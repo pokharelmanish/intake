@@ -16,8 +16,6 @@ import IncidentInformationCard from 'screenings/IncidentInformationCard'
 import NarrativeCard from 'screenings/NarrativeCard'
 import ScreeningInformationCard from 'screenings/ScreeningInformationCard'
 import WorkerSafetyCard from 'screenings/WorkerSafetyCard'
-import BreadCrumb from 'containers/common/BreadCrumb'
-import {urlHelper} from 'common/url_helper.js.erb'
 
 const isDuplicatePerson = (participants, personOnScreening) => (
   participants
@@ -133,7 +131,6 @@ export class ScreeningPage extends React.Component {
     const genericErrorClass = this.props.hasGenericErrors ? 'generic-error' : ''
     return (
       <div>
-        <BreadCrumb navigationElements={[<Link key={this.props.params.id} to={urlHelper('/')}>CaseLoad</Link>]}/>
         <div className={`container hotline-container ${genericErrorClass}`}>
           {this.renderScreening()}
         </div>

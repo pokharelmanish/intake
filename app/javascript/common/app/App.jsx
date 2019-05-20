@@ -13,6 +13,7 @@ import {ScrollToTop} from 'common/app/ScrollToTop'
 import {createScreening} from 'actions/screeningActions'
 import {snapshotEnabledSelector, hotlineEnabledSelector} from 'selectors/homePageSelectors'
 import {Page, CaresProvider, MenuItem, UncontrolledUserMenu} from '@cwds/components'
+import BreadCrumb from 'containers/common/BreadCrumb'
 import {createSnapshot} from 'actions/snapshotActions'
 import {clearPeople} from 'actions/personCardActions'
 import {clearHistoryOfInvolvement} from 'actions/historyOfInvolvementActions'
@@ -37,7 +38,6 @@ const Footer = () => (
     <span> <Link to='/pages/conditions_of_use'>Conditions of use</Link></span>
   </div>
 )
-
 export class App extends React.Component {
   componentDidMount() {
     const {fetchSystemCodesAction, checkStaffPermission, fetchUserInfoAction} = this.props.actions
@@ -79,6 +79,8 @@ export class App extends React.Component {
         className="btn primary-btn pull-right"
         disabled={false}
         onClick={this.props.startOver}
+        primary
+        size='lg'
       >
     Start Over
       </button>
@@ -103,6 +105,7 @@ export class App extends React.Component {
   }
 
   render() {
+    const breadcrumb = <BreadCrumb isHotline={isHotline(location)}/>
     const logoutUrl = `${config().base_path.replace(/\/$/, '')}/logout`
 
     const UserMenu = (state) => {
@@ -126,7 +129,7 @@ export class App extends React.Component {
     return (
       <RouterScrollToTop>
         <CaresProvider UserMenu={UserMenu} Brand= 'CWS-CARES'>
-          <Page layout= 'dashboard' title= {pageTitle} PageActions={() => buttons}>
+          <Page Breadcrumb={breadcrumb} layout= 'dashboard' title= {pageTitle} PageActions={() => buttons}>
             {this.props.children}
             <Footer />
           </Page>

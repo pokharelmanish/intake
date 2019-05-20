@@ -1,25 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Breadcrumb, BreadcrumbItem} from '@cwds/components'
+import {Link} from 'react-router'
+import {urlHelper} from 'common/url_helper.js.erb'
 
 export const BreadCrumb = ({
-  navigationElements,
   hasError,
+  isHotline,
+  id,
 }) => {
   const klasses = hasError ? 'container back-to-dashboard-error' : 'container back-to-dashboard'
   return (
     <div className={klasses}>
-      <div className='row'>
-        <div className='col-xs-7'>
-          <h5>Back to: <span><a href='/dashboard'>Dashboard</a> {navigationElements.map((nav, index) => (<span key={index}> {'>'} {nav}</span>))}</span></h5>
-        </div>
-      </div>
+      <Breadcrumb>
+        <BreadcrumbItem>
+          <a href="/dashboard">Dashboard</a>
+        </BreadcrumbItem>
+        { isHotline ? <BreadcrumbItem>
+          <Link key={id} to={urlHelper('/')}>CaseLoad</Link>
+        </BreadcrumbItem> : null }
+      </Breadcrumb>
     </div>
   )
 }
 
 BreadCrumb.propTypes = {
   hasError: PropTypes.bool,
-  navigationElements: PropTypes.array,
+  id: PropTypes.string,
+  isHotline: PropTypes.bool,
 }
 
 BreadCrumb.defaultProps = {
