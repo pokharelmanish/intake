@@ -131,19 +131,10 @@ describe('ScreeningPage', () => {
   })
 
   describe('render', () => {
-    it('renders a page header', () => {
-      expect(renderScreeningPage({}).find('Connect(PageHeader)').exists()).toBe(true)
-    })
-
     it('passes the screening title to the page header', () => {
       const screeningPage = renderScreeningPage({screeningTitle: 'Screening 1'})
       const pageHeader = screeningPage.find('Connect(PageHeader)')
       expect(pageHeader.props().pageTitle).toEqual('Screening 1')
-    })
-
-    it('passes buttons to the screening header', () => {
-      const pageHeader = renderScreeningPage({}).find('Connect(PageHeader)')
-      expect(pageHeader.props().button.type).toEqual('button')
     })
 
     describe('with errors', () => {

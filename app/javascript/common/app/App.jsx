@@ -54,6 +54,7 @@ export class App extends React.Component {
     <button type='button'
       className='btn primary-btn'
       disabled={false}
+      id='snapshot'
       onClick={this.props.actions.createSnapshot}
     >
     Start Snapshot
@@ -64,6 +65,7 @@ export class App extends React.Component {
     <button type='button'
       className='btn primary-btn'
       disabled={false}
+      id='screening'
       onClick={this.props.actions.createScreening}
     >
     Start Screening
@@ -79,8 +81,6 @@ export class App extends React.Component {
         className="btn primary-btn pull-right"
         disabled={false}
         onClick={this.props.startOver}
-        primary
-        size='lg'
       >
     Start Over
       </button>

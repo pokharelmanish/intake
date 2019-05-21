@@ -3,6 +3,8 @@ import React from 'react'
 import {shallow, mount} from 'enzyme'
 import * as IntakeConfig from 'common/config'
 import {CaresProvider, Page} from '@cwds/components'
+import {store} from 'store/configureStore'
+import {Provider} from 'react-redux'
 
 describe('App', () => {
   beforeEach(() => {
@@ -38,6 +40,11 @@ describe('App', () => {
     expect(app.find('div').exists()).toBe(true)
   })
 
+  it('renders the BreadCrumb', () => {
+    const app = shallow(<App actions={{}}><div/></App>, {disableLifecycleMethods: true})
+    expect(app.find(Page).exists()).toBe(true)
+    expect(app.find('Page[Breadcrumb]').exists()).toBe(true)
+  })
   it('renders a CaresProvider', () => {
     const fetchUserInfoAction = jasmine.createSpy('fetchUserInfoAction')
     const fetchSystemCodesAction = jasmine.createSpy('fetchSystemCodesAction')
@@ -47,5 +54,60 @@ describe('App', () => {
 
     expect(app.find(CaresProvider).length).toEqual(1)
     expect(app.find('CaresProvider[Brand="CWS-CARES"]').exists()).toBe(true)
+  })
+  describe('App', () => {
+    const fetchUserInfoAction = jasmine.createSpy('fetchUserInfoAction')
+    const fetchSystemCodesAction = jasmine.createSpy('fetchSystemCodesAction')
+    const checkStaffPermission = jasmine.createSpy('checkStaffPermission')
+    const actions = {fetchUserInfoAction, fetchSystemCodesAction, checkStaffPermission}
+    it('displays the hotline button', () => {
+      const props = {hotline: true, actions: actions}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      expect(app.find(Page).exists()).toBe(true)
+      const pageHeader = app.find('PageActions').find('button')
+      expect(pageHeader.text()).toContain('Start Screening')
+    })
+
+    it('displays the snapshot button', () => {
+      const props = {snapshot: true, actions: actions}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      expect(app.find(Page).exists()).toBe(true)
+      const pageHeader = app.find('PageActions').find('button')
+      expect(pageHeader.text()).toContain('Start Snapshot')
+    })
+
+    it('when it is hotline and snapshot enabled it display snapshot button', () => {
+      const props = {snapshot: true, hotline: true, actions: actions}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      expect(app.find(Page).exists()).toBe(true)
+      const pageHeader = app.find('PageActions').find('button')
+      console.log('pageHeader', pageHeader.debug())
+      expect(pageHeader.find('#snapshot').text()).toContain('Start Snapshot')
+    })
+
+    it('when it is hotline and snapshot enabled it display hotline button', () => {
+      const props = {snapshot: true, hotline: true, actions: actions}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      expect(app.find(Page).exists()).toBe(true)
+      const pageHeader = app.find('PageActions').find('button')
+      console.log('pageHeader', pageHeader.debug())
+      expect(pageHeader.find('#screening').text()).toContain('Start Screening')
+    })
+
+    it('does not display the snapshot button', () => {
+      const props = {hotline: true, actions: actions}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      expect(app.find(Page).exists()).toBe(true)
+      const pageHeader = app.find('PageActions').find('button')
+      expect(pageHeader.text()).not.toContain('Start Snapshot')
+    })
+
+    it('does not display the hotline button', () => {
+      const props = {snapshot: true, actions: actions}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      expect(app.find(Page).exists()).toBe(true)
+      const pageHeader = app.find('PageActions').find('button')
+      expect(pageHeader.text()).not.toContain('Start Screening')
+    })
   })
 })
