@@ -11,9 +11,11 @@ import HistoryOfInvolvementContainer from 'containers/snapshot/HistoryOfInvolvem
 import HistoryTableContainer from 'containers/common/HistoryTableContainer'
 import EmptyHistory from 'views/history/EmptyHistory'
 import RelationshipsCardContainer from 'containers/snapshot/RelationshipsCardContainer'
-import SnapshotIntro from 'snapshots/SnapshotIntro'
 import {selectParticipants} from 'selectors/participantSelectors'
 import {getHasGenericErrorValueSelector} from 'selectors/errorsSelectors'
+import PersonSearchResultsContainer from 'containers/snapshot/PersonSearchResultsContainer'
+import {selectPeopleResults} from 'selectors/peopleSearchSelectors'
+import {isAdvancedSearchOn} from 'common/config'
 
 const isDuplicatePerson = (participants, id) =>
   participants.some(x => x.id === id)
@@ -34,10 +36,12 @@ export class SnapshotPage extends React.Component {
   }
 
   renderBody(participants) {
+    const {results, location} = this.props
+    const advancedSearchFeatureFlag = isAdvancedSearchOn(location)
+    const hasResults = results && results.length !== 0
     return (
       <div className="col-md-12 col-xs-12 snapshot-inner-container">
         <div className="row">
-          <SnapshotIntro />
           <PersonSearchFormContainer
             onSelect={person => this.onSelectPerson(person)}
             searchPrompt="Search for clients"
@@ -47,6 +51,7 @@ export class SnapshotPage extends React.Component {
           {participants.map(({id}) => (
             <PersonCardView key={id} personId={id} />
           ))}
+          {advancedSearchFeatureFlag && hasResults && <PersonSearchResultsContainer />}
           <RelationshipsCardContainer />
           <HistoryOfInvolvementContainer
             empty={<EmptyHistory />}
@@ -76,7 +81,11 @@ SnapshotPage.propTypes = {
   createSnapshot: PropTypes.func,
   createSnapshotPerson: PropTypes.func,
   hasGenericErrors: PropTypes.bool,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
   participants: PropTypes.array,
+  results: PropTypes.array,
   startOver: PropTypes.func,
   unmount: PropTypes.func,
 }
@@ -84,6 +93,7 @@ SnapshotPage.propTypes = {
 const mapStateToProps = state => ({
   hasGenericErrors: getHasGenericErrorValueSelector(state),
   participants: selectParticipants(state).toJS(),
+  results: selectPeopleResults(state).toJS(),
 })
 
 export const mapDispatchToProps = dispatch => ({

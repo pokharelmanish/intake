@@ -63,7 +63,7 @@ module PersonSearchByLastNameQueryBuilderHelper
                 "match": {
                   "last_name_ngram": {
                     "query": 'last name',
-                    "minimum_should_match": '20%',
+                    "minimum_should_match": '10%',
                     "_name": '4_partial'
                   }
                 }
@@ -81,7 +81,7 @@ module PersonSearchByLastNameQueryBuilderHelper
                 "fuzzy": {
                   "last_name": {
                     "value": 'last name',
-                    "fuzziness": '5',
+                    "fuzziness": 'AUTO',
                     "prefix_length": '1',
                     "max_expansions": '50',
                     "_name": '5_fuzzy'

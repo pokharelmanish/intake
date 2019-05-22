@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'feature/testing'
 
-feature 'Adding and removing a person from a snapshot' do
+feature 'Search results page' do
   around do |example|
     Feature.run_with_activated(:release_two, :advanced_search) do
       example.run
@@ -20,10 +20,11 @@ feature 'Adding and removing a person from a snapshot' do
       addresses: [{
         messages: [],
         type: 'Placement Home',
-        street_address: 'P.O. Box 162',
-        city: 'Pala',
+        street_number: '500',
+        street_name: 'El Camino Real',
+        city: 'Santa Clara',
         state: 'CA',
-        zip: '92089',
+        zip: '95053',
         phone_numbers: [{ id: '1', type: 'Home', number: '(971) 287-6774' }],
         legacy_descriptor: {
           legacy_id: '7OFBh9m2St',
@@ -93,6 +94,8 @@ feature 'Adding and removing a person from a snapshot' do
             builder.with_addresses do
               [
                 AddressSearchResultBuilder.build do |address|
+                  address.with_street_number(participant[:addresses][0][:street_number])
+                  address.with_street_name(participant[:addresses][0][:street_name])
                   address.with_state_code(participant[:addresses][0][:state])
                   address.with_city(participant[:addresses][0][:city])
                   address.with_zip(participant[:addresses][0][:zip])
@@ -134,7 +137,7 @@ feature 'Adding and removing a person from a snapshot' do
                      person_response: participant)
   end
 
-  scenario 'User can add and remove users on snapshot' do
+  scenario 'Display search results grid' do
     visit snapshot_path
 
     within '#search-card', text: 'Search' do
@@ -142,62 +145,11 @@ feature 'Adding and removing a person from a snapshot' do
       click_button 'Search'
     end
 
-    within '#search-card', text: 'Search' do
-      expect(page).not_to have_content 'Create a new person'
-      page.find('strong', text: participant[:last_name]).click
+    within '.rt-tbody' do
+      expect(page).to have_content('Juan Simpson')
+      expect(page).to have_content('Male')
+      expect(page).to have_content('500 El Camino Real, Santa Clara, CA 95053')
     end
-
-    expect(
-      a_request(
-        :get, ferb_api_url(
-                FerbRoutes.client_authorization_path(
-                  participant.dig(:legacy_descriptor, :legacy_id)
-                )
-        )
-      )
-    ).to have_been_made
-
-    within show_participant_card_selector(participant.dig(:legacy_descriptor, :legacy_id)) do
-      within '.card-body' do
-        expect(page).to have_content(participant[:legacy_descriptor][:legacy_ui_id])
-        expect(page).to have_content(participant[:first_name])
-        expect(page).to have_content(participant[:last_name])
-        expect(page).to have_content(participant[:addresses][0][:phone_numbers].first[:number])
-        expect(page).to have_content(participant[:addresses][0][:phone_numbers].first[:type])
-        expect(page).to have_content(participant[:gender].capitalize)
-        expect(page).to have_content(participant[:approximate_age])
-        expect(page).to have_content(participant[:ssn])
-        expect(page).to have_content(participant[:races].first[:race])
-      end
-
-      within '.card-header' do
-        expect(page).not_to have_content 'Edit'
-        expect(page).to_not have_content('Sensitive')
-        expect(page).to have_content("#{participant[:first_name]} #{participant[:last_name]}")
-        click_button 'Remove person'
-      end
-    end
-
-    expect(
-      a_request(
-        :get,
-        ferb_api_url(
-          FerbRoutes.history_of_involvements_path
-        ) + "?clientIds=#{participant.dig(:legacy_descriptor, :legacy_id)}"
-      )
-    ).to have_been_made.times(1)
-
-    expect(
-      a_request(
-        :get,
-        ferb_api_url(
-          FerbRoutes.relationships_path
-        ) + "?clientIds=#{participant.dig(:legacy_descriptor, :legacy_id)}"
-      )
-    ).to have_been_made.times(1)
-
-    expect(page).not_to have_content show_participant_card_selector('person.id')
-    expect(page).not_to have_content(participant[:first_name])
   end
 
   scenario 'Clicking Start Over removes people from the snapshot page' do
@@ -208,32 +160,12 @@ feature 'Adding and removing a person from a snapshot' do
       click_button 'Search'
     end
 
-    within '#search-card', text: 'Search' do
-      expect(page).not_to have_content 'Create a new person'
-      page.find('strong', text: participant[:last_name]).click
-    end
-
-    expect(
-      a_request(
-        :get, ferb_api_url(
-                FerbRoutes.client_authorization_path(
-                  participant.dig(:legacy_descriptor, :legacy_id)
-                )
-        )
-      )
-    ).to have_been_made
-
-    within show_participant_card_selector(participant.dig(:legacy_descriptor, :legacy_id)) do
-      within '.card-header' do
-        expect(page).to have_content("#{participant[:first_name]} #{participant[:last_name]}")
-      end
+    within '.rt-tbody' do
+      expect(page).to have_content('Juan Simpson')
     end
 
     click_button 'Start Over'
 
-    expect(page).not_to have_content(
-      show_participant_card_selector(participant.dig(:legacy_descriptor, :legacy_id))
-    )
-    expect(page).not_to have_content(participant[:first_name])
+    expect(page).not_to have_content('Juan Simpson')
   end
 end

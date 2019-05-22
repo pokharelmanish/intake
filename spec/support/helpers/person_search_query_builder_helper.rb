@@ -4,7 +4,7 @@
 module PersonSearchQueryBuilderHelper
   def person_only_query
     {
-      "size": '10',
+      "size": '250',
       "track_scores": 'true',
       "sort": [
         {
@@ -113,7 +113,7 @@ module PersonSearchQueryBuilderHelper
 
   def client_id_only_query
     {
-      "size": '10',
+      "size": '250',
       "track_scores": 'true',
       "sort": [
         {
@@ -142,7 +142,7 @@ module PersonSearchQueryBuilderHelper
 
   def ssn_only_query
     {
-      "size": '10',
+      "size": '250',
       "track_scores": 'true',
       "sort": [
         {

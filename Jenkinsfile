@@ -21,7 +21,30 @@ GITHUB_CREDENTIALS_ID = '433ac100-b3c2-4519-b4d6-207c029a103b'
 switch(env.BUILD_JOB_TYPE) {
   case "master": buildMaster(); break;
   case "release":releasePipeline(); break;
+  case "regression": buildRegression(); break;
   default: buildPullRequest();
+}
+
+def buildRegression() {
+  node('intake-slave') {
+    try {
+      regressionTestStage()
+    } catch(Exception exception) {
+      currentBuild.result = "FAILURE"
+      throw exception
+    } finally {
+      cleanupStage('')
+    }
+  }
+}
+
+def regressionTestStage() {
+  stage('Regression Test') {
+    withDockerRegistry([credentialsId: JENKINS_MANAGEMENT_DOCKER_REGISTRY_CREDENTIALS_ID]) {
+        sh "docker-compose -f docker/test/docker-compose.yml up -d --build"
+        sh "docker-compose -f docker/test/docker-compose.yml exec bundle exec rspec spec/regression"
+    }
+  }
 }
 
 def buildPullRequest() {
@@ -40,6 +63,7 @@ def buildPullRequest() {
       verifySemVerLabel()
       karmaTests()
       rspecTestsSnapshot()
+      rspecRegressionSnapshot()
       reports()
     } catch(Exception exception) {
       currentBuild.result = "FAILURE"
@@ -149,7 +173,14 @@ def rspecTests() {
 def rspecTestsSnapshot() {
   stage('Rspec tests for Snapshot') {
     curStage = 'Rspec tests for Snapshot'
-    sh 'EXCLUDE_PATTERN="features/screening" ./scripts/ci/rspec_test.rb'
+    sh 'EXCLUDE_PATTERN="{features/screening,spec/regression}" ./scripts/ci/rspec_test.rb'
+  }
+}
+
+def rspecRegressionSnapshot() {
+  stage('Regression tests') {
+    curStage = 'Rspec tests for Snapshot'
+    sh 'EXCLUDE_PATTERN="features/screening" ./scripts/ci/rspec_regression_test.rb'
   }
 }
 

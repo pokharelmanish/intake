@@ -32,12 +32,11 @@ import {Link} from 'react-router'
 
 const RouterScrollToTop = withRouter(ScrollToTop)
 
-const Footer = () => (
-  <div aria-label= 'footer' className= 'col-12-xs text-center footer'><br/>
-    <span><Link to='/pages/privacy_policy'>Privacy Policy</Link></span>
-    <span> <Link to='/pages/conditions_of_use'>Conditions of use</Link></span>
-  </div>
-)
+// eslint-disable-next-line no-nested-ternary
+const pageTitle = isSnapshot(location) ? 'Snapshot' :
+  isHotline(location) ? 'Hotline' :
+    'Dashboard'
+
 export class App extends React.Component {
   componentDidMount() {
     const {fetchSystemCodesAction, checkStaffPermission, fetchUserInfoAction} = this.props.actions
@@ -122,16 +121,15 @@ export class App extends React.Component {
     // eslint-disable-next-line no-nested-ternary
     const buttons = isSnapshot(location) ? this.SnapshotButton() : isHotline(location) ? this.ScreeningButton() : this.dashBoardButtons()
 
-    // eslint-disable-next-line no-nested-ternary
-    const pageTitle = isSnapshot(location) ? 'Snapshot' :
-      isHotline(location) ? 'Hotline' :
-        'Dashboard'
     return (
       <RouterScrollToTop>
         <CaresProvider UserMenu={UserMenu} Brand= 'CWS-CARES'>
           <Page Breadcrumb={breadcrumb} layout= 'dashboard' title= {pageTitle} PageActions={() => buttons}>
             {this.props.children}
-            <Footer />
+            <div aria-label= 'footer' className= 'col-12-xs text-center footer'><br/>
+              <span><Link to='/pages/privacy_policy'>Privacy Policy</Link></span>
+              <span> <Link to='/pages/conditions_of_use'>Conditions of use</Link></span>
+            </div>
           </Page>
         </CaresProvider>
       </RouterScrollToTop>

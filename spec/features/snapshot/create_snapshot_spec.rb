@@ -94,12 +94,6 @@ feature 'Create Snapshot' do
         within '#search-card' do
           expect(page).to have_content('How to Use Snapshot')
         end
-
-        within '#snapshot-card' do
-          expect(page).to have_content(
-            'The Child Welfare History Snapshot allows you to search CWS/CMS for people and their'
-          )
-        end
       end
 
       scenario 'user starts a snapshot, goes back to the home page, and starts another snapshot' do
@@ -146,13 +140,10 @@ feature 'Create Snapshot' do
         within '#search-card', text: 'Search' do
           fill_in 'Last Name', with: 'Si'
           click_button 'Search'
-          page.find('strong', text: person[:last_name]).click
         end
 
-        within show_participant_card_selector(person[:id]) do
-          within '.card-body' do
-            expect(page).to have_content(person[:last_name])
-          end
+        within '.rt-tbody' do
+          expect(page).to have_content('Simpson')
         end
 
         page.driver.go_back
@@ -211,129 +202,16 @@ feature 'Create Snapshot' do
           within '#search-card', text: 'Search' do
             fill_in 'Last Name', with: 'Si'
             click_button 'Search'
-            page.find('strong', text: person[:last_name])
           end
-
           click_button 'Start Over'
 
-          within '#search-card', text: 'Search' do
-            expect(page).to_not have_content 'Client ID 1621-3598-1936-3000631 in CWS-CMS'
-          end
-        end
-
-        scenario 'closes when clicking search result' do
-          within '#search-card', text: 'Search' do
-            fill_in 'Last Name', with: 'Si'
-            click_button 'Search'
-            page.find('strong', text: person[:last_name]).click
-          end
-
-          within '#search-card', text: 'Search' do
-            expect(page).to_not have_content('Showing 1-1 of 1 results for "Ma"')
-          end
-        end
-
-        scenario 'does not close when clicking outside search result' do
-          within '#search-card', text: 'Search' do
-            fill_in 'Last Name', with: 'Si'
-            click_button 'Search'
-            page.find('strong', text: person[:last_name])
-          end
-
-          click_button 'CWDS'
-
-          within '#search-card', text: 'Search' do
-            expect(page).to have_content 'Client ID 1621-3598-1936-3000631 in CWS-CMS'
-          end
+          expect(page).not_to have_content('Simpson')
         end
       end
 
       scenario 'a new snapshot is created if the user visits the snapshot page directly' do
         visit snapshot_path(accessCode: access_code)
-        expect(page).to have_content('The Child Welfare History Snapshot allows you to search')
-      end
-    end
-
-    context 'when snapshot is not enabled' do
-      around do |example|
-        Feature.run_with_deactivated(:snapshot) do
-          example.run
-        end
-      end
-
-      scenario 'snapshot page is not accessible' do
-        visit snapshot_path(accessCode: access_code)
-        expect(page).to have_content('Sorry, this is not the page you want')
-      end
-    end
-
-    context 'both snapshot and screening are enabled' do
-      before do
-        allow(LUID).to receive(:generate).and_return(['DQJIYK'])
-      end
-
-      scenario 'user starts a screening, goes back to the home page, and starts a snapshot' do
-        stub_request(:get, ferb_api_url(FerbRoutes.screenings_path)).and_return(
-          json_body([], status: 200)
-        )
-        visit root_path(accessCode: access_code)
-
-        stub_empty_history_for_screening(new_screening)
-        stub_empty_relationships
-        stub_request(:post, ferb_api_url(FerbRoutes.intake_screenings_path))
-          .and_return(json_body(new_screening.to_json, status: 201))
-        stub_request(
-          :get, ferb_api_url(FerbRoutes.intake_screening_path(new_screening[:id]))
-        ).and_return(json_body(new_screening.to_json, status: 200))
-        click_button 'Start Screening'
-
-        search_response = PersonSearchResponseBuilder.build do |response|
-          response.with_total(1)
-          response.with_hits do
-            [
-              PersonSearchResultBuilder.build do |builder|
-                builder.with_first_name('Juan')
-                builder.with_legacy_descriptor(person[:legacy_descriptor])
-              end
-            ]
-          end
-        end
-        stub_person_search(person_response: search_response)
-        stub_request(
-          :get,
-          ferb_api_url(
-            FerbRoutes.client_authorization_path(
-              person.dig(:legacy_descriptor, :legacy_id)
-            )
-          )
-        ).and_return(json_body('', status: 200))
-        stub_request(
-          :post,
-          ferb_api_url(FerbRoutes.screening_participant_path(new_screening[:id]))
-        ).and_return(json_body(person.to_json, status: 201))
-
-        within '#search-card', text: 'Search' do
-          fill_in 'Search for any person', with: 'Ju'
-          click_with_js('strong', text: 'Juan')
-        end
-
-        within edit_participant_card_selector(person[:id]) do
-          within '.card-header' do
-            expect(page).to have_content(person[:first_name])
-          end
-        end
-
-        page.driver.go_back
-        click_button 'Start Snapshot'
-
-        within '#snapshot-card' do
-          expect(page).to have_content(
-            'The Child Welfare History Snapshot allows you to search CWS/CMS for people and their'
-          )
-        end
-        expect(page).not_to have_css(
-          show_participant_card_selector(person.dig(:legacy_descriptor, :legacy_id))
-        )
+        expect(page).to have_content('Snapshot Search')
       end
     end
   end

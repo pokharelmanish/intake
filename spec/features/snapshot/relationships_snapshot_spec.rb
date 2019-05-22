@@ -26,7 +26,7 @@ feature 'Snapshot relationship card' do
 
   context 'load relationships' do
     around do |example|
-      Feature.run_with_activated(:release_two, :advanced_search) do
+      Feature.run_with_activated(:release_two) do
         example.run
       end
     end
@@ -172,42 +172,13 @@ feature 'Snapshot relationship card' do
       within '#search-card', text: 'Search' do
         fill_in 'Last Name', with: 'Si'
         click_button 'Search'
-        page.find('strong', text: 'Simpson').click
       end
     end
 
-    scenario 'should return the correct relationships' do
-      expect(
-        a_request(
-          :get,
-          ferb_api_url(
-            FerbRoutes.relationships_path
-          ) + "?clientIds=#{participant.dig(:legacy_descriptor, :legacy_id)}"
-        )
-      ).to have_been_made
-
-      within '#relationships-card.card.show', text: 'Relationships' do
-        expect(page).to have_content(
-          "#{relationships.first[:first_name]} #{relationships.first[:last_name]} is the..",
-          normalize_ws: true
-        )
-        expect(page).to have_content('Sister (Half) of Jake Campbell', normalize_ws: true)
-        expect(page).to have_content('Sister (Half) of Jane Campbell', normalize_ws: true)
-        expect(page).to have_content('Sister (Half) of John Florence, PhD', normalize_ws: true)
-      end
-    end
-
-    scenario 'clicking the Start Over button clears relationships card' do
-      within '#relationships-card.card.show' do
-        expect(page).to have_content(
-          "#{relationships.first[:first_name]} #{relationships.first[:last_name]} is the.."
-        )
-      end
-
-      click_button 'Start Over'
-
-      within '#relationships-card.card.show' do
-        expect(page).to have_content('Search for people and add them to see their relationships')
+    scenario 'should return relationships card' do
+      within '#relationships-card' do
+        expect(page).to have_content('Relationship')
+        expect(page).to have_content('Search for people and add them to see their relationships.')
       end
     end
   end

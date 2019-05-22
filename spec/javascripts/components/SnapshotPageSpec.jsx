@@ -1,13 +1,14 @@
 import React from 'react'
-import {SnapshotPage, mapDispatchToProps} from 'snapshots/SnapshotPage'
-import {clear, resetPersonSearch} from 'actions/peopleSearchActions'
+import {SnapshotPage} from 'snapshots/SnapshotPage'
 import {shallow} from 'enzyme'
+import * as IntakeConfig from 'common/config'
 
 describe('SnapshotPage', () => {
-  const renderSnapshotPage = ({participants = [], ...args}) => {
-    const props = {participants, ...args}
+  const renderSnapshotPage = ({participants = [], results = [], ...args}) => {
+    const props = {participants, results, ...args}
     return shallow(<SnapshotPage {...props} />, {disableLifecycleMethods: true})
   }
+
   it('renders a SnapshotIntro', () => {
     const snapshotPage = renderSnapshotPage({})
     expect(snapshotPage.find('SnapshotIntro').exists()).toEqual(true)

@@ -147,3 +147,26 @@
 .modal-dialog {
   top: 20%;
 }
+
+.pagination-bottom {
+  .select-wrap > select {
+    background-position: right 1.3rem center;
+    background-repeat: no-repeat;
+    background-size: 1.3rem;
+    width: 10rem;
+  }
+}
+
+.search-result-button {
+  background-color: transparent;
+  border: none;
+  color: $medium-blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.search-result-button:hover,
+.search-result-button:focus {
+  text-decoration: underline;
+}
+
