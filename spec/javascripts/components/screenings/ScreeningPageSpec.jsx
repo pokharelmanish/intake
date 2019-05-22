@@ -68,11 +68,6 @@ describe('ScreeningPage', () => {
     return shallow(<ScreeningPage {...props}/>)
   }
 
-  it('renders a breadCrumb', () => {
-    const screeningPage = renderScreeningPage({})
-    expect(screeningPage.find('Connect(BreadCrumb)').exists()).toEqual(true)
-  })
-
   describe('componentDidMount', () => {
     it("sets the page mode to EDIT_MODE when url mode is 'edit' and editable is true", () => {
       const id = '222'
@@ -131,12 +126,6 @@ describe('ScreeningPage', () => {
   })
 
   describe('render', () => {
-    it('passes the screening title to the page header', () => {
-      const screeningPage = renderScreeningPage({screeningTitle: 'Screening 1'})
-      const pageHeader = screeningPage.find('Connect(PageHeader)')
-      expect(pageHeader.props().pageTitle).toEqual('Screening 1')
-    })
-
     describe('with errors', () => {
       it('renders the error detail card', () => {
         const submitReferralErrors = ['a', 'b', 'c']

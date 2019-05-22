@@ -12,7 +12,7 @@ export const BreadCrumb = ({
   const klasses = hasError ? 'container back-to-dashboard-error' : 'container back-to-dashboard'
   return (
     <div className={klasses}>
-      <Breadcrumb>
+      <span style={{display: 'flex'}}> Back to:  <Breadcrumb>
         <BreadcrumbItem>
           <a href="/dashboard">Dashboard</a>
         </BreadcrumbItem>
@@ -20,6 +20,7 @@ export const BreadCrumb = ({
           <Link key={id} to={urlHelper('/')}>CaseLoad</Link>
         </BreadcrumbItem> : null }
       </Breadcrumb>
+      </span>
     </div>
   )
 }
@@ -28,8 +29,4 @@ BreadCrumb.propTypes = {
   hasError: PropTypes.bool,
   id: PropTypes.string,
   isHotline: PropTypes.bool,
-}
-
-BreadCrumb.defaultProps = {
-  navigationElements: [],
 }

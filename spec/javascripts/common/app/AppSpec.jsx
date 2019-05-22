@@ -16,7 +16,7 @@ describe('App', () => {
     const fetchSystemCodesAction = jasmine.createSpy('fetchSystemCodesAction')
     const checkStaffPermission = jasmine.createSpy('checkStaffPermission')
     const actions = {fetchUserInfoAction, fetchSystemCodesAction, checkStaffPermission}
-    mount(<App actions={actions}><div/></App>)
+    mount(<Provider store={store}><App actions={actions}><div/></App></Provider>)
     expect(fetchUserInfoAction).toHaveBeenCalled()
     expect(fetchSystemCodesAction).toHaveBeenCalled()
     expect(checkStaffPermission).toHaveBeenCalledWith('add_sensitive_people')
@@ -50,7 +50,7 @@ describe('App', () => {
     const fetchSystemCodesAction = jasmine.createSpy('fetchSystemCodesAction')
     const checkStaffPermission = jasmine.createSpy('checkStaffPermission')
 
-    const app = mount(<App actions={{fetchUserInfoAction, fetchSystemCodesAction, checkStaffPermission}} fullName={''}><div /></App>)
+    const app = mount(<Provider store={store}><App actions={{fetchUserInfoAction, fetchSystemCodesAction, checkStaffPermission}} fullName={''}><div /></App></Provider>)
 
     expect(app.find(CaresProvider).length).toEqual(1)
     expect(app.find('CaresProvider[Brand="CWS-CARES"]').exists()).toBe(true)
@@ -81,7 +81,6 @@ describe('App', () => {
       const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
       expect(app.find(Page).exists()).toBe(true)
       const pageHeader = app.find('PageActions').find('button')
-      console.log('pageHeader', pageHeader.debug())
       expect(pageHeader.find('#snapshot').text()).toContain('Start Snapshot')
     })
 
@@ -90,7 +89,6 @@ describe('App', () => {
       const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
       expect(app.find(Page).exists()).toBe(true)
       const pageHeader = app.find('PageActions').find('button')
-      console.log('pageHeader', pageHeader.debug())
       expect(pageHeader.find('#screening').text()).toContain('Start Screening')
     })
 
@@ -108,6 +106,22 @@ describe('App', () => {
       expect(app.find(Page).exists()).toBe(true)
       const pageHeader = app.find('PageActions').find('button')
       expect(pageHeader.text()).not.toContain('Start Screening')
+    })
+
+    it('render a snapshot title', () => {
+      spyOn(IntakeConfig, 'isSnapshot').and.returnValue(true)
+      const props = {actions: actions}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      const pageTitle = app.find('PageTitle')
+      expect(pageTitle.text()).toContain('Snapshot')
+    })
+
+    it('render a snapshot button', () => {
+      spyOn(IntakeConfig, 'isSnapshot').and.returnValue(true)
+      const props = {actions: actions}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      const startOver = app.find('PageActions')
+      expect(startOver.find('button').text()).toContain('Start Over')
     })
   })
 })

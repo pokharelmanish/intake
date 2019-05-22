@@ -123,7 +123,7 @@ export class App extends React.Component {
     const buttons = isSnapshot(location) ? this.SnapshotButton() : isHotline(location) ? this.ScreeningButton() : this.dashBoardButtons()
 
     // eslint-disable-next-line no-nested-ternary
-    const pageTitle = isSnapshot(location) ? 'Snapshort' :
+    const pageTitle = isSnapshot(location) ? 'Snapshot' :
       isHotline(location) ? 'Hotline' :
         'Dashboard'
     return (

@@ -8,12 +8,6 @@ describe('SnapshotPage', () => {
     const props = {participants, ...args}
     return shallow(<SnapshotPage {...props} />, {disableLifecycleMethods: true})
   }
-
-  it('renders a BreadCrumb', () => {
-    const snapshotPage = renderSnapshotPage({})
-    expect(snapshotPage.find('Connect(BreadCrumb)').exists()).toBe(true)
-  })
-
   it('renders a SnapshotIntro', () => {
     const snapshotPage = renderSnapshotPage({})
     expect(snapshotPage.find('SnapshotIntro').exists()).toEqual(true)
@@ -35,35 +29,10 @@ describe('SnapshotPage', () => {
     expect(snapshotPage.find('PersonCardView').length).toEqual(2)
   })
 
-  it('passes the page title to the header', () => {
-    const snapshotPage = renderSnapshotPage({})
-    expect(snapshotPage.find('Connect(PageHeader)').exists()).toBe(true)
-    expect(snapshotPage.find('Connect(PageHeader)').props().pageTitle).toEqual('Snapshot')
-  })
-
-  it('passes a null button to the page header so it does not render the default button', () => {
-    const snapshotPage = renderSnapshotPage({})
-    expect(snapshotPage.find('Connect(PageHeader)').props().button.type).toEqual('button')
-  })
-
   it('calls the unmount function when the component is unmounted', () => {
     const unmount = jasmine.createSpy('unmount')
     const snapshotPage = renderSnapshotPage({unmount})
     snapshotPage.unmount()
     expect(unmount).toHaveBeenCalled()
-  })
-
-  describe('mapDispatchToProps', () => {
-    describe('starting over', () => {
-      it('clears search results', () => {
-        const dispatch = jasmine.createSpy('dispatch')
-        const props = mapDispatchToProps(dispatch)
-
-        props.startOver()
-
-        expect(dispatch).toHaveBeenCalledWith(clear('results'))
-        expect(dispatch).toHaveBeenCalledWith(resetPersonSearch())
-      })
-    })
   })
 })
