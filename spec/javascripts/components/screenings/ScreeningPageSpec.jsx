@@ -68,11 +68,6 @@ describe('ScreeningPage', () => {
     return shallow(<ScreeningPage {...props}/>)
   }
 
-  it('renders a breadCrumb', () => {
-    const screeningPage = renderScreeningPage({})
-    expect(screeningPage.find('Connect(BreadCrumb)').exists()).toEqual(true)
-  })
-
   describe('componentDidMount', () => {
     it("sets the page mode to EDIT_MODE when url mode is 'edit' and editable is true", () => {
       const id = '222'

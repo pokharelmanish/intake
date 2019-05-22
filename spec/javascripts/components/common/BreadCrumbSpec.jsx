@@ -14,18 +14,16 @@ describe('BreadCrumb', () => {
   it('renders with a single node', () => {
     const props = [<a key='' href='/'>CaseLoad</a>]
     const breadCrumb = shallow(
-      <BreadCrumb navigationElements={props} />, {disableLifecycleMethods: true}
+      <BreadCrumb {...props} />, {disableLifecycleMethods: true}
     )
     expect(breadCrumb.text()).toContain('Back to:')
-    expect(breadCrumb.find('a').length).toEqual(2)
+    expect(breadCrumb.find('a').length).toEqual(1)
   })
 
   it('uses container and back-to-dashboard-error classes with errors', () => {
-    const navigationElements = [<a key='' href='/'>CaseLoad</a>]
     const breadCrumb = shallow(
       <BreadCrumb
         hasError={true}
-        navigationElements={navigationElements}
       />
     )
     expect(breadCrumb.hasClass('container')).toEqual(true)
@@ -33,11 +31,9 @@ describe('BreadCrumb', () => {
   })
 
   it('uses container and back-to-dashboard class without errors', () => {
-    const navigationElements = [<a key='' href='/'>CaseLoad</a>]
     const breadCrumb = shallow(
       <BreadCrumb
         hasError={false}
-        navigationElements={navigationElements}
       />
     )
     expect(breadCrumb.hasClass('container')).toEqual(true)

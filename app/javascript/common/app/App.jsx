@@ -13,6 +13,7 @@ import {ScrollToTop} from 'common/app/ScrollToTop'
 import {createScreening} from 'actions/screeningActions'
 import {snapshotEnabledSelector, hotlineEnabledSelector} from 'selectors/homePageSelectors'
 import {Page, CaresProvider, MenuItem, UncontrolledUserMenu} from '@cwds/components'
+import BreadCrumb from 'containers/common/BreadCrumb'
 import {createSnapshot} from 'actions/snapshotActions'
 import {clearPeople} from 'actions/personCardActions'
 import {clearHistoryOfInvolvement} from 'actions/historyOfInvolvementActions'
@@ -32,7 +33,7 @@ import {Link} from 'react-router'
 const RouterScrollToTop = withRouter(ScrollToTop)
 
 // eslint-disable-next-line no-nested-ternary
-const pageTitle = isSnapshot(location) ? 'Snapshort' :
+const pageTitle = isSnapshot(location) ? 'Snapshot' :
   isHotline(location) ? 'Hotline' :
     'Dashboard'
 
@@ -52,6 +53,7 @@ export class App extends React.Component {
     <button type='button'
       className='btn primary-btn'
       disabled={false}
+      id='snapshot'
       onClick={this.props.actions.createSnapshot}
     >
     Start Snapshot
@@ -62,6 +64,7 @@ export class App extends React.Component {
     <button type='button'
       className='btn primary-btn'
       disabled={false}
+      id='screening'
       onClick={this.props.actions.createScreening}
     >
     Start Screening
@@ -101,6 +104,7 @@ export class App extends React.Component {
   }
 
   render() {
+    const breadcrumb = <BreadCrumb isHotline={isHotline(location)}/>
     const logoutUrl = `${config().base_path.replace(/\/$/, '')}/logout`
 
     const UserMenu = (state) => {
@@ -120,7 +124,7 @@ export class App extends React.Component {
     return (
       <RouterScrollToTop>
         <CaresProvider UserMenu={UserMenu} Brand= 'CWS-CARES'>
-          <Page layout= 'dashboard' title= {pageTitle} PageActions={() => buttons}>
+          <Page Breadcrumb={breadcrumb} layout= 'dashboard' title= {pageTitle} PageActions={() => buttons}>
             {this.props.children}
             <div aria-label= 'footer' className= 'col-12-xs text-center footer'><br/>
               <span><Link to='/pages/privacy_policy'>Privacy Policy</Link></span>

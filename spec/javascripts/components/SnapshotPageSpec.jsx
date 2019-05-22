@@ -9,26 +9,9 @@ describe('SnapshotPage', () => {
     return shallow(<SnapshotPage {...props} />, {disableLifecycleMethods: true})
   }
 
-  beforeEach(() => {
-    spyOn(IntakeConfig, 'isFeatureInactive').and.returnValue(true)
-    spyOn(IntakeConfig, 'isFeatureActive').and.returnValue(false)
-  })
-
-  it('renders a BreadCrumb', () => {
+  it('renders a SnapshotIntro', () => {
     const snapshotPage = renderSnapshotPage({})
-    expect(snapshotPage.find('Connect(BreadCrumb)').exists()).toBe(true)
-  })
-
-  it('renders a PersonSearchResults', () => {
-    spyOn(IntakeConfig, 'isAdvancedSearchOn').and.returnValue(true)
-    const results = [{fullName: 'Sarah Timson'}]
-    const snapshotPage = renderSnapshotPage({results: results})
-    expect(snapshotPage.find('Connect(PersonSearchResults)').exists()).toEqual(true)
-  })
-
-  it('doesnot renders PersonSearchResults when no records found', () => {
-    const snapshotPage = renderSnapshotPage({results: []})
-    expect(snapshotPage.find('Connect(PersonSearchResults)').exists()).toBeFalsy()
+    expect(snapshotPage.find('SnapshotIntro').exists()).toEqual(true)
   })
 
   it('renders history of involvement', () => {

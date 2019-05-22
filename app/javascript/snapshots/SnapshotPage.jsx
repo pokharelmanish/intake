@@ -12,7 +12,6 @@ import HistoryTableContainer from 'containers/common/HistoryTableContainer'
 import EmptyHistory from 'views/history/EmptyHistory'
 import RelationshipsCardContainer from 'containers/snapshot/RelationshipsCardContainer'
 import {selectParticipants} from 'selectors/participantSelectors'
-import BreadCrumb from 'containers/common/BreadCrumb'
 import {getHasGenericErrorValueSelector} from 'selectors/errorsSelectors'
 import PersonSearchResultsContainer from 'containers/snapshot/PersonSearchResultsContainer'
 import {selectPeopleResults} from 'selectors/peopleSearchSelectors'
@@ -68,7 +67,6 @@ export class SnapshotPage extends React.Component {
     const genericErrorClass = hasGenericErrors ? 'generic-error' : ''
     return (
       <div>
-        <BreadCrumb />
         <div className={`container snapshot-container ${genericErrorClass}`}>
           <div className="row">
             {this.renderBody(participants)}
