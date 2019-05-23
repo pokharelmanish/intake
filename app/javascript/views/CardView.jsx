@@ -4,6 +4,7 @@ import ClassNames from 'classnames'
 import EditLink from 'common/EditLink'
 import {EDIT_MODE, SHOW_MODE, SAVING_MODE} from 'actions/screeningPageActions'
 import {setHash} from 'utils/navigation'
+import {CardHeader} from '@cwds/components'
 
 const modeClass = (mode) => (mode === SHOW_MODE ? 'show' : 'edit')
 
@@ -17,10 +18,10 @@ class CardView extends React.PureComponent {
   render() {
     const {edit, editable, id, mode, onEdit, onSave, onShow, show, title} = this.props
     return (
-      <div className='card-height'>
+      <div>
         <button className='anchor' aria-label={`${id}-anchor`} id={`${id}-anchor`}/>
-        <div className={ClassNames('card', modeClass(mode), 'double-gap-bottom', 'position-relative')} id={id}>
-          <div className='card-header'>
+        <div className={ClassNames('card', modeClass(mode), 'position-relative')} id={id}>
+          <CardHeader>
             <h2>{title}</h2>
             {(editable && mode === SHOW_MODE) &&
               <EditLink
@@ -31,7 +32,7 @@ class CardView extends React.PureComponent {
                 }}
               />
             }
-          </div>
+          </CardHeader>
           {(mode === EDIT_MODE || mode === undefined) && edit && React.cloneElement(edit, {onSave, onShow})}
           {(mode === SAVING_MODE) && edit && React.cloneElement(edit, {isSaving: true})}
           {mode === SHOW_MODE && show}

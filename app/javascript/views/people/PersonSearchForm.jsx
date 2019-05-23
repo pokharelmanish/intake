@@ -7,7 +7,7 @@ import {isAdvancedSearchOn} from 'common/config'
 import ModalComponent from '../../common/Modal'
 import SearchModalBody from 'common/search/SearchModalBody'
 // eslint-disable-next-line no-unused-vars
-import {ModalFooter} from '@cwds/components'
+import {ModalFooter, CardHeader, CardBody} from '@cwds/components'
 
 class PersonSearchForm extends React.Component {
   constructor(props) {
@@ -58,23 +58,23 @@ class PersonSearchForm extends React.Component {
     const {searchPrompt, location, ...autocompleterProps} = this.props
     const advancedSearchFeatureFlag = isAdvancedSearchOn(location)
     const classNameAdvancedSearchDisabled = advancedSearchFeatureFlag ? 'advanced-search-enabled' : 'advanced-search-disabled'
-    return (<div className="card-height">
+    return (<div>
       <button className="anchor" aria-label="search-card-anchor" id="search-card-anchor" />
-      <div id='search-card' className="card double-gap-bottom hidden-print person-search-card">
-        <div className="card-header">
+      <div id='search-card' className="card hidden-print person-search-card">
+        <CardHeader>
           <h2>Snapshot Search</h2>
           {advancedSearchFeatureFlag && <span role='button' className='gap-right search-modal-info' tabIndex="0" onClick={this.handleShowModal} onKeyPress={this.handleKeyPress}>
           How to Use Snapshot
           </span>}
-        </div>
-        <div className={`card-body ${classNameAdvancedSearchDisabled}`}>
+        </CardHeader>
+        <CardBody className={`${classNameAdvancedSearchDisabled}`}>
           <div className="row">
             <div className="col-md-12">
               {!advancedSearchFeatureFlag && <label className='pull-left autocompleter-label' htmlFor='screening_participants'>{searchPrompt}</label>}
               <Autocompleter id="screening_participants" {...autocompleterProps} isAdvancedSearchOn={advancedSearchFeatureFlag} />
             </div>
           </div>
-        </div>
+        </CardBody>
       </div>
       {this.state.show && this.renderModal()}
     </div>)

@@ -2,6 +2,7 @@ import FormField from 'common/FormField'
 import PropTypes from 'prop-types'
 import React from 'react'
 import ActionRow from 'screenings/ActionRow'
+import {CardBody} from '@cwds/components'
 
 const NarrativeForm = ({
   isSaving,
@@ -11,7 +12,7 @@ const NarrativeForm = ({
   onSave,
   reportNarrative,
 }) => (
-  <div className='card-body'>
+  <CardBody>
     <div className='row'>
       <FormField
         errors={reportNarrative.errors}
@@ -30,7 +31,7 @@ const NarrativeForm = ({
       </FormField>
     </div>
     <ActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving}/>
-  </div>
+  </CardBody>
 )
 
 NarrativeForm.propTypes = {

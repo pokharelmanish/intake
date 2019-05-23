@@ -5,6 +5,7 @@ import AlertInfoMessage from 'common/AlertInfoMessage'
 import ErrorMessages from 'common/ErrorMessages'
 import {dateTimeFormatter} from 'utils/dateFormatter'
 import {ALLEGATIONS_REQUIRE_CROSS_REPORTS_MESSAGE} from 'enums/CrossReport'
+import {CardBody} from '@cwds/components'
 
 const CrossReportShow = ({
   agencies,
@@ -15,7 +16,7 @@ const CrossReportShow = ({
   hasCrossReport,
   reportedOn,
 }) => (
-  <div className='card-body'>
+  <CardBody>
     { areCrossReportsRequired && <AlertInfoMessage message={ALLEGATIONS_REQUIRE_CROSS_REPORTS_MESSAGE} /> }
     <div className='row'>
       <ShowField gridClassName='col-md-12' label='This report has cross reported to:' errors={errors.agencyRequired}>
@@ -55,7 +56,7 @@ const CrossReportShow = ({
         </ShowField>
       </div>
     }
-  </div>
+  </CardBody>
 )
 
 CrossReportShow.propTypes = {

@@ -7,6 +7,7 @@ import CopyableCaseView from 'views/history/copyable/CaseView'
 import CopyableReferralView from 'views/history/copyable/ReferralView'
 import CopyableScreeningView from 'views/history/copyable/ScreeningView'
 import Clipboard from 'react-clipboard.js'
+import {CardBody} from '@cwds/reactstrap'
 
 const offset = 1
 const toOneBasedNumbering = (i) => i + offset
@@ -113,11 +114,11 @@ export default class HistoryTable extends React.Component {
   }
 
   render() {
-    return (<div className='card-body no-pad-top'>
+    return (<CardBody>
       {this.renderTable()}
       {this.renderCopyFriendlyTable()}
       {this.renderButtonRow()}
-    </div>
+    </CardBody>
     )
   }
 }

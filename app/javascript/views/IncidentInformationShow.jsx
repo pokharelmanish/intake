@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ShowField from 'common/ShowField'
+import {CardBody} from '@cwds/reactstrap'
 
 const IncidentInformationShow = ({incidentDate, incidentCounty, address, locationType, locationOfChildren, errors}) => (
-  <div className='card-body'>
+  <CardBody>
     <div className='row'>
       <ShowField gridClassName='col-md-6' label='Incident Date' errors={errors.incident_date}>
         {incidentDate}
@@ -36,7 +37,7 @@ const IncidentInformationShow = ({incidentDate, incidentCounty, address, locatio
         {locationOfChildren}
       </ShowField>
     </div>
-  </div>
+  </CardBody>
 )
 
 IncidentInformationShow.propTypes = {

@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 import ActionRow from 'screenings/ActionRow'
+import {CardBody} from '@cwds/reactstrap'
 
 const AllegationsForm = ({
   alertErrorMessage,
@@ -14,7 +15,7 @@ const AllegationsForm = ({
   onSave,
   required,
 }) => (
-  <div className='card-body no-pad-top'>
+  <CardBody>
     { alertErrorMessage && <AlertErrorMessage message={alertErrorMessage} /> }
     <div className='row'>
       <div className='col-md-12'>
@@ -58,7 +59,7 @@ const AllegationsForm = ({
       </div>
     </div>
     <ActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving} />
-  </div>
+  </CardBody>
 )
 
 AllegationsForm.propTypes = {

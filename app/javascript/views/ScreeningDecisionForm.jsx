@@ -5,6 +5,7 @@ import SelectField from 'common/SelectField'
 import InputField from 'common/InputField'
 import FormField from 'common/FormField'
 import ActionRow from 'screenings/ActionRow'
+import {CardBody} from '@cwds/components'
 
 const ScreeningDecisionForm = ({
   accessRestriction,
@@ -25,7 +26,7 @@ const ScreeningDecisionForm = ({
   screeningContactReference,
   sdmPath,
 }) => (
-  <div className='card-body'>
+  <CardBody>
     { alertErrorMessage && <AlertErrorMessage message={alertErrorMessage} /> }
     <div className='row'>
       <div className='col-md-6'>
@@ -137,7 +138,7 @@ const ScreeningDecisionForm = ({
       </div>
     </div>
     <ActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving}/>
-  </div>
+  </CardBody>
 )
 
 ScreeningDecisionForm.propTypes = {

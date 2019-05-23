@@ -2,6 +2,7 @@ import AlertErrorMessage from 'common/AlertErrorMessage'
 import React from 'react'
 import PropTypes from 'prop-types'
 import ShowField from 'common/ShowField'
+import {CardBody} from '@cwds/components'
 
 const ScreeningDecisionShow = ({
   alertErrorMessage,
@@ -14,7 +15,7 @@ const ScreeningDecisionShow = ({
   sdmPath,
   isAdditionalInfoRequired,
 }) => (
-  <div className='card-body no-pad-top'>
+  <CardBody>
     { alertErrorMessage && <AlertErrorMessage message={alertErrorMessage} /> }
     <div className='row'>
       <div className='col-md-6'>
@@ -40,7 +41,7 @@ const ScreeningDecisionShow = ({
       </div>
       <div className='col-md-6'>
         <p className='double-gap-top'><strong>SDM Hotline Tool</strong></p>
-        <div>Determine Decision and Response Time by using Structured Decision Making.</div>
+        <div id='screening_decision'>Determine Decision and Response Time by using Structured Decision Making.</div>
         <a href={sdmPath} target='_blank' rel="noopener noreferrer" id='complete_sdm'>Complete SDM</a>
       </div>
     </div>
@@ -61,7 +62,7 @@ const ScreeningDecisionShow = ({
         }
       </div>
     </div>
-  </div>
+  </CardBody>
 )
 
 ScreeningDecisionShow.propTypes = {
