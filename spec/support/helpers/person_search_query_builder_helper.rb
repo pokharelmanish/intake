@@ -4,13 +4,13 @@
 module PersonSearchQueryBuilderHelper
   def person_only_query
     {
-      "size": '250',
+      "size": '25',
       "track_scores": 'true',
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],
@@ -113,13 +113,13 @@ module PersonSearchQueryBuilderHelper
 
   def client_id_only_query
     {
-      "size": '250',
+      "size": '25',
       "track_scores": 'true',
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],
@@ -142,13 +142,13 @@ module PersonSearchQueryBuilderHelper
 
   def ssn_only_query
     {
-      "size": '250',
+      "size": '25',
       "track_scores": 'true',
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],

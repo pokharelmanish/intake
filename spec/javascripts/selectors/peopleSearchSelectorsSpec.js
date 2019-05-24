@@ -12,6 +12,7 @@ import {
   selectSsnErrors,
   selectDobErrors,
   selectCanSearch,
+  selectSearchResultsSubset,
 } from 'selectors/peopleSearchSelectors'
 import Immutable from 'immutable'
 import moment from 'moment'
@@ -1014,6 +1015,375 @@ describe('peopleSearchSelectors', () => {
         const state = fromJS({peopleSearch})
         expect(selectCanSearch(state)).toEqual(true)
       })
+    })
+  })
+
+  describe('selectSearchResultsSubset', () => {
+    it('return results subset', () => {
+      const peopleSearch = {
+        searchTableCurrentPage: 1,
+        searchTableCurrentRow: 5,
+        results: [
+          {
+            _source: {
+              id: '1',
+              first_name: 'Bart',
+              last_name: 'Simpson',
+              middle_name: 'Jacqueline',
+              name_suffix: 'md',
+              gender: 'female',
+              akas: [],
+              languages: [{id: '3'}, {id: '2'}],
+              race_ethnicity: {
+                hispanic_origin_code: 'Y',
+                hispanic_unable_to_determine_code: 'Y',
+                race_codes: [{id: '1'}],
+                hispanic_codes: [{description: 'Central American'}],
+              },
+              date_of_birth: '1990-02-13',
+              date_of_death: '2000-02-18',
+              ssn: '123456789',
+              client_counties: [
+                {
+                  description: 'Nowhere',
+                  id: '999',
+                },
+                {
+                  description: 'Places',
+                  id: '998',
+                },
+              ],
+              legacy_descriptor: {
+                legacy_ui_id: '123-456-789',
+                legacy_table_description: 'Client',
+              },
+              sensitivity_indicator: 'S',
+              open_case_responsible_agency_code: 'P',
+            },
+          },
+          {
+            _source: {
+              id: '2',
+              first_name: 'Bart',
+              last_name: 'Simpson',
+              middle_name: 'Jacqueline',
+              name_suffix: 'md',
+              gender: 'female',
+              akas: [],
+              languages: [{id: '3'}, {id: '2'}],
+              race_ethnicity: {
+                hispanic_origin_code: 'Y',
+                hispanic_unable_to_determine_code: 'Y',
+                race_codes: [{id: '1'}],
+                hispanic_codes: [{description: 'Central American'}],
+              },
+              date_of_birth: '1990-02-13',
+              date_of_death: '2000-02-18',
+              ssn: '123456789',
+              client_counties: [
+                {
+                  description: 'Nowhere',
+                  id: '999',
+                },
+                {
+                  description: 'Places',
+                  id: '998',
+                },
+              ],
+              legacy_descriptor: {
+                legacy_ui_id: '123-456-789',
+                legacy_table_description: 'Client',
+              },
+              sensitivity_indicator: 'S',
+              open_case_responsible_agency_code: 'P',
+            },
+          },
+          {
+            _source: {
+              id: '3',
+              first_name: 'Bart',
+              last_name: 'Simpson',
+              middle_name: 'Jacqueline',
+              name_suffix: 'md',
+              gender: 'female',
+              akas: [],
+              languages: [{id: '3'}, {id: '2'}],
+              race_ethnicity: {
+                hispanic_origin_code: 'Y',
+                hispanic_unable_to_determine_code: 'Y',
+                race_codes: [{id: '1'}],
+                hispanic_codes: [{description: 'Central American'}],
+              },
+              date_of_birth: '1990-02-13',
+              date_of_death: '2000-02-18',
+              ssn: '123456789',
+              client_counties: [
+                {
+                  description: 'Nowhere',
+                  id: '999',
+                },
+                {
+                  description: 'Places',
+                  id: '998',
+                },
+              ],
+              legacy_descriptor: {
+                legacy_ui_id: '123-456-789',
+                legacy_table_description: 'Client',
+              },
+              sensitivity_indicator: 'S',
+              open_case_responsible_agency_code: 'P',
+            },
+          },
+          {
+            _source: {
+              id: '4',
+              first_name: 'Bart',
+              last_name: 'Simpson',
+              middle_name: 'Jacqueline',
+              name_suffix: 'md',
+              gender: 'female',
+              akas: [],
+              languages: [{id: '3'}, {id: '2'}],
+              race_ethnicity: {
+                hispanic_origin_code: 'Y',
+                hispanic_unable_to_determine_code: 'Y',
+                race_codes: [{id: '1'}],
+                hispanic_codes: [{description: 'Central American'}],
+              },
+              date_of_birth: '1990-02-13',
+              date_of_death: '2000-02-18',
+              ssn: '123456789',
+              client_counties: [
+                {
+                  description: 'Nowhere',
+                  id: '999',
+                },
+                {
+                  description: 'Places',
+                  id: '998',
+                },
+              ],
+              legacy_descriptor: {
+                legacy_ui_id: '123-456-789',
+                legacy_table_description: 'Client',
+              },
+              sensitivity_indicator: 'S',
+              open_case_responsible_agency_code: 'P',
+            },
+          },
+          {
+            _source: {
+              id: '5',
+              first_name: 'Bart',
+              last_name: 'Simpson',
+              middle_name: 'Jacqueline',
+              name_suffix: 'md',
+              gender: 'female',
+              akas: [],
+              languages: [{id: '3'}, {id: '2'}],
+              race_ethnicity: {
+                hispanic_origin_code: 'Y',
+                hispanic_unable_to_determine_code: 'Y',
+                race_codes: [{id: '1'}],
+                hispanic_codes: [{description: 'Central American'}],
+              },
+              date_of_birth: '1990-02-13',
+              date_of_death: '2000-02-18',
+              ssn: '123456789',
+              client_counties: [
+                {
+                  description: 'Nowhere',
+                  id: '999',
+                },
+                {
+                  description: 'Places',
+                  id: '998',
+                },
+              ],
+              legacy_descriptor: {
+                legacy_ui_id: '123-456-789',
+                legacy_table_description: 'Client',
+              },
+              sensitivity_indicator: 'S',
+              open_case_responsible_agency_code: 'P',
+            },
+          },
+          {
+            _source: {
+              id: '6',
+              first_name: 'Bart',
+              last_name: 'Simpson',
+              middle_name: 'Jacqueline',
+              name_suffix: 'md',
+              gender: 'female',
+              akas: [],
+              languages: [{id: '3'}, {id: '2'}],
+              race_ethnicity: {
+                hispanic_origin_code: 'Y',
+                hispanic_unable_to_determine_code: 'Y',
+                race_codes: [{id: '1'}],
+                hispanic_codes: [{description: 'Central American'}],
+              },
+              date_of_birth: '1990-02-13',
+              date_of_death: '2000-02-18',
+              ssn: '123456789',
+              client_counties: [
+                {
+                  description: 'Nowhere',
+                  id: '999',
+                },
+                {
+                  description: 'Places',
+                  id: '998',
+                },
+              ],
+              legacy_descriptor: {
+                legacy_ui_id: '123-456-789',
+                legacy_table_description: 'Client',
+              },
+              sensitivity_indicator: 'S',
+              open_case_responsible_agency_code: 'P',
+            },
+          },
+        ],
+      }
+      const state = fromJS({
+        peopleSearch,
+        systemCodes,
+      })
+      expect(selectSearchResultsSubset(state)).toEqual([
+        {
+          legacy_id: '1',
+          fullName: 'Bart Jacqueline Simpson, MD',
+          gender: 'female',
+          akaFullName: null,
+          legacyDescriptor: {
+            legacy_ui_id: '123-456-789',
+            legacy_table_description: 'Client',
+          },
+          languages: ['Italian', 'French'],
+          races: [{race: 'Race 1', race_detail: 'European'}],
+          ethnicity: {
+            hispanic_latino_origin: 'yes',
+            ethnicity_detail: ['Central American'],
+          },
+          address: null,
+          phoneNumber: null,
+          dateOfBirth: '1990-02-13',
+          isCsec: false,
+          isDeceased: true,
+          isProbationYouth: true,
+          ssn: '123-45-6789',
+          clientCounties: ['SysCode Nowhere', 'SysCode Places'],
+          isSensitive: true,
+          isSealed: false,
+        },
+        {
+          legacy_id: '2',
+          fullName: 'Bart Jacqueline Simpson, MD',
+          gender: 'female',
+          akaFullName: null,
+          legacyDescriptor: {
+            legacy_ui_id: '123-456-789',
+            legacy_table_description: 'Client',
+          },
+          languages: ['Italian', 'French'],
+          races: [{race: 'Race 1', race_detail: 'European'}],
+          ethnicity: {
+            hispanic_latino_origin: 'yes',
+            ethnicity_detail: ['Central American'],
+          },
+          address: null,
+          phoneNumber: null,
+          dateOfBirth: '1990-02-13',
+          isCsec: false,
+          isDeceased: true,
+          isProbationYouth: true,
+          ssn: '123-45-6789',
+          clientCounties: ['SysCode Nowhere', 'SysCode Places'],
+          isSensitive: true,
+          isSealed: false,
+        },
+        {
+          legacy_id: '3',
+          fullName: 'Bart Jacqueline Simpson, MD',
+          gender: 'female',
+          akaFullName: null,
+          legacyDescriptor: {
+            legacy_ui_id: '123-456-789',
+            legacy_table_description: 'Client',
+          },
+          languages: ['Italian', 'French'],
+          races: [{race: 'Race 1', race_detail: 'European'}],
+          ethnicity: {
+            hispanic_latino_origin: 'yes',
+            ethnicity_detail: ['Central American'],
+          },
+          address: null,
+          phoneNumber: null,
+          dateOfBirth: '1990-02-13',
+          isCsec: false,
+          isDeceased: true,
+          isProbationYouth: true,
+          ssn: '123-45-6789',
+          clientCounties: ['SysCode Nowhere', 'SysCode Places'],
+          isSensitive: true,
+          isSealed: false,
+        },
+        {
+          legacy_id: '4',
+          fullName: 'Bart Jacqueline Simpson, MD',
+          gender: 'female',
+          akaFullName: null,
+          legacyDescriptor: {
+            legacy_ui_id: '123-456-789',
+            legacy_table_description: 'Client',
+          },
+          languages: ['Italian', 'French'],
+          races: [{race: 'Race 1', race_detail: 'European'}],
+          ethnicity: {
+            hispanic_latino_origin: 'yes',
+            ethnicity_detail: ['Central American'],
+          },
+          address: null,
+          phoneNumber: null,
+          dateOfBirth: '1990-02-13',
+          isCsec: false,
+          isDeceased: true,
+          isProbationYouth: true,
+          ssn: '123-45-6789',
+          clientCounties: ['SysCode Nowhere', 'SysCode Places'],
+          isSensitive: true,
+          isSealed: false,
+        },
+        {
+          legacy_id: '5',
+          fullName: 'Bart Jacqueline Simpson, MD',
+          gender: 'female',
+          akaFullName: null,
+          legacyDescriptor: {
+            legacy_ui_id: '123-456-789',
+            legacy_table_description: 'Client',
+          },
+          languages: ['Italian', 'French'],
+          races: [{race: 'Race 1', race_detail: 'European'}],
+          ethnicity: {
+            hispanic_latino_origin: 'yes',
+            ethnicity_detail: ['Central American'],
+          },
+          address: null,
+          phoneNumber: null,
+          dateOfBirth: '1990-02-13',
+          isCsec: false,
+          isDeceased: true,
+          isProbationYouth: true,
+          ssn: '123-45-6789',
+          clientCounties: ['SysCode Nowhere', 'SysCode Places'],
+          isSensitive: true,
+          isSealed: false,
+        },
+      ])
     })
   })
 })

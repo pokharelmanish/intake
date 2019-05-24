@@ -24,3 +24,7 @@ export function dateRangeFormatter({start_date, end_date}) {
   ].filter((dateString) => Boolean(dateString))
     .join(' - ') || 'No Date'
 }
+
+export function isValidDate(date) {
+  return moment(date, 'MM/DD/YYYY', true).isValid()
+}

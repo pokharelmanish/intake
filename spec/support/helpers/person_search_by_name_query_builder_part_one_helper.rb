@@ -16,7 +16,7 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "last_name": {
                     "query": 'last name',
-                    "_name": '1_m_lst'
+                    "_name": '1_exact_last'
                   }
                 }
               },
@@ -24,14 +24,14 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "first_name": {
                     "query": 'first name',
-                    "_name": '1_m_fst'
+                    "_name": '1_exact_first'
                   }
                 }
               }
             ]
           }
         },
-        "weight": 16_384
+        "weight": 8192
       },
       {
         "filter": {
@@ -43,7 +43,7 @@ module PersonSearchByNameQueryBuilderPartOneHelper
               'akas.last_name'
             ],
             "type": 'cross_fields',
-            "_name": '3_mlt_aka'
+            "_name": '3_multi_aka'
           }
         },
         "weight": 4096
@@ -56,7 +56,7 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "last_name": {
                     "query": 'last name',
-                    "_name": '4_dim_lst'
+                    "_name": '4_exact_last'
                   }
                 }
               },
@@ -64,7 +64,7 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "first_name.diminutive": {
                     "query": 'first name',
-                    "_name": '4_dim_fst'
+                    "_name": '4_diminutive_first'
                   }
                 }
               }
@@ -81,7 +81,7 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "last_name": {
                     "query": 'last name',
-                    "_name": '5_pho_lst'
+                    "_name": '5_exact_last'
                   }
                 }
               },
@@ -89,7 +89,7 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "first_name.phonetic": {
                     "query": 'first name',
-                    "_name": '5_pho_fst'
+                    "_name": '5_phonetic_first'
                   }
                 }
               }
@@ -106,7 +106,7 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "last_name": {
                     "query": 'last name',
-                    "_name": '6_fz_lst'
+                    "_name": '6_exact_last'
                   }
                 }
               },
@@ -114,10 +114,10 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "fuzzy": {
                   "first_name": {
                     "value": 'first name',
-                    "fuzziness": '5',
+                    "fuzziness": '3',
                     "prefix_length": '1',
-                    "max_expansions": '25',
-                    "_name": '6_fz_fst'
+                    "max_expansions": '50',
+                    "_name": '6_fuzzy_first'
                   }
                 }
               }
@@ -134,7 +134,7 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "last_name": {
                     "query": 'last name',
-                    "_name": '7_prt_lst'
+                    "_name": '7_exact_last'
                   }
                 }
               },
@@ -142,8 +142,8 @@ module PersonSearchByNameQueryBuilderPartOneHelper
                 "match": {
                   "first_name_ngram": {
                     "query": 'first name',
-                    "minimum_should_match": '25%',
-                    "_name": '7_prt_fst'
+                    "minimum_should_match": '10%',
+                    "_name": '7_partial_first'
                   }
                 }
               }
@@ -151,21 +151,6 @@ module PersonSearchByNameQueryBuilderPartOneHelper
           }
         },
         "weight": 256
-      },
-      {
-        "filter": {
-          "multi_match": {
-            "query": 'last name first name',
-            "operator": 'and',
-            "fields": %w[
-              first_name
-              last_name
-            ],
-            "fuzziness": '2',
-            "_name": '7_mlt_fz'
-          }
-        },
-        "weight": 200
       }
     ]
   end
@@ -177,8 +162,8 @@ module PersonSearchByNameQueryBuilderPartOneHelper
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],
@@ -200,8 +185,8 @@ module PersonSearchByNameQueryBuilderPartOneHelper
             }
           },
           "functions": [],
-          "score_mode": 'sum',
-          "boost_mode": 'sum'
+          "score_mode": 'max',
+          "boost_mode": 'max'
         }
       },
       "_source": source,
@@ -216,8 +201,8 @@ module PersonSearchByNameQueryBuilderPartOneHelper
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],
@@ -239,8 +224,8 @@ module PersonSearchByNameQueryBuilderPartOneHelper
             }
           },
           "functions": full_name_functions_part_one,
-          "score_mode": 'sum',
-          "boost_mode": 'sum'
+          "score_mode": 'max',
+          "boost_mode": 'max'
         }
       },
       "_source": source,
@@ -255,8 +240,8 @@ module PersonSearchByNameQueryBuilderPartOneHelper
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],
@@ -278,8 +263,8 @@ module PersonSearchByNameQueryBuilderPartOneHelper
             }
           },
           "functions": full_name_without_suffix_functions_part_one,
-          "score_mode": 'sum',
-          "boost_mode": 'sum'
+          "score_mode": 'max',
+          "boost_mode": 'max'
         }
       },
       "_source": source,

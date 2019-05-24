@@ -45,13 +45,6 @@ describe('PersonSearchForm', () => {
     })
   }
 
-  it('componentWillUnmount', () => {
-    const onCancel = jasmine.createSpy('onCancel')
-    const component = renderPersonSearchForm({onCancel})
-    component.unmount()
-    expect(onCancel).toHaveBeenCalled()
-  })
-
   it('renders a card anchor', () => {
     const component = renderPersonSearchForm({})
     expect(component.find('.anchor').exists()).toBe(true)

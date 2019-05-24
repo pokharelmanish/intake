@@ -54,12 +54,12 @@ export default class HistoryTable extends React.Component {
   renderButtonRow() {
     return (
       <div className='row'>
-        <div className='centered' id='copy-button'>
+        <div className='centered copy-button' id='copy-button'>
           <Clipboard
             className='btn btn-primary'
             data-clipboard-target='#history'
           >
-            Copy
+            Copy History
           </Clipboard>
         </div>
       </div>

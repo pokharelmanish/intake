@@ -174,7 +174,7 @@ module PersonSearchByLastNameSuffixQueryBuilderHelper
                 "fuzzy": {
                   "last_name": {
                     "value": 'last name',
-                    "fuzziness": '3',
+                    "fuzziness": 'AUTO',
                     "prefix_length": '1',
                     "max_expansions": '50',
                     "_name": '7_fuzzy_last'
@@ -196,8 +196,8 @@ module PersonSearchByLastNameSuffixQueryBuilderHelper
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],
@@ -235,8 +235,8 @@ module PersonSearchByLastNameSuffixQueryBuilderHelper
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],

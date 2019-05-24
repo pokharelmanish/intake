@@ -143,6 +143,18 @@ export const selectPeopleResults = (state) => selectPeopleSearch(state)
     })
   })
 
+export const selectSearchResultsCurrentRow = (state) => selectPeopleSearch(state).get('searchTableCurrentRow')
+
+export const selectSearchResultsSubset = (state) => {
+  const results = selectPeopleResults(state)
+  const currentPageNumber = selectPeopleSearch(state).get('searchTableCurrentPage')
+  const currentRowNumber = selectPeopleSearch(state).get('searchTableCurrentRow')
+  const startResultIndex = (currentPageNumber - 1) * currentRowNumber
+  const endResultsIndex = currentPageNumber * currentRowNumber
+  const resultsSubset = results.toJS().slice(startResultIndex, endResultsIndex)
+  return resultsSubset
+}
+
 export const selectStartTime = state =>
   selectPeopleSearch(state).get('startTime')
 

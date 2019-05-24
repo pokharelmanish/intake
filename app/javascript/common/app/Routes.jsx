@@ -5,6 +5,7 @@ import App from 'common/app/App'
 import {default as HomePageContainer} from 'containers/HomePageContainer'
 import ScreeningPageContainer from 'containers/screenings/screeningPageContainer'
 import SnapshotPage from 'snapshots/SnapshotPage'
+import SnapshotDetailPage from 'snapshots/SnapshotDetailPage'
 import ConditionsOfUse from 'views/pages/ConditionsOfUse'
 import PrivacyPolicy from 'views/pages/PrivacyPolicy'
 import NotFoundPage from 'errors/NotFoundPage'
@@ -36,6 +37,7 @@ export const Routes = ({
         {screeningActive && <Route path='screenings/:id' component={ScreeningPageContainer}/>}
         {screeningActive && <Route path='screenings/:id/:mode' component={ScreeningPageContainer} />}
         {snapshotActive && <Route path='snapshot' component={SnapshotPage}/>}
+        {snapshotActive && <Route path='snapshot/detail/:id' component={SnapshotDetailPage}/>}
         <Route path='logout' component={() => (window.location = IntakeConfig.config().authentication_logout_url)}/>
         <Route path='pages/conditions_of_use' component={ConditionsOfUse}/>
         <Route path='pages/privacy_policy' component={PrivacyPolicy}/>

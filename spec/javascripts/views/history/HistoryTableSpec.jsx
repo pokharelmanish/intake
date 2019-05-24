@@ -92,8 +92,8 @@ describe('HistoryTable', () => {
       it('renders', () => {
         const component = renderHistoryTable({})
         const copyButton = component.find('ClipboardButton')
-
         expect(copyButton.exists()).toEqual(true)
+        expect(copyButton.props().children).toEqual('Copy History')
         expect(copyButton.props()['data-clipboard-target']).toBeDefined()
       })
     })

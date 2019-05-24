@@ -2,14 +2,22 @@ import React from 'react'
 import SearchResultsTable from 'common/search/SearchResultsTable'
 import {mount} from 'enzyme'
 
-const render = ({results = []} = {}) => {
-  return mount(<SearchResultsTable results={results} />, {disableLifecycleMethods: true})
+const render = ({resultsSubset = [], setCurrentPageNumber = () => {}, setCurrentRowNumber = () => {}, onLoadMoreResults = () => {}, personSearchFields = {}} = {}) => {
+  return mount(
+    <SearchResultsTable
+      resultsSubset={resultsSubset}
+      setCurrentPageNumber={setCurrentPageNumber}
+      setCurrentRowNumber={setCurrentRowNumber}
+      onLoadMoreResults={onLoadMoreResults}
+      personSearchFields={personSearchFields}
+    />, {disableLifecycleMethods: true})
 }
 
 describe('SearchResultsTable', () => {
   const defaultMockedResults = [
     {
       'gender': 'female',
+      'isSealed': true,
       'address': {
         'city': 'Lake Elsinore',
         'state': 'CA',
@@ -26,6 +34,7 @@ describe('SearchResultsTable', () => {
     },
     {
       'gender': 'female',
+      'isSensitive': true,
       'clientCounties': [
         'Los Angeles',
       ],
@@ -70,11 +79,24 @@ describe('SearchResultsTable', () => {
       'dateOfBirth': '1983-01-01',
       'fullName': 'First Gimson',
     },
+    {
+      'gender': 'male',
+      'address': {
+        'city': 'town',
+        'state': 'CA',
+        'zip': null,
+        'streetAddress': '123 4th',
+        'type': 'Placement Home',
+      },
+      'phoneNumber': null,
+      'dateOfBirth': '1983-01-01',
+      'fullName': 'First Gimson',
+    },
   ]
 
   let component
   beforeEach(() => {
-    component = render({results: defaultMockedResults})
+    component = render({resultsSubset: defaultMockedResults})
   })
 
   describe('layout', () => {
@@ -99,13 +121,92 @@ describe('SearchResultsTable', () => {
       const row = component.find('div.rt-tr-group').at(0)
       const cell = row.find('div.rt-td')
       expect(cell.at(0).text()).toEqual('1.')
-      expect(cell.at(1).text()).toEqual('Sarah Timson')
+      expect(cell.at(1).find('a').text()).toEqual('Sarah Timson')
       expect(cell.at(2).text()).toEqual('01/03/2005')
       expect(cell.at(3).text()).toEqual('Female')
       expect(cell.at(4).text()).toEqual('')
       expect(cell.at(5).text()).toEqual('')
       expect(cell.at(6).text()).toEqual('4451 Anniversary Parkway, Lake Elsinore, CA 92530')
       expect(cell.at(7).text()).toEqual('')
+    })
+  })
+
+  describe('onPageChange', () => {
+    it('calls setCurrentPageNumber', () => {
+      const setCurrentPageNumber = jasmine.createSpy('setCurrentPageNumber')
+      const component = render({resultsSubset: defaultMockedResults, setCurrentPageNumber})
+      const searchResultsTable = component.find('ReactTable')
+      searchResultsTable.props().onPageChange(1)
+      expect(setCurrentPageNumber).toHaveBeenCalledWith(2)
+    })
+
+    it('calls onLoadMoreResults', () => {
+      const onLoadMoreResults = jasmine.createSpy('onLoadMoreResults')
+      const personSearchFields = {lastName: 'laure'}
+      const component = render({resultsSubset: defaultMockedResults, onLoadMoreResults, personSearchFields})
+      const searchResultsTable = component.find('ReactTable')
+      searchResultsTable.props().onPageChange(1)
+      expect(onLoadMoreResults).toHaveBeenCalledWith({lastName: 'laure'})
+    })
+
+    it('doesnot call onLoadMoreResults when currentPage is less than previousPage', () => {
+      const onLoadMoreResults = jasmine.createSpy('onLoadMoreResults')
+      const personSearchFields = {lastName: 'laure'}
+      const component = render({resultsSubset: defaultMockedResults, onLoadMoreResults, personSearchFields})
+      const searchResultsTable = component.find('ReactTable')
+      searchResultsTable.props().onPageChange(-2)
+      expect(onLoadMoreResults).not.toHaveBeenCalledWith({lastName: 'laure'})
+    })
+  })
+
+  describe('onPageSizeChange', () => {
+    it('calls setCurrentRowNumber', () => {
+      const setCurrentRowNumber = jasmine.createSpy('setCurrentRowNumber')
+      const component = render({resultsSubset: defaultMockedResults, setCurrentRowNumber})
+      const searchResultsTable = component.find('ReactTable')
+      searchResultsTable.props().onPageSizeChange(5, 1)
+      expect(setCurrentRowNumber).toHaveBeenCalledWith(5)
+    })
+
+    it('calls setCurrentRowNumber with currentPage', () => {
+      const setCurrentPageNumber = jasmine.createSpy('setCurrentPageNumber')
+      const component = render({resultsSubset: defaultMockedResults, setCurrentPageNumber})
+      const searchResultsTable = component.find('ReactTable')
+      searchResultsTable.props().onPageSizeChange(5, 1)
+      expect(setCurrentPageNumber).toHaveBeenCalledWith(2)
+    })
+
+    it('calls onLoadMoreResults', () => {
+      const onLoadMoreResults = jasmine.createSpy('onLoadMoreResults')
+      const personSearchFields = {lastName: 'laure'}
+      const component = render({resultsSubset: defaultMockedResults, onLoadMoreResults, personSearchFields})
+      const searchResultsTable = component.find('ReactTable')
+      searchResultsTable.props().onPageSizeChange(5, 1)
+      expect(onLoadMoreResults).toHaveBeenCalledWith({lastName: 'laure'})
+    })
+  })
+
+  describe('Sealed', () => {
+    it('disable Name Link', () => {
+      const row = component.find('div.rt-tr-group').at(0)
+      const cell = row.find('div.rt-td')
+      expect(cell.find('Link').props().className).toEqual('disabled-cursor')
+    })
+
+    it('render client with tooltip', () => {
+      const row = component.find('div.rt-tr-group').at(0)
+      const cell = row.find('div.rt-td')
+      expect(cell.find('span').html()).toContain('Sealed')
+      expect(cell.find('span i').exists()).toBe(true)
+    })
+  })
+
+  describe('Sensitive', () => {
+    it('render client with tooltip', () => {
+      const row = component.find('div.rt-tr-group').at(1)
+      const cell = row.find('div.rt-td')
+      expect(cell.find('span').html()).toContain('Sensitive')
+      expect(cell.find('span i').exists()).toBe(true)
     })
   })
 })

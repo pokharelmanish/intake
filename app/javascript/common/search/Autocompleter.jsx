@@ -9,6 +9,7 @@ import {logEvent} from 'utils/analytics'
 import moment from 'moment'
 import PersonSearchFields from 'common/search/PersonSearchFields'
 import {PersonSearchFieldsPropType} from 'data/personSearch'
+import {isValidDate} from 'utils/dateFormatter'
 
 const MIN_SEARCHABLE_CHARS = 2
 const addPosAndSetAttr = (results) => {
@@ -73,9 +74,7 @@ export default class Autocompleter extends Component {
   }
 
   onSelect(item) {
-    this.props.onCancel()
     this.props.onSelect(item)
-    this.hideMenu()
   }
 
   onButtonSelect(item) {
@@ -115,16 +114,10 @@ export default class Autocompleter extends Component {
     const key = `${item.posInSet}-of-${item.setSize}`
     if (item.suggestionHeader) {
       return (<div id={id} key={key} aria-live='polite'>
-        <SuggestionHeader
-          currentNumberOfResults={results.length}
-          total={total}
-          searchTerm={searchTerm}
-        />
+        <SuggestionHeader currentNumberOfResults={results.length} total={total} searchTerm={searchTerm} />
       </div>)
     }
-    return (
-      <div id={id} key={key} className={itemClassName(isHighlighted)}><PersonSuggestion {...item} /></div>
-    )
+    return (<div id={id} key={key} className={itemClassName(isHighlighted)}><PersonSuggestion {...item} /></div>)
   }
 
   renderItemButtons(item, isHighlighted, id, key) {
@@ -167,6 +160,12 @@ export default class Autocompleter extends Component {
     return <input {...newProps} />
   }
 
+  shouldMenuOpen() {
+    const {searchTerm} = this.props.personSearchFields
+    const openMenu = this.state.menuVisible || Boolean(this.props.results.length && this.isSearchable(searchTerm))
+    return openMenu
+  }
+
   prepareAutocomplete() {
     const {personSearchFields, id, results, canCreateNewPerson, total, isAdvancedSearchOn} = this.props
     const {searchTerm} = personSearchFields
@@ -190,7 +189,7 @@ export default class Autocompleter extends Component {
         onChange={this.onChangeInput}
         onSelect={this.onItemSelect}
         renderItem={this.renderItem}
-        open={this.state.menuVisible}
+        open={this.shouldMenuOpen()}
         renderMenu={this.renderMenu}
         value={searchTerm}
         wrapperStyle={{display: 'block'}}
@@ -199,15 +198,13 @@ export default class Autocompleter extends Component {
     )
   }
 
-  isValidDate = (e) => moment(e.target.value, 'MM/DD/YYYY', true).isValid()
-
   renderPersonSearchFields() {
     const {states, counties, onChange, onCancel, onBlur, onFocus, personSearchFields, isAdvancedSearchOn, clientIdError, ssnErrors, dobErrors, canSearch} = this.props
     const searchWithEnter = (e) => {
       const enterKeyCode = 13
       if ((canSearch && e.charCode === enterKeyCode)) { this.handleSubmit() }
     }
-    const validateAndSetDateOfBirth = (e) => { if (this.isValidDate(e)) { onChange('dateOfBirth', moment(e.target.value).format('YYYY-MM-DD')) } }
+    const validateAndSetDateOfBirth = (e) => { if (isValidDate(e.target.value)) { onChange('dateOfBirth', moment(e.target.value).format('YYYY-MM-DD')) } }
     return (
       <PersonSearchFields
         onBlur={onBlur}

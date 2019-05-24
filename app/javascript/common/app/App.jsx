@@ -32,11 +32,6 @@ import {Link} from 'react-router'
 
 const RouterScrollToTop = withRouter(ScrollToTop)
 
-// eslint-disable-next-line no-nested-ternary
-const pageTitle = isSnapshot(location) ? 'Snapshot' :
-  isHotline(location) ? 'Hotline' :
-    'Dashboard'
-
 export class App extends React.Component {
   componentDidMount() {
     const {fetchSystemCodesAction, checkStaffPermission, fetchUserInfoAction} = this.props.actions
@@ -117,6 +112,10 @@ export class App extends React.Component {
         </UncontrolledUserMenu>
       )
     }
+    // eslint-disable-next-line no-nested-ternary
+    const pageTitle = isSnapshot(location) ? 'Snapshot' :
+      isHotline(location) ? 'Hotline' :
+        'Dashboard'
 
     // eslint-disable-next-line no-nested-ternary
     const buttons = isSnapshot(location) ? this.SnapshotButton() : isHotline(location) ? this.ScreeningButton() : this.dashBoardButtons()

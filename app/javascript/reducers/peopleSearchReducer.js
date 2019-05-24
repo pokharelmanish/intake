@@ -8,6 +8,8 @@ import {
   SET_SEARCH_FIELD,
   SET_SEARCH_FIELD_ERROR_CHECK,
   LOAD_MORE_RESULTS_COMPLETE,
+  SET_SEARCH_CURRENT_PAGE,
+  SET_SEARCH_CURRENT_ROW,
 } from 'actions/peopleSearchActions'
 import {FETCH_USER_INFO_COMPLETE} from 'actions/userInfoActions'
 import moment from 'moment'
@@ -35,6 +37,8 @@ const defaultSearchFieldsState = {
 
 const initialState = fromJS({
   results: [],
+  searchTableCurrentPage: 1,
+  searchTableCurrentRow: 25,
   total: 0,
   defaultCounty: null,
   searchFields: defaultSearchFieldsState,
@@ -47,12 +51,15 @@ const initialState = fromJS({
 
 const setPersonSearchField = (state, {payload}) => {
   const {field, value} = payload
+  const defaultRowNumber = 25
   const newSearchFields = state.get('searchFields').set(field, value)
   const newState = state.set('searchFields', newSearchFields)
   if (state.get('startTime')) {
     return newState
   } else if (value) {
     return newState.set('startTime', moment().toISOString())
+      .set('searchTableCurrentPage', 1)
+      .set('searchTableCurrentRow', defaultRowNumber)
   } else {
     return newState.set('startTime', null)
   }
@@ -146,4 +153,10 @@ export default createReducer(initialState, {
     }
   },
   [RESET_PERSON_SEARCH]: resetPersonSearchFields,
+  [SET_SEARCH_CURRENT_PAGE](state, {payload: {pageNumber}}) {
+    return state.set('searchTableCurrentPage', pageNumber)
+  },
+  [SET_SEARCH_CURRENT_ROW](state, {payload: {rowNumber}}) {
+    return state.set('searchTableCurrentRow', rowNumber)
+  },
 })

@@ -4,6 +4,7 @@ import {get} from 'utils/http'
 import {logEvent} from 'utils/analytics'
 import {PEOPLE_SEARCH_FETCH, fetchSuccess, fetchFailure} from 'actions/peopleSearchActions'
 import {getStaffIdSelector} from 'selectors/userInfoSelectors'
+import {selectSearchResultsCurrentRow} from 'selectors/peopleSearchSelectors'
 import {toAPIParams} from 'data/personSearch'
 
 const removeFalsy = (params) => {
@@ -21,10 +22,11 @@ const personSearchParams = (personSearchFields) => {
 
 const searchAfterParams = (sort) => (sort ? {search_after: sort} : {})
 
-export function getPeopleEffect({isClientOnly, isAdvancedSearchOn, personSearchFields, sort}) {
+export function getPeopleEffect({isClientOnly, isAdvancedSearchOn, personSearchFields, size, sort}) {
   return call(get, '/api/v1/people', {
     is_client_only: isClientOnly,
     is_advanced_search_on: isAdvancedSearchOn,
+    size: size,
     ...personSearchParams(personSearchFields),
     ...searchAfterParams(sort),
   })
@@ -34,7 +36,8 @@ export function* fetchPeopleSearch({payload: {isClientOnly, isAdvancedSearchOn, 
   try {
     const TIME_TO_DEBOUNCE = 400
     yield call(delay, TIME_TO_DEBOUNCE)
-    const response = yield getPeopleEffect({isClientOnly, isAdvancedSearchOn, personSearchFields})
+    const size = yield select(selectSearchResultsCurrentRow)
+    const response = yield getPeopleEffect({isClientOnly, isAdvancedSearchOn, personSearchFields, size})
     const staffId = yield select(getStaffIdSelector)
     yield put(fetchSuccess(response))
     yield call(logEvent, 'personSearch', {

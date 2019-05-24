@@ -112,6 +112,7 @@ describe('App', () => {
       spyOn(IntakeConfig, 'isSnapshot').and.returnValue(true)
       const props = {actions: actions}
       const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      console.log('app', app.debug())
       const pageTitle = app.find('PageTitle')
       expect(pageTitle.text()).toContain('Snapshot')
     })

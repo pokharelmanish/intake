@@ -9,6 +9,8 @@ import {
   setFieldErrorCheck,
   loadMoreResultsSuccess,
   loadMoreResultsFailure,
+  setSearchCurrentPage,
+  setSearchCurrentRow,
 } from 'actions/peopleSearchActions'
 import {fetchSuccess as fetchUserInfoSuccess} from 'actions/userInfoActions'
 import peopleSearchReducer from 'reducers/peopleSearchReducer'
@@ -193,6 +195,8 @@ describe('peopleSearchReducer', () => {
             },
             total: 1,
             results: ['result_one'],
+            searchTableCurrentPage: 1,
+            searchTableCurrentRow: 25,
             startTime: today.toISOString(),
           })
         )
@@ -650,6 +654,44 @@ describe('peopleSearchReducer', () => {
         const newState = peopleSearchReducer(initialState, action)
         expect(newState.get('errorCheckFields').get('dateOfBirth')).toEqual(false)
       })
+    })
+  })
+
+  describe('on SET_SEARCH_CURRENT_PAGE', () => {
+    const initialState = fromJS({
+      searchTableCurrentPage: 1,
+      searchFields: {
+        searchTerm: 'newSearchTerm',
+      },
+    })
+    const currentPage = 2
+    const action = setSearchCurrentPage(currentPage)
+    it('set the current page', () => {
+      expect(peopleSearchReducer(initialState, action)).toEqualImmutable(fromJS({
+        searchTableCurrentPage: currentPage,
+        searchFields: {
+          searchTerm: 'newSearchTerm',
+        },
+      }))
+    })
+  })
+
+  describe('on SET_SEARCH_CURRENT_ROW', () => {
+    const initialState = fromJS({
+      searchTableCurrentRow: 25,
+      searchFields: {
+        searchTerm: 'newSearchTerm',
+      },
+    })
+    const currentRow = 10
+    const action = setSearchCurrentRow(currentRow)
+    it('set the current row', () => {
+      expect(peopleSearchReducer(initialState, action)).toEqualImmutable(fromJS({
+        searchTableCurrentRow: currentRow,
+        searchFields: {
+          searchTerm: 'newSearchTerm',
+        },
+      }))
     })
   })
 })

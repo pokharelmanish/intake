@@ -208,8 +208,10 @@ describe QueryBuilder do
   describe '#build' do
     context 'when client_id is present' do
       it 'returns query with client id only' do
-        result = described_class.build(person_search_fields: person_search_fields_with_client_id)
-                                .payload.as_json
+        result = described_class.build(
+          person_search_fields: person_search_fields_with_client_id,
+          size: '25'
+        ).payload.as_json
         expect(result['_source']).to eq client_id_only_query['_source']
         expect(result['size']).to eq client_id_only_query['size']
         expect(result['sort']).to eq client_id_only_query['sort']
@@ -222,7 +224,8 @@ describe QueryBuilder do
       it 'returns query with no name' do
         result = described_class.build(
           is_advanced_search_on: 'true',
-          person_search_fields: person_search_fields_with_no_name
+          person_search_fields: person_search_fields_with_no_name,
+          size: '25'
         ).payload.as_json
         expect(result['_source']).to eq no_name_query['_source']
         expect(result['size']).to eq no_name_query['size']
@@ -234,7 +237,8 @@ describe QueryBuilder do
       it 'returns query with last name, approx age in years, and gender' do
         result = described_class.build(
           is_advanced_search_on: 'true',
-          person_search_fields: person_search_fields_with_last_name_approx_age_years_gender
+          person_search_fields: person_search_fields_with_last_name_approx_age_years_gender,
+          size: '25'
         ).payload.as_json
         expect(result['_source']).to eq last_name_approx_age_years_gender_query['_source']
         expect(result['size']).to eq last_name_approx_age_years_gender_query['size']
@@ -246,7 +250,8 @@ describe QueryBuilder do
       it 'returns query with last name, suffix, approx age in years, and gender' do
         result = described_class.build(
           is_advanced_search_on: 'true',
-          person_search_fields: person_search_fields_with_last_name_suffix_approx_age_years_gender
+          person_search_fields: person_search_fields_with_last_name_suffix_approx_age_years_gender,
+          size: '25'
         ).payload.as_json
         expect(result['_source']).to eq last_name_suffix_approx_age_years_gender_query['_source']
         expect(result['size']).to eq last_name_suffix_approx_age_years_gender_query['size']
@@ -260,7 +265,8 @@ describe QueryBuilder do
       it 'returns query with full name' do
         result = described_class.build(
           is_advanced_search_on: 'true',
-          person_search_fields: person_search_fields_with_full_name
+          person_search_fields: person_search_fields_with_full_name,
+          size: '25'
         ).payload.as_json
         expect(result['_source']).to eq full_name_query['_source']
         expect(result['size']).to eq full_name_query['size']
@@ -272,7 +278,8 @@ describe QueryBuilder do
       it 'returns query with full name and no suffix' do
         result = described_class.build(
           is_advanced_search_on: 'true',
-          person_search_fields: person_search_fields_with_full_name_without_suffix
+          person_search_fields: person_search_fields_with_full_name_without_suffix,
+          size: '25'
         ).payload.as_json
         expect(result['_source']).to eq full_name_without_suffix_query['_source']
         expect(result['size']).to eq full_name_without_suffix_query['size']
@@ -284,7 +291,8 @@ describe QueryBuilder do
       it 'returns query with full name and date of birth' do
         result = described_class.build(
           is_advanced_search_on: 'true',
-          person_search_fields: person_search_fields_with_full_name_dob
+          person_search_fields: person_search_fields_with_full_name_dob,
+          size: '25'
         ).payload.as_json
         expect(result['_source']).to eq full_name_dob_query['_source']
         expect(result['size']).to eq full_name_dob_query['size']
@@ -296,7 +304,8 @@ describe QueryBuilder do
       it 'returns query with full name, approx age in months, and gender' do
         result = described_class.build(
           is_advanced_search_on: 'true',
-          person_search_fields: person_search_fields_with_full_name_approx_age_months_gender
+          person_search_fields: person_search_fields_with_full_name_approx_age_months_gender,
+          size: '25'
         ).payload.as_json
         expect(result['_source']).to eq full_name_approx_age_months_gender_query['_source']
         expect(result['size']).to eq full_name_approx_age_months_gender_query['size']
@@ -310,7 +319,8 @@ describe QueryBuilder do
       it 'returns query with full name, approx age in years, and gender' do
         result = described_class.build(
           is_advanced_search_on: 'true',
-          person_search_fields: person_search_fields_with_full_name_approx_age_years_gender
+          person_search_fields: person_search_fields_with_full_name_approx_age_years_gender,
+          size: '25'
         ).payload.as_json
         expect(result['_source']).to eq full_name_approx_age_years_gender_query['_source']
         expect(result['size']).to eq full_name_approx_age_years_gender_query['size']
@@ -325,7 +335,8 @@ describe QueryBuilder do
         result = described_class.build(
           is_advanced_search_on: 'true',
           person_search_fields:
-            person_search_fields_with_full_name_without_suffix_approx_age_months_gender
+            person_search_fields_with_full_name_without_suffix_approx_age_months_gender,
+          size: '25'
         ).payload.as_json
         expect(
           result['_source']
@@ -343,8 +354,10 @@ describe QueryBuilder do
 
     context 'when ssn is present' do
       it 'returns query with ssn only' do
-        result = described_class.build(person_search_fields: person_search_fields_with_ssn)
-                                .payload.as_json
+        result = described_class.build(
+          person_search_fields: person_search_fields_with_ssn,
+          size: '25'
+        ).payload.as_json
         expect(result['_source']).to eq ssn_only_query['_source']
         expect(result['size']).to eq ssn_only_query['size']
         expect(result['sort']).to eq ssn_only_query['sort']

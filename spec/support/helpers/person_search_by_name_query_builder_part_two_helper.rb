@@ -11,16 +11,18 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
               {
                 "match": {
                   "last_name": {
-                    "query": 'first name',
-                    "_name": '9a_rev_lst'
+                    "query": 'last name',
+                    "_name": '8_exact_last'
                   }
                 }
-              },
+              }
+            ],
+            "must_not": [
               {
                 "match": {
                   "first_name": {
-                    "query": 'last name',
-                    "_name": '9a_rev_fst'
+                    "query": 'first name',
+                    "_name": '8_no_match_first'
                   }
                 }
               }
@@ -37,7 +39,32 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
                 "match": {
                   "last_name": {
                     "query": 'first name',
-                    "_name": '9b_rev_prt_lst'
+                    "_name": '9a_reverse_exact_last'
+                  }
+                }
+              },
+              {
+                "match": {
+                  "first_name": {
+                    "query": 'last name',
+                    "_name": '9a_reverse_exact_first'
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "weight": 64
+      },
+      {
+        "filter": {
+          "bool": {
+            "must": [
+              {
+                "match": {
+                  "last_name": {
+                    "query": 'first name',
+                    "_name": '9b_reverse_partial_last'
                   }
                 }
               },
@@ -46,7 +73,7 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
                   "first_name_ngram": {
                     "query": 'last name',
                     "minimum_should_match": '25%',
-                    "_name": '9b_rev_prt_fst'
+                    "_name": '9b_reverse_partial_first'
                   }
                 }
               }
@@ -63,7 +90,7 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
                 "match": {
                   "last_name": {
                     "query": 'last name',
-                    "_name": '10_dup_lst'
+                    "_name": '10_dupe_exact_last'
                   }
                 }
               },
@@ -71,7 +98,7 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
                 "match": {
                   "first_name": {
                     "query": 'last name',
-                    "_name": '10_dup_fst'
+                    "_name": '10_dupe_exact_first'
                   }
                 }
               }
@@ -86,19 +113,19 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
             "must": [
               {
                 "match": {
-                  "last_name_ngram": {
+                  "first_name_ngram": {
                     "query": 'first name',
-                    "minimum_should_match": '25%',
-                    "_name": '11_rev_prt_lst'
+                    "minimum_should_match": '10%',
+                    "_name": '11_partial_first'
                   }
                 }
               },
               {
                 "match": {
-                  "first_name_ngram": {
+                  "last_name_ngram": {
                     "query": 'last name',
-                    "minimum_should_match": '25%',
-                    "_name": '11_rev_prt_fst'
+                    "minimum_should_match": '15%',
+                    "_name": '11_partial_last'
                   }
                 }
               }
@@ -106,28 +133,6 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
           }
         },
         "weight": 16
-      },
-      {
-        "filter": {
-          "match": {
-            "last_name": {
-              "query": 'last name',
-              "_name": '8_m_lst'
-            }
-          }
-        },
-        "weight": 12
-      },
-      {
-        "filter": {
-          "match": {
-            "first_name": {
-              "query": 'first name',
-              "_name": 'xb_m_fst'
-            }
-          }
-        },
-        "weight": 8
       }
     ]
   end
@@ -139,8 +144,8 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],
@@ -148,8 +153,8 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
       "query": {
         "function_score": {
           "functions": [],
-          "score_mode": 'sum',
-          "boost_mode": 'sum'
+          "score_mode": 'max',
+          "boost_mode": 'max'
         }
       },
       "_source": source,
@@ -164,8 +169,8 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
       "sort": [
         {
           "_score": 'desc',
-          "last_name": 'asc',
-          "first_name": 'asc',
+          "last_name.keyword": 'asc',
+          "first_name.keyword": 'asc',
           "_uid": 'desc'
         }
       ],
@@ -173,8 +178,8 @@ module PersonSearchByNameQueryBuilderPartTwoHelper
       "query": {
         "function_score": {
           "functions": full_name_functions_part_two,
-          "score_mode": 'sum',
-          "boost_mode": 'sum'
+          "score_mode": 'max',
+          "boost_mode": 'max'
         }
       },
       "_source": source,

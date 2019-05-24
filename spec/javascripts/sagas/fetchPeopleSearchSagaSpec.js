@@ -5,6 +5,7 @@ import {logEvent} from 'utils/analytics'
 import {fetchPeopleSearchSaga, fetchPeopleSearch, getPeopleEffect} from 'sagas/fetchPeopleSearchSaga'
 import {PEOPLE_SEARCH_FETCH, search, fetchSuccess, fetchFailure} from 'actions/peopleSearchActions'
 import {getStaffIdSelector} from 'selectors/userInfoSelectors'
+import {selectSearchResultsCurrentRow} from 'selectors/peopleSearchSelectors'
 
 describe('fetchPeopleSearchSaga', () => {
   it('fetches people search results on PEOPLE_SEARCH_FETCH', () => {
@@ -21,15 +22,20 @@ describe('fetchPeopleSearch', () => {
 
   it('finds some error during the process', () => {
     const error = 'Something went wrong'
-    const peopleSeachGenerator = fetchPeopleSearch(action)
-    const searchParams = {is_client_only: true, is_advanced_search_on: true, person_search_fields: {last_name: 'Doe'}}
-    expect(peopleSeachGenerator.next().value).toEqual(call(delay, 400))
-    expect(peopleSeachGenerator.next().value).toEqual(call(get, '/api/v1/people', searchParams))
-    expect(peopleSeachGenerator.throw(error).value).toEqual(put(fetchFailure('Something went wrong')))
+    const size = 25
+    const peopleSearchGenerator = fetchPeopleSearch(action)
+    const searchParams = {is_client_only: true, is_advanced_search_on: true, person_search_fields: {last_name: 'Doe'}, size: size}
+    expect(peopleSearchGenerator.next().value).toEqual(call(delay, 400))
+    expect(peopleSearchGenerator.next(size).value).toEqual(
+      select(selectSearchResultsCurrentRow)
+    )
+    expect(peopleSearchGenerator.next(size).value).toEqual(call(get, '/api/v1/people', searchParams))
+    expect(peopleSearchGenerator.throw(error).value).toEqual(put(fetchFailure('Something went wrong')))
   })
 
   it('fetches people search results successfully', () => {
     const staff_id = '0x4'
+    const size = 25
     const searchResults = {
       hits: {
         total: 0,
@@ -37,9 +43,12 @@ describe('fetchPeopleSearch', () => {
       },
     }
     const peopleSearchGenerator = fetchPeopleSearch(action)
-    const searchParams = {is_client_only: true, is_advanced_search_on: true, person_search_fields: {last_name: 'Doe'}}
+    const searchParams = {is_client_only: true, is_advanced_search_on: true, person_search_fields: {last_name: 'Doe'}, size: size}
     expect(peopleSearchGenerator.next().value).toEqual(call(delay, 400))
-    expect(peopleSearchGenerator.next().value).toEqual(call(get, '/api/v1/people', searchParams))
+    expect(peopleSearchGenerator.next(size).value).toEqual(
+      select(selectSearchResultsCurrentRow)
+    )
+    expect(peopleSearchGenerator.next(size).value).toEqual(call(get, '/api/v1/people', searchParams))
     expect(peopleSearchGenerator.next(searchResults).value).toEqual(
       select(getStaffIdSelector)
     )
@@ -57,10 +66,12 @@ describe('getPeopleEffect', () => {
       isClientOnly: true,
       isAdvancedSearchOn: true,
       personSearchFields: {firstName: 'John', county: 'Yolo'},
+      size: 25,
     })).toEqual(call(get, '/api/v1/people', {
       is_client_only: true,
       is_advanced_search_on: true,
       person_search_fields: {first_name: 'John'},
+      size: 25,
     }))
   })
   it('includes search_after param when present', () => {
@@ -68,10 +79,12 @@ describe('getPeopleEffect', () => {
       isClientOnly: true,
       isAdvancedSearchOn: false,
       personSearchFields: {firstName: 'John', lastName: 'Doe', county: 'Yolo'},
+      size: 25,
       sort: 'What even goes here?',
     })).toEqual(call(get, '/api/v1/people', {
       is_client_only: true,
       is_advanced_search_on: false,
+      size: 25,
       person_search_fields: {first_name: 'John', last_name: 'Doe'},
       search_after: 'What even goes here?',
     }))

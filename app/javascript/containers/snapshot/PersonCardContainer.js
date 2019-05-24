@@ -11,7 +11,7 @@ import {SHOW_MODE} from 'actions/screeningPageActions'
 const mapStateToProps = (state, {personId}) => ({
   mode: SHOW_MODE,
   editable: false,
-  deletable: true,
+  deletable: false,
   informationFlag: getPersonInformationFlagValuesSelector(state).get(personId),
   personName: getPersonNamesSelector(state).get(personId),
   informationPill: selectInformationalMessage(state, personId),

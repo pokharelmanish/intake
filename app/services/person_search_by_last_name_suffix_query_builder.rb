@@ -75,7 +75,7 @@ module PersonSearchByLastNameSuffixQueryBuilder
 
   def match_suffix_last_name_fuzzy
     suffix_query = match_query(generate_match_params('name_suffix', suffix, '7_exact_suffix', nil))
-    fuzzy_last_name_query = fuzzy_query(field: 'last_name', value: last_name, fuzziness: '3',
+    fuzzy_last_name_query = fuzzy_query(field: 'last_name', value: last_name, fuzziness: 'AUTO',
                                         prefix_length: '1', max_expansions: '50',
                                         name: '7_fuzzy_last')
     [suffix_query, fuzzy_last_name_query].compact

@@ -89,7 +89,7 @@ describe('PersonCardHeader', () => {
       expect(onDelete).toHaveBeenCalled()
     })
 
-    it('displays if showDelete is false', () => {
+    it('does not display if showDelete is false', () => {
       const component = renderComponent({showDelete: false})
       const deleteButton = component.find('button[aria-label="Remove person"]')
       expect(deleteButton.exists()).toEqual(false)

@@ -6,6 +6,7 @@ import {
 } from 'sagas/loadMorePeopleSearchResultsSaga'
 import {
   selectLastResultsSortValue,
+  selectSearchResultsCurrentRow,
 } from 'selectors/peopleSearchSelectors'
 import {
   LOAD_MORE_RESULTS,
@@ -28,19 +29,23 @@ describe('loadMorePeopleSearch', () => {
   const isAdvancedSearchOn = true
   const personSearchFields = {lastName: 'Doe'}
   const action = loadMoreResults(isClientOnly, isAdvancedSearchOn, personSearchFields)
-  const searchTerm = 'test'
   const lastResultSort = ['last_result_sort']
 
   it('finds some error during the process', () => {
     const error = 'Something went wrong'
     const peopleSeachGenerator = loadMorePeopleSearch(action)
+    const size = 25
     const searchParams = {
       is_client_only: true,
       is_advanced_search_on: true,
       person_search_fields: {last_name: 'Doe'},
+      size: size,
       search_after: lastResultSort,
     }
-    expect(peopleSeachGenerator.next(searchTerm).value).toEqual(select(selectLastResultsSortValue))
+    expect(peopleSeachGenerator.next(size).value).toEqual(
+      select(selectSearchResultsCurrentRow)
+    )
+    expect(peopleSeachGenerator.next(size).value).toEqual(select(selectLastResultsSortValue))
     expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people', searchParams))
     expect(peopleSeachGenerator.throw(error).value).toEqual(put(loadMoreResultsFailure('Something went wrong')))
   })
@@ -51,12 +56,17 @@ describe('loadMorePeopleSearch', () => {
         hits: [],
       },
     }
+    const size = 25
     const peopleSeachGenerator = loadMorePeopleSearch(action)
-    expect(peopleSeachGenerator.next(searchTerm).value).toEqual(select(selectLastResultsSortValue))
+    expect(peopleSeachGenerator.next(size).value).toEqual(
+      select(selectSearchResultsCurrentRow)
+    )
+    expect(peopleSeachGenerator.next(size).value).toEqual(select(selectLastResultsSortValue))
     expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people', {
       is_client_only: true,
       is_advanced_search_on: true,
       person_search_fields: {last_name: 'Doe'},
+      size: size,
       search_after: lastResultSort,
     }))
     expect(peopleSeachGenerator.next(searchResults).value).toEqual(put(loadMoreResultsSuccess(searchResults)))

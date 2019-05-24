@@ -28,6 +28,8 @@ describe('Store', () => {
       peopleForm: {},
       peopleSearch: {
         results: [],
+        searchTableCurrentPage: 1,
+        searchTableCurrentRow: 25,
         total: 0,
         defaultCounty: null,
         searchFields: {

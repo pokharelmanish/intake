@@ -38,11 +38,11 @@ module Api
         params.permit(
           :is_client_only,
           :is_advanced_search_on,
+          :size,
           search_after: [],
           person_search_fields: %i[
-            search_term last_name first_name middle_name
-            suffix ssn date_of_birth street city county client_id gender
-            approximate_age approximate_age_units search_by_age_method
+            search_term last_name first_name middle_name suffix ssn date_of_birth street
+            city county client_id gender approximate_age approximate_age_units search_by_age_method
           ]
         )
       end

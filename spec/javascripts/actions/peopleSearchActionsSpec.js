@@ -9,6 +9,8 @@ import {
   resetPersonSearch,
   setPersonSearchField,
   setFieldErrorCheck,
+  setSearchCurrentPage,
+  setSearchCurrentRow,
 } from 'actions/peopleSearchActions'
 import {isFSA} from 'flux-standard-action'
 
@@ -93,6 +95,18 @@ describe('peopleSearchActions', () => {
 
   it('setFieldErrorCheck with field is FSA compliant', () => {
     const action = setFieldErrorCheck('clientIdErrorCheck', true)
+    expect(isFSA(action)).toEqual(true)
+  })
+
+  it('setSearchCurrentPage is FSA compliant', () => {
+    const defaultPageNumber = 1
+    const action = setSearchCurrentPage({pageNumber: defaultPageNumber})
+    expect(isFSA(action)).toEqual(true)
+  })
+
+  it('setSearchCurrentRow is FSA compliant', () => {
+    const defaultRowNumber = 25
+    const action = setSearchCurrentRow({rowNumber: defaultRowNumber})
     expect(isFSA(action)).toEqual(true)
   })
 })

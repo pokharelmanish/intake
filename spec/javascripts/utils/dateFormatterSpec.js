@@ -1,4 +1,4 @@
-import {dateFormatter, dateTimeFormatter, dateRangeFormatter} from 'utils/dateFormatter'
+import {dateFormatter, dateTimeFormatter, dateRangeFormatter, isValidDate} from 'utils/dateFormatter'
 
 describe('dateFormatter', () => {
   it('returns empty string when passed undefined', () => {
@@ -59,5 +59,17 @@ describe('dateRangeFormatter', () => {
   it('returns a properly formatted date range if both start and end date are present', () => {
     const dateableObject = {start_date: '2016-07-08', end_date: '2016-09-12'}
     expect(dateRangeFormatter(dateableObject)).toEqual('07/08/2016 - 09/12/2016')
+  })
+})
+
+describe('isValidDate', () => {
+  it('returns true if date is in a valid format', () => {
+    const date = '12/12/2000'
+    expect(isValidDate(date)).toEqual(true)
+  })
+
+  it('returns false if date is not in a valid format', () => {
+    const date = '2000/12/12'
+    expect(isValidDate(date)).toEqual(false)
   })
 })

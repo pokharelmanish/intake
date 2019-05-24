@@ -249,30 +249,7 @@ feature 'Snapshot History of Involvement' do
       end
     end
 
-    scenario 'snapshot displays the no HOI copy' do
-      visit snapshot_path
-
-      within '#history-card.card.show' do
-        expect(page).to have_content('Search for people and add them to see their')
-      end
-    end
-  end
-
-  context 'a snapshot with HOI from FERB' do
-    around do |example|
-      Feature.run_with_activated(:release_two, :advanced_search) do
-        example.run
-      end
-    end
-
     before(:each) do
-      stub_request(
-        :get,
-        ferb_api_url(
-          FerbRoutes.relationships_path
-        ) + "?clientIds=#{person.dig(:legacy_descriptor, :legacy_id)}"
-      ).and_return(json_body([].to_json, status: 200))
-
       search_response = PersonSearchResponseBuilder.build do |response|
         response.with_total(1)
         response.with_hits do
@@ -288,11 +265,14 @@ feature 'Snapshot History of Involvement' do
       stub_request(
         :get,
         ferb_api_url(
-          FerbRoutes.history_of_involvements_path
+          FerbRoutes.relationships_path
         ) + "?clientIds=#{person.dig(:legacy_descriptor, :legacy_id)}"
-      ).and_return(json_body(history.to_json, status: 200))
+      ).and_return(json_body([].to_json, status: 200))
+
+      stub_empty_history_for_clients([person.dig(:legacy_descriptor, :legacy_id)])
 
       stub_person_search(person_response: search_response)
+
       stub_request(
         :get,
         ferb_api_url(
@@ -313,13 +293,90 @@ feature 'Snapshot History of Involvement' do
         fill_in 'Last Name', with: 'Si'
         click_button 'Search'
       end
+
+      within '#person-search-results-card' do
+        click_link 'Simpson'
+      end
+    end
+
+    scenario 'snapshot detail page displays the no HOI copy' do
+      within '#history-card.card.show' do
+        expect(page).to have_content('Search for people and add them to see their')
+      end
+    end
+  end
+
+  context 'a snapshot with HOI from FERB' do
+    around do |example|
+      Feature.run_with_activated(:release_two, :advanced_search) do
+        example.run
+      end
+    end
+
+    before(:each) do
+      search_response = PersonSearchResponseBuilder.build do |response|
+        response.with_total(1)
+        response.with_hits do
+          [
+            PersonSearchResultBuilder.build do |builder|
+              builder.with_last_name(person[:last_name])
+              builder.with_legacy_descriptor(person[:legacy_descriptor])
+            end
+          ]
+        end
+      end
+
+      stub_request(
+        :get,
+        ferb_api_url(
+          FerbRoutes.relationships_path
+        ) + "?clientIds=#{person.dig(:legacy_descriptor, :legacy_id)}"
+      ).and_return(json_body([].to_json, status: 200))
+
+      stub_request(
+        :get,
+        ferb_api_url(
+          FerbRoutes.history_of_involvements_path
+        ) + "?clientIds=#{person.dig(:legacy_descriptor, :legacy_id)}"
+      ).and_return(json_body(history.to_json, status: 200))
+
+      stub_person_search(person_response: search_response)
+
+      stub_request(
+        :get,
+        ferb_api_url(
+          FerbRoutes.client_authorization_path(
+            person.dig(:legacy_descriptor, :legacy_id)
+          )
+        )
+      ).and_return(json_body('', status: 200))
+
+      stub_person_find(
+        id: person.dig(:legacy_descriptor, :legacy_id),
+        person_response: person
+      )
+
+      visit snapshot_path
+
+      within '#search-card', text: 'Search' do
+        fill_in 'Last Name', with: 'Si'
+        click_button 'Search'
+      end
+
+      within '#person-search-results-card' do
+        click_link 'Simpson'
+      end
     end
 
     scenario 'should return history card' do
       within '#history-card' do
         expect(page).to have_content('History')
         expect(page)
-          .to have_content('Search for people and add them to see their child welfare history.')
+          .not_to have_content('Search for people and add them to see their child welfare history.')
+        expect(page).to have_content('Madera')
+        expect(page).to have_content('San Francisco')
+        expect(page).to have_content('El Dorado')
+        expect(page).to have_content('Plumas')
       end
     end
   end

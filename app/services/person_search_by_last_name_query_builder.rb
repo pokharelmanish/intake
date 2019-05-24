@@ -46,7 +46,7 @@ module PersonSearchByLastNameQueryBuilder
 
   def match_last_name_fuzzy
     [fuzzy_query(field: 'last_name', value: last_name, fuzziness: 'AUTO', prefix_length: '1',
-                 max_expansions: '50', name: '5_fuzzy')]
+                 max_expansions: '150', name: '5_fuzzy')]
   end
 
   def fs_query_params

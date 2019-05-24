@@ -19,10 +19,6 @@ class PersonSearchForm extends React.Component {
     this.enterKey = 13
   }
 
-  componentWillUnmount() {
-    this.props.onCancel()
-  }
-
   closeModal() {
     this.setState({show: false})
   }

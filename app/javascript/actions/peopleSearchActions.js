@@ -6,6 +6,8 @@ export const SET_SEARCH_FIELD_ERROR_CHECK = 'PEOPLE_SEARCH/SET_SEARCH_FIELD_ERRO
 export const LOAD_MORE_RESULTS = 'PEOPLE_SEARCH/LOAD_MORE_RESULTS'
 export const LOAD_MORE_RESULTS_COMPLETE = 'PEOPLE_SEARCH/LOAD_MORE_RESULTS_COMPLETE'
 export const RESET_PERSON_SEARCH = 'RESET_PERSON_SEARCH'
+export const SET_SEARCH_CURRENT_PAGE = 'SET_SEARCH_CURRENT_PAGE'
+export const SET_SEARCH_CURRENT_ROW = 'SET_SEARCH_CURRENT_ROW'
 
 export const setPersonSearchField = (field, value) => ({
   type: SET_SEARCH_FIELD,
@@ -47,4 +49,12 @@ export const resetPersonSearch = () => ({
 export const setFieldErrorCheck = (field, value) => ({
   type: SET_SEARCH_FIELD_ERROR_CHECK,
   payload: {field, value},
+})
+export const setSearchCurrentPage = (pageNumber) => ({
+  type: SET_SEARCH_CURRENT_PAGE,
+  payload: {pageNumber},
+})
+export const setSearchCurrentRow = (rowNumber) => ({
+  type: SET_SEARCH_CURRENT_ROW,
+  payload: {rowNumber},
 })
