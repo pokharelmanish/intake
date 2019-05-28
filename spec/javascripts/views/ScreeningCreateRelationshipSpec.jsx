@@ -85,7 +85,7 @@ describe('ScreeningCreateRelationship', () => {
   it('has two buttons on modalFooter only if the show state is set to true', () => {
     const afterRendering = wrapper.setState({show: true})
     const footer = shallow(afterRendering.find('ModalComponent').props().modalFooter)
-    expect(footer.find('button').length).toBe(2)
+    expect(footer.find('Button').length).toBe(2)
   })
 
   it('simulate a click on button and show modal', () => {
@@ -104,7 +104,7 @@ describe('ScreeningCreateRelationship', () => {
       wrapper.setState({show: true})
       const footer = wrapper.find('ModalComponent').props().modalFooter
       const footerComponent = shallow(footer)
-      const cancelButton = footerComponent.find('button').at(0).props()
+      const cancelButton = footerComponent.find('Button').at(0).props()
       expect(wrapper.state().show).toEqual(true)
       cancelButton.onClick()
       expect(wrapper.state().show).toEqual(false)
@@ -127,7 +127,7 @@ describe('ScreeningCreateRelationship', () => {
       wrapper.setState({show: true})
       const footer = wrapper.find('ModalComponent').props().modalFooter
       const footerComponent = shallow(footer)
-      const createRelationshipButton = footerComponent.find('button').at(1).props()
+      const createRelationshipButton = footerComponent.find('Button').at(1).props()
       expect(wrapper.state().show).toEqual(true)
       createRelationshipButton.onClick()
       expect(wrapper.state().show).toEqual(true)
@@ -139,7 +139,7 @@ describe('ScreeningCreateRelationship', () => {
       wrapper.setState({show: true})
       const footer = wrapper.find('ModalComponent').props().modalFooter
       const createRelationshipButton = shallow(footer)
-      expect(createRelationshipButton.find('button').at(1).props().disabled).toBe(true)
+      expect(createRelationshipButton.find('Button').at(1).props().disabled).toBe(true)
     })
 
     it('renders only SavingButton if isSaving prop is set to True', () => {
@@ -171,7 +171,7 @@ describe('ScreeningCreateRelationship', () => {
       wrapper.setState({show: true})
       const footer = wrapper.find('ModalComponent').props().modalFooter
       const buttons = shallow(footer)
-      expect(buttons.find('button').length).toEqual(2)
+      expect(buttons.find('Button').length).toEqual(2)
     })
 
     it('closes the modal once isSaving prop updates to false', () => {
@@ -181,7 +181,7 @@ describe('ScreeningCreateRelationship', () => {
       wrapper.setState({show: true})
       const footer = wrapper.find('ModalComponent').props().modalFooter
       const footerComponent = shallow(footer)
-      const createRelationshipButton = footerComponent.find('button').at(1).props()
+      const createRelationshipButton = footerComponent.find('Button').at(1).props()
       expect(wrapper.state().show).toEqual(true)
       createRelationshipButton.onClick()
       wrapper.setProps({isSaving: true})

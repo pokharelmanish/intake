@@ -10,21 +10,8 @@ const PersonSearchButtonGroup = ({
 }) => (
   <div className="row person-search-button-group">
     <div className="col-md-12">
-      {/* <button
-        className="btn person-search-button search"
-        onClick={onSubmit}
-        disabled={!canSearch}
-      >
-        Search
-      </button> */}
-      <Button primary className="btn person-search-button search" onClick={onSubmit} disabled={!canSearch}>Search</Button>
-      {/* <button
-        className="btn person-search-button clear"
-        onClick={onCancel}
-      >
-        Clear
-      </button> */}
       <Button className="btn person-search-button clear" onClick={onCancel}>Clear</Button>
+      <Button primary className="btn person-search-button search" onClick={onSubmit} disabled={!canSearch}>Search</Button>
     </div>
   </div>
 )
