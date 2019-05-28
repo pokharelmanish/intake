@@ -5,6 +5,7 @@ import InputField from 'common/InputField'
 import SelectField from 'common/SelectField'
 import TextAreaCount from 'common/TextAreaCount'
 import ActionRow from 'screenings/ActionRow'
+import {CardBody} from '@cwds/reactstrap'
 
 const IncidentInformationForm = ({
   incidentDate,
@@ -22,7 +23,7 @@ const IncidentInformationForm = ({
   onCancel,
   isSaving,
 }) => (
-  <div className='card-body'>
+  <CardBody>
     <div className='row'>
       <DateField
         gridClassName='col-md-4'
@@ -126,7 +127,7 @@ const IncidentInformationForm = ({
       </div>
     </div>
     <ActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving} />
-  </div>
+  </CardBody>
 )
 
 IncidentInformationForm.propTypes = {

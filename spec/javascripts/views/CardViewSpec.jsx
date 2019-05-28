@@ -30,7 +30,7 @@ describe('Card View', () => {
 
   it('renders the title of the card in the header', () => {
     const card = renderCardView({title: 'My Title'})
-    const title = card.find('.card-header').children('h2').text()
+    const title = card.find('CardHeader').children('h2').text()
     expect(title).toEqual('My Title')
   })
 
@@ -70,8 +70,8 @@ describe('Card View', () => {
       const edit = <span>Edit</span>
       const show = <span>Show</span>
       const card = renderCardView({edit, mode, show})
-      expect(card.text()).toContain('Edit')
-      expect(card.text()).not.toContain('Show')
+      expect(card.find('span').text()).toContain('Edit')
+      expect(card.find('span').text()).not.toContain('Show')
     })
 
     it('passes the onShow prop to the edit prop child', () => {
@@ -112,8 +112,8 @@ describe('Card View', () => {
       const edit = <span>Edit</span>
       const show = <span>Show</span>
       const card = renderCardView({edit, mode, show})
-      expect(card.text()).toContain('Edit')
-      expect(card.text()).not.toContain('Show')
+      expect(card.find('span').text()).toContain('Edit')
+      expect(card.find('span').text()).not.toContain('Show')
     })
 
     it('sets isSaving on the edit prop child', () => {
@@ -146,8 +146,8 @@ describe('Card View', () => {
       const edit = <span>Edit</span>
       const show = <span>Show</span>
       const card = renderCardView({edit, mode, show})
-      expect(card.text()).toContain('Show')
-      expect(card.text()).not.toContain('Edit')
+      expect(card.find('span').text()).toContain('Show')
+      expect(card.find('span').text()).not.toContain('Edit')
     })
   })
 })

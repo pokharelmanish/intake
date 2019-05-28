@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ActionRow from 'screenings/ActionRow'
 import {setHash} from 'utils/navigation'
+import {Card, CardBody} from '@cwds/components'
 
 class PersonCard extends React.PureComponent {
   componentDidUpdate(prevProps) {
@@ -45,28 +46,28 @@ class PersonCard extends React.PureComponent {
       show,
     } = this.props
     return (
-      <div className='card-body'>
+      <CardBody>
         {mode === SHOW_MODE && show}
         {mode !== SHOW_MODE && edit}
         {mode !== SHOW_MODE && <ActionRow onCancel={onCancel} onSave={onSave} isSaving={mode === SAVING_MODE}/>}
-      </div>
+      </CardBody>
     )
   }
 
   render() {
     const {mode, personId} = this.props
     const modeClass = (mode === SHOW_MODE ? 'show' : 'edit')
-    const className = `card ${modeClass} participant double-gap-bottom`
+    const className = `card ${modeClass} participant`
     const id = `participants-card-${personId}`
 
     return (
-      <div className="card-height">
+      <Card>
         <button className='anchor' aria-label={`${id}-anchor`} id={`${id}-anchor`}/>
         <div className={className} id={id}>
           {this.renderHeader()}
           {this.renderBody()}
         </div>
-      </div>
+      </Card>
     )
   }
 }

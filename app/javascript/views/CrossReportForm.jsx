@@ -15,6 +15,7 @@ import {
   LAW_ENFORCEMENT,
 } from 'enums/CrossReport'
 import ActionRow from 'screenings/ActionRow'
+import {CardBody} from '@cwds/reactstrap'
 
 const CrossReportForm = ({
   allegationsRequireCrossReports,
@@ -75,7 +76,7 @@ const CrossReportForm = ({
   }
 
   return (
-    <div className='card-body no-pad-top'>
+    <CardBody>
       { areCrossReportsRequired && <AlertInfoMessage message={ALLEGATIONS_REQUIRE_CROSS_REPORTS_MESSAGE} /> }
       <div className='row col-md-12'>
         <p className='c-dark-grey'>This report has cross reported to:</p>
@@ -187,7 +188,7 @@ const CrossReportForm = ({
         }
       </div>
       <ActionRow onCancel={cancel} onSave={save} isSaving={isSaving} />
-    </div>
+    </CardBody>
   )
 }
 

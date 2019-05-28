@@ -1,7 +1,8 @@
 import React from 'react'
+import {CardBody} from '@cwds/reactstrap'
 
 const EmptyHistory = () => (
-  <div className='card-body no-pad-top'>
+  <CardBody>
     <div className='row'>
       <div className='col-md-12 empty-relationships'>
         <div className='double-gap-top  centered'>
@@ -9,7 +10,7 @@ const EmptyHistory = () => (
         </div>
       </div>
     </div>
-  </div>
+  </CardBody>
 )
 
 export default EmptyHistory

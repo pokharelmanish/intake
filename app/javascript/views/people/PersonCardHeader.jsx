@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import EditLink from 'common/EditLink'
+import {CardHeader, CardTitle} from '@cwds/components'
 
 const PersonCardHeader = ({informationFlag, title, onDelete, onEdit, informationPill, showDelete, showEdit}) => (
-  <div className='card-header'>
-    <div><h2>{title}</h2></div>
+  <CardHeader>
+    <CardTitle>{title}</CardTitle>
     { informationPill && <div className='information-flag-rounded'>{informationPill}</div>}
     { informationFlag && <span className='information-flag'>{informationFlag}</span>}
     <div className='edit-remove'>
@@ -26,7 +27,7 @@ const PersonCardHeader = ({informationFlag, title, onDelete, onEdit, information
       </button>
       }
     </div>
-  </div>
+  </CardHeader>
 )
 
 PersonCardHeader.propTypes = {

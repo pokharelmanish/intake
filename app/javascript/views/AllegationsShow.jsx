@@ -1,9 +1,10 @@
 import AlertErrorMessage from 'common/AlertErrorMessage'
 import React from 'react'
 import PropTypes from 'prop-types'
+import {CardBody} from '@cwds/reactstrap'
 
 const AllegationShow = ({allegations, alertErrorMessage, required}) => (
-  <div className='card-body no-pad-top'>
+  <CardBody>
     { alertErrorMessage && <AlertErrorMessage message={alertErrorMessage} /> }
     <div className='row'>
       <div className='table-responsive'>
@@ -27,7 +28,7 @@ const AllegationShow = ({allegations, alertErrorMessage, required}) => (
         </table>
       </div>
     </div>
-  </div>
+  </CardBody>
 )
 
 AllegationShow.propTypes = {

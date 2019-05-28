@@ -16,14 +16,9 @@ describe('PersonCardHeader', () => {
     return shallow(<PersonCardHeader {...props} />, {disableLifecycleMethods: true})
   }
 
-  it('renders a header element', () => {
-    const component = renderComponent({title: 'Alex'})
-    expect(component.find('h2').length).toEqual(1)
-  })
-
   it('displays the name passed in the props', () => {
     const component = renderComponent({title: 'Alex'})
-    expect(component.text()).toContain('Alex')
+    expect(component.find('CardTitle').children().text()).toContain('Alex')
   })
 
   describe('participant flag', () => {

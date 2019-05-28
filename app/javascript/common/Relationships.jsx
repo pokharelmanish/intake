@@ -4,6 +4,7 @@ import AttachLink from 'common/relationship/AttachLink'
 import RelationCard from 'common/relationship/RelationCard'
 import ScreeningCreateRelationshipContainer from 'containers/screenings/ScreeningCreateRelationshipContainer'
 import {CandidatesPropType} from 'data/candidates'
+import {CardBody} from '@cwds/reactstrap'
 
 export const Relationships = ({
   editFormRelationship,
@@ -21,7 +22,7 @@ export const Relationships = ({
   relationshipsButtonStatus,
   screeningId,
 }) => (
-  <div className="card-body no-pad-top">
+  <CardBody>
     {isScreening &&
       people.map((person, index) => (
         <div key={index}>
@@ -104,7 +105,7 @@ export const Relationships = ({
           </div>
         </div>
       ))}
-  </div>
+  </CardBody>
 )
 
 Relationships.propTypes = {
@@ -151,7 +152,7 @@ Relationships.propTypes = {
 }
 
 export const EmptyRelationships = () => (
-  <div className="card-body no-pad-top">
+  <CardBody>
     <div className="row">
       <div className="col-md-12 empty-relationships">
         <div className="double-gap-top  centered">
@@ -161,5 +162,5 @@ export const EmptyRelationships = () => (
         </div>
       </div>
     </div>
-  </div>
+  </CardBody>
 )

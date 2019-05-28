@@ -6,6 +6,7 @@ import SelectField from 'common/SelectField'
 import AlertInfoMessage from 'common/AlertInfoMessage'
 import {SafelySurrenderedBabyMessage} from 'views/ScreeningInformationHelpTextBox'
 import ActionRow from 'screenings/ActionRow'
+import {CardBody} from '@cwds/reactstrap'
 
 const ScreeningInformationForm = ({
   assignee,
@@ -24,7 +25,7 @@ const ScreeningInformationForm = ({
   reportType,
   reportTypes,
 }) => (
-  <div className='card-body'>
+  <CardBody>
     { reportType === 'ssb' && <AlertInfoMessage message={<SafelySurrenderedBabyMessage/>} /> }
     <div className='row'>
       <InputField
@@ -99,7 +100,7 @@ const ScreeningInformationForm = ({
       </SelectField>
     </div>
     <ActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving}/>
-  </div>
+  </CardBody>
 )
 
 const actionPropTypes = {
