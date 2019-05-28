@@ -24,20 +24,20 @@ describe('PersonSearchButtonGroup', () => {
 
   it('renders search button', () => {
     const component = render()
-    const searchButton = component.find('button.person-search-button.search')
-    expect(searchButton.text()).toEqual('Search')
+    const searchButton = component.find('Button').at(1)
+    expect(searchButton.html()).toContain('Search')
   })
 
   it('renders clear button', () => {
     const component = render()
-    const clearButton = component.find('button.person-search-button.clear')
-    expect(clearButton.text()).toEqual('Clear')
+    const clearButton = component.find('Button').at(0)
+    expect(clearButton.html()).toContain('Clear')
   })
 
   it('calls onSubmit when search button is clicked', () => {
     const onSubmit = jasmine.createSpy('onClick')
     const component = render({onSubmit})
-    const searchButton = component.find('button.person-search-button.search')
+    const searchButton = component.find('Button').at(1)
     searchButton.simulate('click')
     expect(onSubmit).toHaveBeenCalled()
   })
@@ -45,18 +45,18 @@ describe('PersonSearchButtonGroup', () => {
   it('calls onCancel when cancel button is clicked', () => {
     const onCancel = jasmine.createSpy('onCancel')
     const component = render({onCancel})
-    const cancelButton = component.find('button.person-search-button.clear')
+    const cancelButton = component.find('Button').at(0)
     cancelButton.simulate('click')
     expect(onCancel).toHaveBeenCalled()
   })
 
   it('search button gets enabled when canSearch props is true', () => {
     const component = render({canSearch: true})
-    expect(component.find('button.person-search-button.search').props().disabled).toBeFalsy()
+    expect(component.find('Button').at(1).props().disabled).toBeFalsy()
   })
 
   it('search button gets disabled when canSearch props is false', () => {
     const component = render({canSearch: false})
-    expect(component.find('button.person-search-button.search').props().disabled).toBeTruthy()
+    expect(component.find('Button').at(1).props().disabled).toBeTruthy()
   })
 })

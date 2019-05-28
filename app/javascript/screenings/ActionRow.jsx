@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import {Button} from '@cwds/components'
 import SavingButton from 'common/SavingButton'
 
 const ActionRow = ({buttonText, isDisabled, isSaving, onCancel, onSave}) => (
@@ -7,16 +8,16 @@ const ActionRow = ({buttonText, isDisabled, isSaving, onCancel, onSave}) => (
     <div className='col-md-12'>
       <div className='pull-right'>
         {!isSaving &&
-          <button className='btn btn-default' onClick={onCancel}>Cancel</button>}
+          <Button onClick={onCancel}>Cancel</Button>}
         {isSaving ?
           <SavingButton text='Saving'/> :
-          <button
-            className='btn btn-primary'
+          <Button
+            primary
             disabled={isDisabled}
             onClick={onSave}
           >
             {buttonText}
-          </button>}
+          </Button>}
       </div>
     </div>
   </div>

@@ -13,15 +13,14 @@ describe('ActionRow', () => {
 
       const row = component.find('.row .col-md-12 .pull-right')
       expect(row.exists()).toEqual(true)
-
-      expect(row.find('button').at(0).text()).toEqual('Cancel')
-      expect(row.find('button').at(1).text()).toEqual('Save')
+      expect(row.find('Button').at(0).html()).toContain('Cancel')
+      expect(row.find('Button').at(1).html()).toContain('Save')
     })
 
     it('calls onCancel when cancel button is clicked', () => {
       const onCancel = jasmine.createSpy('onCancel')
       const component = render({onCancel})
-      const cancelButton = component.find('.btn-default')
+      const cancelButton = component.find('Button').at(0)
 
       cancelButton.simulate('click')
       expect(onCancel).toHaveBeenCalled()
@@ -30,7 +29,7 @@ describe('ActionRow', () => {
     it('calls onSave when save button is clicked', () => {
       const onSave = jasmine.createSpy('onSave')
       const component = render({onSave})
-      const saveButton = component.find('.btn-primary')
+      const saveButton = component.find('Button').at(1)
 
       saveButton.simulate('click')
       expect(onSave).toHaveBeenCalled()
@@ -61,13 +60,13 @@ describe('ActionRow', () => {
     it('passes text props to the save button', () => {
       const component = render({buttonText: 'Save Relationship'})
       const row = component.find('.row .col-md-12 .pull-right')
-      expect(row.find('button').at(1).text()).toEqual('Save Relationship')
+      expect(row.find('Button').at(1).html()).toContain('Save Relationship')
     })
 
     it('passes isDisable props to the save button', () => {
       const component = render({isDisabled: true})
       const row = component.find('.row .col-md-12 .pull-right')
-      expect(row.find('button').at(1).prop('disabled')).toBe(true)
+      expect(row.find('Button').at(1).prop('disabled')).toBe(true)
     })
   })
 })
