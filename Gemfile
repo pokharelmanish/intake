@@ -28,6 +28,7 @@ gem 'webpacker'
 gem 'yard', '~> 0.9.11'
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'factory_bot_rails', require: false
   gem 'ffaker'
   gem 'fpm',
