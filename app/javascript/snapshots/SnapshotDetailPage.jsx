@@ -15,7 +15,7 @@ import {selectParticipants} from 'selectors/participantSelectors'
 import BreadCrumb from 'containers/common/BreadCrumb'
 import {getHasGenericErrorValueSelector} from 'selectors/errorsSelectors'
 import {selectPeopleResults} from 'selectors/peopleSearchSelectors'
-import {urlHelper} from 'common/url_helper.js.erb'
+import {urlHelper} from 'common/url_helper.js'
 import {Link} from 'react-router'
 
 export class SnapshotDetailPage extends React.Component {
