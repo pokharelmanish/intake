@@ -2,7 +2,9 @@
   "private": true,
   "scripts": {
     "licenses-report": "bundle exec license_finder report --save=legal/licenses.csv --format csv --columns=name version homepage licenses",
-    "test:regression": "bundle exec rspec spec/regression"
+    "test:regression": "bundle exec rspec spec/regression",
+    "test:karma": "NODE_ENV=test ./node_modules/.bin/karma start ./karma.conf.js",
+    "test:rspec:unit": "bundle exec rspec --exclude-pattern 'spec/features/**/*_spec.rb, spec/regression/**/*_spec.rb'"
   },
   "dependencies": {
     "@babel/core": "^7.4.3",
