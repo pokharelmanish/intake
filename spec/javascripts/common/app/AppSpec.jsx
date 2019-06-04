@@ -1,10 +1,12 @@
-import {App} from 'common/app/App'
+import {App, mapDispatchToProps} from 'common/app/App'
+import {viewSnapshotSearch} from 'actions/snapshotActions'
 import React from 'react'
 import {shallow, mount} from 'enzyme'
 import * as IntakeConfig from 'common/config'
 import {CaresProvider, Page} from '@cwds/components'
 import {store} from 'store/configureStore'
 import {Provider} from 'react-redux'
+import {clear, resetPersonSearch} from 'actions/personCardActions'
 
 describe('App', () => {
   beforeEach(() => {
@@ -110,7 +112,7 @@ describe('App', () => {
 
     it('render a snapshot title', () => {
       spyOn(IntakeConfig, 'isSnapshot').and.returnValue(true)
-      const props = {actions: actions}
+      const props = {actions: actions, params: {id: undefined}}
       const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
       const pageTitle = app.find('PageTitle')
       expect(pageTitle.text()).toContain('Snapshot')
@@ -118,10 +120,27 @@ describe('App', () => {
 
     it('render a snapshot button', () => {
       spyOn(IntakeConfig, 'isSnapshot').and.returnValue(true)
-      const props = {actions: actions}
+      const props = {actions: actions, params: {id: undefined}}
       const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
       const startOver = app.find('PageActions')
       expect(startOver.find('button').text()).toContain('Start Over')
+    })
+
+    it('render a Back to results button', () => {
+      spyOn(IntakeConfig, 'isSnapshot').and.returnValue(true)
+      const props = {actions: actions, params: {id: '1'}}
+      const app = mount(<Provider store={store}><App {...props}/></Provider>, {disableLifecycleMethods: true})
+      const startOver = app.find('PageActions')
+      expect(startOver.find('button').text()).toContain('Back to Results')
+    })
+  })
+
+  describe('goBackToResults', () => {
+    it('dispatches viewSnapshotSearch action', () => {
+      const dispatch = jasmine.createSpy('dispatch')
+      const props = mapDispatchToProps(dispatch)
+      props.goBackToResults()
+      expect(dispatch).toHaveBeenCalledWith(viewSnapshotSearch())
     })
   })
 })

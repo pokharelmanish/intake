@@ -1,7 +1,7 @@
 import React from 'react'
 import {SnapshotDetailPage, mapDispatchToProps} from 'snapshots/SnapshotDetailPage'
 import {shallow} from 'enzyme'
-import {clearSnapshot, viewSnapshotSearch} from 'actions/snapshotActions'
+import {clearSnapshot} from 'actions/snapshotActions'
 import {clearPeople, createSnapshotPerson} from 'actions/personCardActions'
 import {clearHistoryOfInvolvement} from 'actions/historyOfInvolvementActions'
 import {clearRelationships} from 'actions/relationshipsActions'
@@ -79,15 +79,6 @@ describe('SnapshotDetailPage', () => {
         const props = mapDispatchToProps(dispatch)
         props.createSnapshotPerson()
         expect(dispatch).toHaveBeenCalledWith(createSnapshotPerson())
-      })
-    })
-
-    describe('goBackToResults', () => {
-      it('dispatches viewSnapshotSearch action', () => {
-        const dispatch = jasmine.createSpy('dispatch')
-        const props = mapDispatchToProps(dispatch)
-        props.goBackToResults()
-        expect(dispatch).toHaveBeenCalledWith(viewSnapshotSearch())
       })
     })
 

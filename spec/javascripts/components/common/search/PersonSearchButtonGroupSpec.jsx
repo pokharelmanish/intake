@@ -24,20 +24,20 @@ describe('PersonSearchButtonGroup', () => {
 
   it('renders search button', () => {
     const component = render()
-    const searchButton = component.find('Button').at(1)
+    const searchButton = component.find('Button').at(0)
     expect(searchButton.html()).toContain('Search')
   })
 
   it('renders clear button', () => {
     const component = render()
-    const clearButton = component.find('Button').at(0)
+    const clearButton = component.find('Button').at(1)
     expect(clearButton.html()).toContain('Clear')
   })
 
   it('calls onSubmit when search button is clicked', () => {
     const onSubmit = jasmine.createSpy('onClick')
     const component = render({onSubmit})
-    const searchButton = component.find('Button').at(1)
+    const searchButton = component.find('Button').at(0)
     searchButton.simulate('click')
     expect(onSubmit).toHaveBeenCalled()
   })
@@ -45,18 +45,18 @@ describe('PersonSearchButtonGroup', () => {
   it('calls onCancel when cancel button is clicked', () => {
     const onCancel = jasmine.createSpy('onCancel')
     const component = render({onCancel})
-    const cancelButton = component.find('Button').at(0)
+    const cancelButton = component.find('Button').at(1)
     cancelButton.simulate('click')
     expect(onCancel).toHaveBeenCalled()
   })
 
   it('search button gets enabled when canSearch props is true', () => {
     const component = render({canSearch: true})
-    expect(component.find('Button').at(1).props().disabled).toBeFalsy()
+    expect(component.find('Button').at(0).props().disabled).toBeFalsy()
   })
 
   it('search button gets disabled when canSearch props is false', () => {
     const component = render({canSearch: false})
-    expect(component.find('Button').at(1).props().disabled).toBeTruthy()
+    expect(component.find('Button').at(0).props().disabled).toBeTruthy()
   })
 })
