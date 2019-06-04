@@ -20,13 +20,11 @@ import * as IntakeConfig from 'common/config'
 const history = syncHistoryWithStore(routerHistory, store, {selectLocationState: createSelectLocationState()})
 
 const snapshotActive = IntakeConfig.isFeatureActive('snapshot')
-const screeningActive = IntakeConfig.isFeatureActive('screenings')
 
 export const Routes = ({
   store,
   history,
   snapshotActive,
-  screeningActive,
 }) => (
   <Provider store={store}>
     <Router history={history}>
@@ -47,9 +45,8 @@ export const Routes = ({
 
 Routes.propTypes = {
   history: PropTypes.object.isRequired,
-  screeningActive: PropTypes.bool.isRequired,
   snapshotActive: PropTypes.bool.isRequired,
   store: PropTypes.object.isRequired,
 }
 
-export default () => Routes({store, history, snapshotActive, screeningActive})
+export default () => Routes({store, history, snapshotActive})
