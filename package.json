@@ -5,7 +5,8 @@
     "test:regression": "bundle exec rspec spec/regression",
     "test:functional": "bundle exec rspec spec/features/snapshot",
     "test:karma": "NODE_ENV=test ./node_modules/.bin/karma start ./karma.conf.js",
-    "test:rspec:unit": "bundle exec rspec --exclude-pattern 'spec/features/**/*_spec.rb, spec/regression/**/*_spec.rb'"
+    "test:rspec:unit": "bundle exec rspec --exclude-pattern 'spec/features/**/*_spec.rb, spec/regression/**/*_spec.rb'",
+    "test:all": "yarn test:rspec:unit && yarn test:karma && yarn test:functional"
   },
   "dependencies": {
     "@babel/core": "^7.4.3",
