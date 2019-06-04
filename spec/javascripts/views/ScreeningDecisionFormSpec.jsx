@@ -36,8 +36,8 @@ describe('ScreeningDecisionForm', () => {
 
   it('renders text about completing the SDM tool', () => {
     const component = renderScreeningDecisionForm({})
-    expect(component.text()).toContain('SDM Hotline Tool')
-    expect(component.text()).toContain('Determine Decision and Response Time by using Structured Decision Making.')
+    expect(component.find('.row').text()).toContain('SDM Hotline Tool')
+    expect(component.find('.row').text()).toContain('Determine Decision and Response Time by using Structured Decision Making.')
   })
 
   it('renders a link to the SDM tool', () => {

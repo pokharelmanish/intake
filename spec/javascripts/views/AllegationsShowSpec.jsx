@@ -45,11 +45,11 @@ describe('AllegationsShow', () => {
 
   it('indicates allegations are required if required prop is true', () => {
     const component = renderAllegationShow({required: true})
-    expect(component.text()).toContain('(Required)')
+    expect(component.find('table').text()).toContain('(Required)')
   })
 
   it('does not indicate allegations are required if required prop is not passed', () => {
     const component = renderAllegationShow({})
-    expect(component.text()).not.toContain('(Required)')
+    expect(component.find('table').text()).not.toContain('(Required)')
   })
 })

@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ShowField from 'common/ShowField'
+import {CardBody} from '@cwds/components'
 
 const NarrativeShow = ({narrative, errors}) => (
-  <div className='card-body'>
+  <CardBody>
     <div className='row'>
       <ShowField gridClassName='col-md-12' label='Report Narrative' errors={errors} required>
         {narrative}
       </ShowField>
     </div>
-  </div>
+  </CardBody>
 )
 
 NarrativeShow.propTypes = {

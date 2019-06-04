@@ -74,7 +74,7 @@ describe('PersonCard', () => {
           show={<p>Showing</p>}
         />
       )
-      expect(component.find('.card-body').children('p').at(0).text()).toEqual('Showing')
+      expect(component.find('CardBody').children('p').at(0).text()).toEqual('Showing')
     })
 
     it('renders an anchor to itself', () => {
@@ -141,7 +141,7 @@ describe('PersonCard', () => {
           show={<p>Showing</p>}
         />
       )
-      expect(component.find('.card-body').children('p').at(0).text()).toEqual('Editing')
+      expect(component.find('CardBody').children('p').at(0).text()).toEqual('Editing')
     })
 
     it('renders a card action row', () => {
@@ -230,7 +230,7 @@ describe('PersonCard', () => {
           show={<p>Showing</p>}
         />
       )
-      expect(component.find('.card-body').children('p').at(0).text()).toEqual('Editing')
+      expect(component.find('CardBody').children('p').at(0).text()).toEqual('Editing')
     })
 
     it('renders a "saving" card action row', () => {

@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ShowField from 'common/ShowField'
+import {CardBody} from '@cwds/reactstrap'
 
 const WorkerSafetyShow = ({safetyAlerts, safetyInformation}) => (
-  <div className='card-body'>
+  <CardBody>
     <div className='row'>
       <ShowField gridClassName='col-md-12' label='Worker Safety Alerts'>
         {safetyAlerts &&
@@ -21,7 +22,7 @@ const WorkerSafetyShow = ({safetyAlerts, safetyInformation}) => (
         {safetyInformation || ''}
       </ShowField>
     </div>
-  </div>
+  </CardBody>
 )
 
 WorkerSafetyShow.propTypes = {

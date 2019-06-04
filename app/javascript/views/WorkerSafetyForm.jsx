@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Select from 'react-select'
 import ActionRow from 'screenings/ActionRow'
+import {CardBody} from '@cwds/components'
 
 const WorkerSafetyForm = ({
   alertOptions,
@@ -12,7 +13,7 @@ const WorkerSafetyForm = ({
   safetyAlerts,
   safetyInformation,
 }) => (
-  <div className='card-body'>
+  <CardBody>
     <div className='row'>
       <div className='col-md-12'>
         <label htmlFor='safety_alerts'>Worker Safety Alerts</label>
@@ -40,7 +41,7 @@ const WorkerSafetyForm = ({
       </div>
     </div>
     <ActionRow onCancel={onCancel} onSave={onSave} isSaving={isSaving} />
-  </div>
+  </CardBody>
 )
 
 WorkerSafetyForm.propTypes = {

@@ -80,7 +80,7 @@ describe('PersonSearchForm', () => {
     const component = renderPersonSearchForm({})
     expect(
       component
-        .find('.card-header')
+        .find('CardHeader')
         .children('h2')
         .text()
     ).toEqual('Snapshot Search')
@@ -91,11 +91,11 @@ describe('PersonSearchForm', () => {
     const component = renderPersonSearchForm({})
     expect(
       component
-        .find('.card-header')
+        .find('CardHeader')
         .children('span')
         .text()
     ).toEqual('How to Use Snapshot')
-    expect(component.find('.card-header').children('span').props().className).toEqual('gap-right search-modal-info')
+    expect(component.find('CardHeader').children('span').props().className).toEqual('gap-right search-modal-info')
   })
 
   it("doesnot renders 'How to Use Snapshot' link in screening", () => {
