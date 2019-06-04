@@ -23,12 +23,14 @@ import {
   resetPersonSearch,
 } from 'actions/peopleSearchActions'
 import {getScreeningTitleSelector, getScreeningIsReadOnlySelector} from 'selectors/screeningSelectors'
+import {viewSnapshotSearch} from 'actions/snapshotActions'
 import {
   getAllCardsAreSavedValueSelector,
   getScreeningHasErrorsSelector,
   getPeopleHaveErrorsSelector,
 } from 'selectors/screening/screeningPageSelectors'
 import {Link} from 'react-router'
+import {Button} from '@cwds/components'
 
 const RouterScrollToTop = withRouter(ScrollToTop)
 
@@ -45,39 +47,42 @@ export class App extends React.Component {
     return <div className='pull-right'>
       {
         this.props.snapshot &&
-    <button type='button'
-      className='btn primary-btn'
+    <Button
+      primary
       disabled={false}
       id='snapshot'
       onClick={this.props.actions.createSnapshot}
     >
     Start Snapshot
-    </button>
+    </Button>
       }
       {
         this.props.hotline &&
-    <button type='button'
-      className='btn primary-btn'
+    <Button
+      primary
       disabled={false}
       id='screening'
       onClick={this.props.actions.createScreening}
     >
     Start Screening
-    </button>
+    </Button>
       }
     </div>
   }
 
   SnapshotButton() {
+    if (this.props.params.id) {
+      return this.backToResultsButton()
+    }
     return (
-      <button
-        type="button"
-        className="btn primary-btn pull-right"
+      <Button
+        primary
+        className="pull-right"
         disabled={false}
         onClick={this.props.startOver}
       >
     Start Over
-      </button>
+      </Button>
     )
   }
 
@@ -85,17 +90,32 @@ export class App extends React.Component {
     const {editable, disableSubmitButton, params: {id}, actions: {submitScreening}} = this.props
     if (editable) {
       return (
-        <button type='button'
-          className='btn primary-btn pull-right'
+        <Button
+          className="pull-right"
+          primary
           disabled={disableSubmitButton}
           onClick={() => submitScreening(id)}
         >
           Submit
-        </button>
+        </Button>
       )
     } else {
       return (<div />)
     }
+  }
+
+  backToResultsButton() {
+    const {goBackToResults} = this.props
+    return (
+      <Button
+        className="pull-right"
+        primary
+        disabled={false}
+        onClick={goBackToResults}
+      >
+        Back to Results
+      </Button>
+    )
   }
 
   render() {
@@ -144,6 +164,7 @@ App.propTypes = {
   disableSubmitButton: PropTypes.bool,
   editable: PropTypes.bool,
   fullName: PropTypes.string,
+  goBackToResults: PropTypes.func,
   hotline: PropTypes.bool,
   params: PropTypes.object.isRequired,
   snapshot: PropTypes.bool,
@@ -160,7 +181,7 @@ const mapStateToProps = (state, _ownProps) => ({
         getPeopleHaveErrorsSelector(state),
 })
 
-function mapDispatchToProps(dispatch, _ownProps) {
+export function mapDispatchToProps(dispatch, _ownProps) {
   const actions = {fetchUserInfoAction, fetchSystemCodesAction, checkStaffPermission, createScreening, createSnapshot}
   return {
     actions: bindActionCreators(actions, dispatch),
@@ -172,6 +193,7 @@ function mapDispatchToProps(dispatch, _ownProps) {
       dispatch(clearSearch('results'))
       dispatch(resetPersonSearch())
     },
+    goBackToResults: () => dispatch(viewSnapshotSearch()),
   }
 }
 
