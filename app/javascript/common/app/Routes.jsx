@@ -3,7 +3,6 @@ import React from 'react'
 import {Router, Route, IndexRoute} from 'react-router'
 import App from 'common/app/App'
 import {default as HomePageContainer} from 'containers/HomePageContainer'
-import ScreeningPageContainer from 'containers/screenings/screeningPageContainer'
 import SnapshotPage from 'snapshots/SnapshotPage'
 import SnapshotDetailPage from 'snapshots/SnapshotDetailPage'
 import ConditionsOfUse from 'views/pages/ConditionsOfUse'
@@ -33,9 +32,6 @@ export const Routes = ({
     <Router history={history}>
       <Route path='/' component={App}>
         <IndexRoute component={HomePageContainer} />
-        {screeningActive && <Route path='screenings/new' component={ScreeningPageContainer}/>}
-        {screeningActive && <Route path='screenings/:id' component={ScreeningPageContainer}/>}
-        {screeningActive && <Route path='screenings/:id/:mode' component={ScreeningPageContainer} />}
         {snapshotActive && <Route path='snapshot' component={SnapshotPage}/>}
         {snapshotActive && <Route path='snapshot/detail/:id' component={SnapshotDetailPage}/>}
         <Route path='logout' component={() => (window.location = IntakeConfig.config().authentication_logout_url)}/>
