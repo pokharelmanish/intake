@@ -23,9 +23,9 @@ describe('CheckboxListFilter', () => {
       const view = render(
         <CheckboxListFilter collection={SCREENING_DECISION} selected={selected} name={'screening-decision'}/>
       )
-      expect(view.find('input#screening-decision-screen_out')[0].attribs.checked).toBeDefined()
-      expect(view.find('input#screening-decision-promote_to_referral')[0].attribs.checked).not.toBeDefined()
-      expect(view.find('input#screening-decision-differential_response')[0].attribs.checked).toBeDefined()
+      expect(view.find('Input#screening-decision-screen_out')[0].attribs.checked).toBeDefined()
+      expect(view.find('Input#screening-decision-promote_to_referral')[0].attribs.checked).not.toBeDefined()
+      expect(view.find('Input#screening-decision-differential_response')[0].attribs.checked).toBeDefined()
     })
 
     it('calls onChange with updated filters', () => {

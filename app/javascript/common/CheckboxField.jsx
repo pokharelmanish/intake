@@ -1,6 +1,7 @@
 import ErrorMessages from 'common/ErrorMessages'
 import PropTypes from 'prop-types'
 import React from 'react'
+import {Input} from '@cwds/components'
 
 const CheckboxField = ({
   errors,
@@ -14,7 +15,7 @@ const CheckboxField = ({
   required,
 }) => (
   <div>
-    <input type='checkbox'
+    <Input type='checkbox'
       id={id}
       value={value}
       checked={checked}

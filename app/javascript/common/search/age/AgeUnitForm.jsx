@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
+import {Input} from '@cwds/components'
 
 class AgeUnitForm extends React.Component {
   handleClick({target: {value}}) {
@@ -17,7 +18,7 @@ class AgeUnitForm extends React.Component {
     return (
       <Fragment>
         <div className={id} onKeyPress={onKeyPress} role='presentation'>
-          <input
+          <Input
             checked={approximateAgeUnits === value}
             type="radio"
             name="age-unit"

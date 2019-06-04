@@ -30,38 +30,38 @@ describe('CheckboxField', () => {
 
   describe('with no flags set', () => {
     it('renders the id', () => {
-      expect(component.find('input').props().id).toEqual('myCheckboxFieldId')
+      expect(component.find('Input').props().id).toEqual('myCheckboxFieldId')
       expect(component.find('label[htmlFor="myCheckboxFieldId"]').exists()).toEqual(true)
     })
 
     it('renders the value', () => {
-      expect(component.find('input').props().value).toEqual('this-is-my-value')
+      expect(component.find('Input').props().value).toEqual('this-is-my-value')
       expect(component.find('label').text()).toEqual('This is my label')
     })
 
     it('renders with NO checked prop', () => {
-      expect(component.find('input').props().checked).toEqual(undefined)
+      expect(component.find('Input').props().checked).toEqual(undefined)
     })
 
     it('renders with NO disable prop', () => {
-      expect(component.find('input').props().disabled).toEqual(undefined)
+      expect(component.find('Input').props().disabled).toEqual(undefined)
     })
 
     it('renders with NO required prop', () => {
       expect(component.find('label.required').exists()).toEqual(false)
-      expect(component.find('input').prop('required')).toEqual(undefined)
-      expect(component.find('input').prop('aria-required')).toEqual(undefined)
+      expect(component.find('Input').prop('required')).toEqual(undefined)
+      expect(component.find('Input').prop('aria-required')).toEqual(undefined)
     })
   })
 
   it('calls onChange when a change event occurs on checkbox field', () => {
-    const selectElement = component.find('input')
+    const selectElement = component.find('Input')
     selectElement.simulate('change')
     expect(onChange).toHaveBeenCalled()
   })
 
   it('calls onBlur when a blur event occurs on checkbox field', () => {
-    const selectElement = component.find('input')
+    const selectElement = component.find('Input')
     selectElement.simulate('blur')
     expect(onBlur).toHaveBeenCalled()
   })
@@ -70,17 +70,17 @@ describe('CheckboxField', () => {
     it('renders with required prop', () => {
       component = shallow(<CheckboxField {...props} required/>, {disableLifecycleMethods: true})
       expect(component.find('label.required').exists()).toEqual(true)
-      expect(component.find('input').prop('required')).toEqual(true)
+      expect(component.find('Input').prop('required')).toEqual(true)
     })
 
     it('renders with disable prop', () => {
       component = shallow(<CheckboxField {...props} disabled/>, {disableLifecycleMethods: true})
-      expect(component.find('input').props().disabled).toEqual(true)
+      expect(component.find('Input').props().disabled).toEqual(true)
     })
 
     it('renders with checked prop', () => {
       component = shallow(<CheckboxField {...props} checked/>, {disableLifecycleMethods: true})
-      expect(component.find('input').props().checked).toEqual(true)
+      expect(component.find('Input').props().checked).toEqual(true)
     })
   })
 })

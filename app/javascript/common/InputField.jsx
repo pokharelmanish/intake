@@ -1,6 +1,7 @@
 import FormField from 'common/FormField'
 import PropTypes from 'prop-types'
 import React from 'react'
+import {Input} from '@cwds/components'
 
 const InputField = ({
   errors,
@@ -43,7 +44,7 @@ const InputField = ({
 
   return (
     <FormField {...formFieldProps}>
-      <input id={id} type={type} placeholder={placeholder}
+      <Input id={id} type={type} placeholder={placeholder}
         value={value} onChange={onChangeWrapper} maxLength={maxLength} onBlur={onBlur}
         aria-required={required} required={required} disabled={disabled}
         onKeyPress={onKeyPress}
