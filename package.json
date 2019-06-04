@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "licenses-report": "bundle exec license_finder report --save=legal/licenses.csv --format csv --columns=name version homepage licenses",
+    "lint": "./node_modules/.bin/eslint --quiet --color app/javascript",
     "test:regression": "bundle exec rspec spec/regression",
     "test:functional": "bundle exec rspec spec/features/snapshot",
     "test:karma": "NODE_ENV=test ./node_modules/.bin/karma start ./karma.conf.js",
