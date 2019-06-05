@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import PropTypes from 'prop-types'
 import React from 'react'
 import {connect} from 'react-redux'
@@ -132,12 +133,9 @@ export class App extends React.Component {
         </UncontrolledUserMenu>
       )
     }
-    // eslint-disable-next-line no-nested-ternary
     const pageTitle = isSnapshot(location) ? 'Snapshot' :
-      isHotline(location) ? 'Hotline' :
-        'Dashboard'
+      isHotline(location) ? 'Hotline' : 'Dashboard'
 
-    // eslint-disable-next-line no-nested-ternary
     const buttons = isSnapshot(location) ? this.SnapshotButton() : isHotline(location) ? this.ScreeningButton() : this.dashBoardButtons()
 
     return (
