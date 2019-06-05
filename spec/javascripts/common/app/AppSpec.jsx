@@ -6,7 +6,6 @@ import * as IntakeConfig from 'common/config'
 import {CaresProvider, Page} from '@cwds/components'
 import {store} from 'store/configureStore'
 import {Provider} from 'react-redux'
-import {clear, resetPersonSearch} from 'actions/personCardActions'
 
 describe('App', () => {
   beforeEach(() => {
