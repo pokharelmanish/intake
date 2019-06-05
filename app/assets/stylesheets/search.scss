@@ -143,29 +143,25 @@
   font-size: 1rem;
 }
 
-.disabled-cursor {
-  color: $dark-grey;
-  pointer-events: none;
-  text-decoration: none;
-}
-
-.disabled-cursor:visited {
-  color: $dark-grey;
-}
-
+// scss-lint:disable ImportantRule
 .custom-tool-tip {
-  background-color: $medium-blue;
+  background-color: $medium-blue !important;
 
   &.place-top {
 
     &::after {
-      border-top-color: $medium-blue;
+      border-top-color: $medium-blue !important;
       border-top-style: solid;
       border-top-width: 6px;
     }
   }
 }
+// scss-lint:enable ImportantRule
 
 .search-results {
   text-align: center;
+}
+
+.sensitive-person {
+  cursor: pointer;
 }

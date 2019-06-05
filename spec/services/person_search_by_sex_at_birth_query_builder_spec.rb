@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe PersonSearchBySexAtBirth do
+describe PersonSearchBySexAtBirthQueryBuilder do
   let(:gender) { 'male' }
   let(:gender_query) { PersonSearchResultBuilder.new.gender_query }
   let(:params) do

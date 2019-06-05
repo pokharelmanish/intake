@@ -70,6 +70,10 @@ class BaseQueryBuilder
     @last_name.present? && @middle_name.blank? && @first_name.blank? && @suffix.present?
   end
 
+  def last_first_name_only?
+    @last_name.present? && @middle_name.blank? && @first_name.present?
+  end
+
   def build_query
     {
       size:  @size, track_scores: TRACK_SCORES, sort: sort, min_score: MIN_SCORE,
@@ -88,11 +92,11 @@ class BaseQueryBuilder
 
   def fields
     %w[id legacy_source_table first_name middle_name last_name name_suffix gender akas
-       date_of_birth date_of_death ssn languages races ethnicity client_counties
+       date_of_birth date_of_death ssn languages races ethnicity client_counties case_status
        addresses.id addresses.effective_start_date addresses.street_name addresses.street_number
        addresses.city addresses.county addresses.state_code addresses.zip addresses.type
        addresses.legacy_descriptor addresses.phone_numbers.number addresses.phone_numbers.type
-       csec.start_date csec.end_date csec.csec_code_id csec.description
+       csec.start_date csec.end_date csec.csec_code_id csec.description sp_county sp_phone
        legacy_descriptor highlight phone_numbers.id phone_numbers.number
        phone_numbers.type sensitivity_indicator race_ethnicity open_case_responsible_agency_code]
   end

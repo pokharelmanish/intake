@@ -7,7 +7,7 @@ class AgeNumberSelect extends React.Component {
     const {range, onChange} = this.props
     const number = Number(value)
     onChange(
-      'searchApproximateAge',
+      'approximateAge',
       number >= range.min && number <= range.max ? value : ''
     )
   }

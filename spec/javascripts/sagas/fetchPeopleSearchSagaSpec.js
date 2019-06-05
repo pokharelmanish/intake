@@ -24,7 +24,7 @@ describe('fetchPeopleSearch', () => {
     const error = 'Something went wrong'
     const size = 25
     const peopleSearchGenerator = fetchPeopleSearch(action)
-    const searchParams = {is_client_only: true, is_advanced_search_on: true, person_search_fields: {last_name: 'Doe'}, size: size}
+    const searchParams = {is_client_only: true, is_advanced_search_on: true, person_search_fields: {last_name: 'doe'}, size: size}
     expect(peopleSearchGenerator.next().value).toEqual(call(delay, 400))
     expect(peopleSearchGenerator.next(size).value).toEqual(
       select(selectSearchResultsCurrentRow)
@@ -43,7 +43,7 @@ describe('fetchPeopleSearch', () => {
       },
     }
     const peopleSearchGenerator = fetchPeopleSearch(action)
-    const searchParams = {is_client_only: true, is_advanced_search_on: true, person_search_fields: {last_name: 'Doe'}, size: size}
+    const searchParams = {is_client_only: true, is_advanced_search_on: true, person_search_fields: {last_name: 'doe'}, size: size}
     expect(peopleSearchGenerator.next().value).toEqual(call(delay, 400))
     expect(peopleSearchGenerator.next(size).value).toEqual(
       select(selectSearchResultsCurrentRow)
@@ -70,7 +70,7 @@ describe('getPeopleEffect', () => {
     })).toEqual(call(get, '/api/v1/people', {
       is_client_only: true,
       is_advanced_search_on: true,
-      person_search_fields: {first_name: 'John'},
+      person_search_fields: {first_name: 'john'},
       size: 25,
     }))
   })
@@ -85,7 +85,7 @@ describe('getPeopleEffect', () => {
       is_client_only: true,
       is_advanced_search_on: false,
       size: 25,
-      person_search_fields: {first_name: 'John', last_name: 'Doe'},
+      person_search_fields: {first_name: 'john', last_name: 'doe'},
       search_after: 'What even goes here?',
     }))
   })

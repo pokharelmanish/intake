@@ -30,7 +30,7 @@ describe('PersonCardHeader', () => {
 
     it('displays the flag if one is passed', () => {
       const component = renderComponent({informationFlag: 'Sensitive'})
-      const informationFlag = component.find('span').filter('.information-flag')
+      const informationFlag = component.find('div').filter('.information-flag-rounded')
       expect(informationFlag.exists()).toEqual(true)
       expect(informationFlag.text()).toEqual('Sensitive')
     })

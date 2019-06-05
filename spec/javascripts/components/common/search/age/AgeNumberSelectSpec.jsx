@@ -60,7 +60,7 @@ describe('AgeNumberSelect', () => {
             const component = render({value: '1', range: {min: 0, max: 1}, onChange})
             const selectField = component.find('SelectField')
             selectField.props().onChange({target: {value: '1'}})
-            expect(onChange).toHaveBeenCalledWith('searchApproximateAge', '1')
+            expect(onChange).toHaveBeenCalledWith('approximateAge', '1')
           })
         })
 
@@ -70,7 +70,7 @@ describe('AgeNumberSelect', () => {
             const component = render({value: '1', range: {min: 0, max: 2}, onChange})
             const selectField = component.find('SelectField')
             selectField.props().onChange({target: {value: '100'}})
-            expect(onChange).toHaveBeenCalledWith('searchApproximateAge', '')
+            expect(onChange).toHaveBeenCalledWith('approximateAge', '')
           })
         })
       })

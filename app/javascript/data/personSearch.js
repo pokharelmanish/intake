@@ -31,5 +31,13 @@ export const toAPIParams = fields => {
   return params
 }
 
+export const lowerCaseFieldValues = fields => {
+  const params = {}
+  Object.entries(fields).forEach(([key, value]) => {
+    params[key] = value.toLowerCase()
+  })
+  return params
+}
+
 export const PersonSearchFieldsPropType = PropTypes.shape(mapObject(SEARCH_PARAMS, () => PropTypes.string))
 export const PersonSearchFieldsDefaultProps = {personSearchFields: mapObject(SEARCH_PARAMS, () => '')}

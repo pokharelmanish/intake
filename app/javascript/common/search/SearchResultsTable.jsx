@@ -6,6 +6,7 @@ import {dateFormatter} from 'utils/dateFormatter'
 import {capitalizedStr} from 'utils/textFormatter'
 import {Link} from 'react-router'
 import ReactTooltip from 'react-tooltip'
+import {phoneNumberFormatter} from 'utils/phoneNumberFormatter'
 
 class SearchResultsTable extends Component {
   constructor() {
@@ -14,6 +15,10 @@ class SearchResultsTable extends Component {
       previousPage: -1,
     }
     this.fetchData = this.fetchData.bind(this)
+  }
+
+  componentDidUpdate() {
+    ReactTooltip.rebuild()
   }
 
   columns = [
@@ -34,10 +39,9 @@ class SearchResultsTable extends Component {
       Cell: (row) => {
         const person = row.original
         const id = person.legacyDescriptor && person.legacyDescriptor.legacy_id
-        const className = person.isSealed ? 'disabled-cursor' : ''
         return (
           <div>
-            <Link className={className} to={`/snapshot/detail/${id}`}>{person.fullName}</Link>
+            {<Link to={`/snapshot/detail/${id}`}>{person.fullName}</Link>}
             {person.isSensitive && <span data-tip="Sensitive">&nbsp;<i className="fa fa-circle search-information-flag" aria-hidden="true"/></span>}
             {person.isSealed && <span data-tip="Sealed">&nbsp;<i className="fa fa-circle search-information-flag" aria-hidden="true"/></span>}
             <ReactTooltip className="custom-tool-tip" />
@@ -57,11 +61,12 @@ class SearchResultsTable extends Component {
     },
     {
       Header: 'Service Provider County',
-      accessor: null,
+      accessor: 'spCounty',
     },
     {
       Header: 'Service Provider Phone',
-      accessor: null,
+      accessor: 'spPhone',
+      Cell: (row) => phoneNumberFormatter(row.original.spPhone),
     },
     {
       id: 'address',
@@ -75,7 +80,7 @@ class SearchResultsTable extends Component {
     },
     {
       Header: 'Case Status',
-      accessor: null,
+      accessor: 'caseStatus',
     },
   ]
 

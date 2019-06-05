@@ -1,8 +1,17 @@
 import React from 'react'
 import SearchResultsTable from 'common/search/SearchResultsTable'
 import {mount} from 'enzyme'
+import ReactTooltip from 'react-tooltip'
 
-const render = ({resultsSubset = [], setCurrentPageNumber = () => {}, setCurrentRowNumber = () => {}, onLoadMoreResults = () => {}, personSearchFields = {}} = {}) => {
+const render = (
+  {
+    resultsSubset = [],
+    setCurrentPageNumber = () => {},
+    setCurrentRowNumber = () => {},
+    onLoadMoreResults = () => {},
+    personSearchFields = {},
+    currentRow = 25,
+  } = {}) => {
   return mount(
     <SearchResultsTable
       resultsSubset={resultsSubset}
@@ -10,6 +19,7 @@ const render = ({resultsSubset = [], setCurrentPageNumber = () => {}, setCurrent
       setCurrentRowNumber={setCurrentRowNumber}
       onLoadMoreResults={onLoadMoreResults}
       personSearchFields={personSearchFields}
+      currentRow={currentRow}
     />, {disableLifecycleMethods: true})
 }
 
@@ -17,6 +27,9 @@ describe('SearchResultsTable', () => {
   const defaultMockedResults = [
     {
       'gender': 'female',
+      'caseStatus': 'Closed',
+      'spCounty': 'pokhara',
+      'spPhone': '111-111-1111',
       'isSealed': true,
       'address': {
         'city': 'Lake Elsinore',
@@ -34,6 +47,8 @@ describe('SearchResultsTable', () => {
     },
     {
       'gender': 'female',
+      'spCounty': 'pokhara',
+      'spPhone': '111-111-1111',
       'isSensitive': true,
       'clientCounties': [
         'Los Angeles',
@@ -45,6 +60,8 @@ describe('SearchResultsTable', () => {
     },
     {
       'gender': 'unknown',
+      'spCounty': 'pokhara',
+      'spPhone': '111-111-1111',
       'address': {
         'city': 'King City',
         'state': 'CA',
@@ -61,6 +78,8 @@ describe('SearchResultsTable', () => {
     },
     {
       'gender': 'male',
+      'spCounty': 'pokhara',
+      'spPhone': '111-111-1111',
       'address': null,
       'phoneNumber': null,
       'dateOfBirth': '1994-05-14',
@@ -68,6 +87,8 @@ describe('SearchResultsTable', () => {
     },
     {
       'gender': 'male',
+      'spCounty': 'pokhara',
+      'spPhone': '111-111-1111',
       'address': {
         'city': 'town',
         'state': 'CA',
@@ -81,6 +102,8 @@ describe('SearchResultsTable', () => {
     },
     {
       'gender': 'male',
+      'spCounty': 'pokhara',
+      'spPhone': '111-111-1111',
       'address': {
         'city': 'town',
         'state': 'CA',
@@ -124,10 +147,10 @@ describe('SearchResultsTable', () => {
       expect(cell.at(1).find('a').text()).toEqual('Sarah Timson')
       expect(cell.at(2).text()).toEqual('01/03/2005')
       expect(cell.at(3).text()).toEqual('Female')
-      expect(cell.at(4).text()).toEqual('')
-      expect(cell.at(5).text()).toEqual('')
+      expect(cell.at(4).text()).toEqual('pokhara')
+      expect(cell.at(5).text()).toEqual('(111) 111-1111')
       expect(cell.at(6).text()).toEqual('4451 Anniversary Parkway, Lake Elsinore, CA 92530')
-      expect(cell.at(7).text()).toEqual('')
+      expect(cell.at(7).text()).toEqual('Closed')
     })
   })
 
@@ -187,10 +210,10 @@ describe('SearchResultsTable', () => {
   })
 
   describe('Sealed', () => {
-    it('disable Name Link', () => {
+    it('renders Link', () => {
       const row = component.find('div.rt-tr-group').at(0)
       const cell = row.find('div.rt-td')
-      expect(cell.find('Link').props().className).toEqual('disabled-cursor')
+      expect(cell.find('Link').exists()).toBe(true)
     })
 
     it('render client with tooltip', () => {
@@ -207,6 +230,15 @@ describe('SearchResultsTable', () => {
       const cell = row.find('div.rt-td')
       expect(cell.find('span').html()).toContain('Sensitive')
       expect(cell.find('span i').exists()).toBe(true)
+    })
+  })
+
+  describe('ComponentDidUpdate', () => {
+    it('rebuild reacttooltip', () => {
+      const rebuild = spyOn(ReactTooltip, 'rebuild')
+      const currentRow = 10
+      component.setProps({currentRow: currentRow})
+      expect(rebuild).toHaveBeenCalled()
     })
   })
 })

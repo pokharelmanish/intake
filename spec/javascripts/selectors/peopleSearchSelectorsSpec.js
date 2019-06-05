@@ -94,6 +94,9 @@ describe('peopleSearchSelectors', () => {
               middle_name: 'Jacqueline',
               name_suffix: 'md',
               gender: 'female',
+              case_status: 'N/A',
+              sp_county: 'pokhara',
+              sp_phone: '111-111-1111',
               akas: [],
               languages: [{id: '3'}, {id: '2'}],
               race_ethnicity: {
@@ -160,6 +163,9 @@ describe('peopleSearchSelectors', () => {
             legacy_id: '1',
             fullName: 'Bart Jacqueline Simpson, MD',
             gender: 'female',
+            caseStatus: 'N/A',
+            spCounty: 'pokhara',
+            spPhone: '111-111-1111',
             akaFullName: null,
             legacyDescriptor: {
               legacy_ui_id: '123-456-789',
@@ -1032,6 +1038,9 @@ describe('peopleSearchSelectors', () => {
               middle_name: 'Jacqueline',
               name_suffix: 'md',
               gender: 'female',
+              case_status: 'N/A',
+              sp_county: 'pokhara',
+              sp_phone: '111-111-1111',
               akas: [],
               languages: [{id: '3'}, {id: '2'}],
               race_ethnicity: {
@@ -1069,6 +1078,9 @@ describe('peopleSearchSelectors', () => {
               middle_name: 'Jacqueline',
               name_suffix: 'md',
               gender: 'female',
+              case_status: 'Open',
+              sp_county: 'pokhara',
+              sp_phone: '111-111-1111',
               akas: [],
               languages: [{id: '3'}, {id: '2'}],
               race_ethnicity: {
@@ -1106,6 +1118,9 @@ describe('peopleSearchSelectors', () => {
               middle_name: 'Jacqueline',
               name_suffix: 'md',
               gender: 'female',
+              case_status: 'Closed',
+              sp_county: 'pokhara',
+              sp_phone: '111-111-1111',
               akas: [],
               languages: [{id: '3'}, {id: '2'}],
               race_ethnicity: {
@@ -1143,6 +1158,9 @@ describe('peopleSearchSelectors', () => {
               middle_name: 'Jacqueline',
               name_suffix: 'md',
               gender: 'female',
+              case_status: 'Closed',
+              sp_county: 'pokhara',
+              sp_phone: '111-111-1111',
               akas: [],
               languages: [{id: '3'}, {id: '2'}],
               race_ethnicity: {
@@ -1180,6 +1198,9 @@ describe('peopleSearchSelectors', () => {
               middle_name: 'Jacqueline',
               name_suffix: 'md',
               gender: 'female',
+              case_status: 'Closed',
+              sp_county: 'pokhara',
+              sp_phone: '111-111-1111',
               akas: [],
               languages: [{id: '3'}, {id: '2'}],
               race_ethnicity: {
@@ -1217,6 +1238,9 @@ describe('peopleSearchSelectors', () => {
               middle_name: 'Jacqueline',
               name_suffix: 'md',
               gender: 'female',
+              case_status: 'Closed',
+              sp_county: 'pokhara',
+              sp_phone: '111-111-1111',
               akas: [],
               languages: [{id: '3'}, {id: '2'}],
               race_ethnicity: {
@@ -1257,6 +1281,9 @@ describe('peopleSearchSelectors', () => {
           legacy_id: '1',
           fullName: 'Bart Jacqueline Simpson, MD',
           gender: 'female',
+          caseStatus: 'N/A',
+          spCounty: 'pokhara',
+          spPhone: '111-111-1111',
           akaFullName: null,
           legacyDescriptor: {
             legacy_ui_id: '123-456-789',
@@ -1283,6 +1310,9 @@ describe('peopleSearchSelectors', () => {
           legacy_id: '2',
           fullName: 'Bart Jacqueline Simpson, MD',
           gender: 'female',
+          caseStatus: 'Open',
+          spCounty: 'pokhara',
+          spPhone: '111-111-1111',
           akaFullName: null,
           legacyDescriptor: {
             legacy_ui_id: '123-456-789',
@@ -1309,6 +1339,9 @@ describe('peopleSearchSelectors', () => {
           legacy_id: '3',
           fullName: 'Bart Jacqueline Simpson, MD',
           gender: 'female',
+          caseStatus: 'Closed',
+          spCounty: 'pokhara',
+          spPhone: '111-111-1111',
           akaFullName: null,
           legacyDescriptor: {
             legacy_ui_id: '123-456-789',
@@ -1335,6 +1368,9 @@ describe('peopleSearchSelectors', () => {
           legacy_id: '4',
           fullName: 'Bart Jacqueline Simpson, MD',
           gender: 'female',
+          caseStatus: 'Closed',
+          spCounty: 'pokhara',
+          spPhone: '111-111-1111',
           akaFullName: null,
           legacyDescriptor: {
             legacy_ui_id: '123-456-789',
@@ -1361,6 +1397,9 @@ describe('peopleSearchSelectors', () => {
           legacy_id: '5',
           fullName: 'Bart Jacqueline Simpson, MD',
           gender: 'female',
+          caseStatus: 'Closed',
+          spCounty: 'pokhara',
+          spPhone: '111-111-1111',
           akaFullName: null,
           legacyDescriptor: {
             legacy_ui_id: '123-456-789',

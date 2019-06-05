@@ -5,7 +5,7 @@ import {logEvent} from 'utils/analytics'
 import {PEOPLE_SEARCH_FETCH, fetchSuccess, fetchFailure} from 'actions/peopleSearchActions'
 import {getStaffIdSelector} from 'selectors/userInfoSelectors'
 import {selectSearchResultsCurrentRow} from 'selectors/peopleSearchSelectors'
-import {toAPIParams} from 'data/personSearch'
+import {toAPIParams, lowerCaseFieldValues} from 'data/personSearch'
 
 const removeFalsy = (params) => {
   const newObj = {}
@@ -17,7 +17,7 @@ const removeFalsy = (params) => {
 
 const personSearchParams = (personSearchFields) => {
   if (!personSearchFields) { return {} }
-  return {person_search_fields: removeFalsy(toAPIParams(personSearchFields))}
+  return {person_search_fields: lowerCaseFieldValues(removeFalsy(toAPIParams(personSearchFields)))}
 }
 
 const searchAfterParams = (sort) => (sort ? {search_after: sort} : {})

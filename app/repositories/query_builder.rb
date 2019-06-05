@@ -15,27 +15,51 @@ class QueryBuilder < BaseQueryBuilder
   end
 
   def self.build_advanced_search(builder)
-    advanced_search_by_name_query(builder)
-    advanced_search_by_age_query(builder)
-    builder.extend(PersonSearchBySexAtBirth).build_query(builder)
+    search_by_name(builder)
+    search_by_age_query(builder)
+    search_by_sex_at_birth(builder)
   end
 
-  def self.advanced_search_by_name_query(builder)
+  def self.search_by_name(builder)
     if builder.last_name_only?
-      builder.extend(PersonSearchByLastNameQueryBuilder).build_query(builder)
+      search_by_last_name(builder)
     elsif builder.last_name_and_suffix_only?
-      builder.extend(PersonSearchByLastNameSuffixQueryBuilder).build_query(builder)
+      search_by_last_name_and_suffix(builder)
+    elsif builder.last_first_name_only?
+      search_by_last_and_first_name(builder)
     else
-      builder.extend(PersonSearchByNameQueryBuilderPartOne).build_query(builder)
-      builder.extend(PersonSearchByNameQueryBuilderPartTwo).build_query(builder)
+      search_by_last_middle_and_first_name(builder)
     end
   end
 
-  def self.advanced_search_by_age_query(builder)
+  def self.search_by_last_name(builder)
+    builder.extend(PersonSearchByLastNameQueryBuilder).build_query(builder)
+  end
+
+  def self.search_by_last_name_and_suffix(builder)
+    builder.extend(PersonSearchByLastNameSuffixQueryBuilder).build_query(builder)
+  end
+
+  def self.search_by_last_and_first_name(builder)
+    builder.extend(PersonSearchByLastFirstNameQueryBuilderPartOne).build_query(builder)
+    builder.extend(PersonSearchByLastFirstNameQueryBuilderPartTwo).build_query(builder)
+  end
+
+  def self.search_by_last_middle_and_first_name(builder)
+    builder.extend(PersonSearchByLastMiddleFirstNameQueryBuilderPartOne).build_query(builder)
+    builder.extend(PersonSearchByLastMiddleFirstNameQueryBuilderPartTwo).build_query(builder)
+    builder.extend(PersonSearchByLastMiddleFirstNameQueryBuilderPartThree).build_query(builder)
+  end
+
+  def self.search_by_age_query(builder)
     if builder.age_search_method == 'dob'
       builder.extend(PersonSearchByDateOfBirthQueryBuilder).build_query(builder)
     elsif builder.age_search_method == 'approximate'
       builder.extend(PersonSearchByApproximateAgeQueryBuilder).build_query(builder)
     end
+  end
+
+  def self.search_by_sex_at_birth(builder)
+    builder.extend(PersonSearchBySexAtBirthQueryBuilder).build_query(builder)
   end
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# PersonSearchBySexOfBirth is a service class responsible for creation
+# PersonSearchBySexOfBirthQueryBuilder is a service class responsible for creation
 # of an elastic search person search query
-module PersonSearchBySexAtBirth
+module PersonSearchBySexAtBirthQueryBuilder
   attr_reader :gender
 
   include QueryBuilderHelper

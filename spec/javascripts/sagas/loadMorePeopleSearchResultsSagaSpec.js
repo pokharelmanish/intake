@@ -38,7 +38,7 @@ describe('loadMorePeopleSearch', () => {
     const searchParams = {
       is_client_only: true,
       is_advanced_search_on: true,
-      person_search_fields: {last_name: 'Doe'},
+      person_search_fields: {last_name: 'doe'},
       size: size,
       search_after: lastResultSort,
     }
@@ -65,7 +65,7 @@ describe('loadMorePeopleSearch', () => {
     expect(peopleSeachGenerator.next(lastResultSort).value).toEqual(call(get, '/api/v1/people', {
       is_client_only: true,
       is_advanced_search_on: true,
-      person_search_fields: {last_name: 'Doe'},
+      person_search_fields: {last_name: 'doe'},
       size: size,
       search_after: lastResultSort,
     }))

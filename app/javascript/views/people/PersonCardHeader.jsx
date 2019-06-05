@@ -7,7 +7,7 @@ const PersonCardHeader = ({informationFlag, title, onDelete, onEdit, information
   <CardHeader>
     <CardTitle>{title}</CardTitle>
     { informationPill && <div className='information-flag-rounded'>{informationPill}</div>}
-    { informationFlag && <span className='information-flag'>{informationFlag}</span>}
+    { informationFlag && <div className='information-flag-rounded'>{informationFlag}</div>}
     <div className='edit-remove'>
       { showEdit &&
       <EditLink

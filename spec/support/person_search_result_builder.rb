@@ -7,11 +7,14 @@ require 'support/helpers/person_search_ssn_query_builder_helper'
 require 'support/helpers/person_search_by_name_query_builder_helper'
 require 'support/helpers/person_search_by_last_name_query_builder_helper'
 require 'support/helpers/person_search_by_last_name_suffix_query_builder_helper'
-require 'support/helpers/person_search_by_name_query_builder_part_one_helper'
-require 'support/helpers/person_search_by_name_query_builder_part_two_helper'
+require 'support/helpers/person_search_by_last_first_name_query_builder_part_one_helper'
+require 'support/helpers/person_search_by_last_first_name_query_builder_part_two_helper'
+require 'support/helpers/person_search_by_last_middle_first_name_query_builder_part_one_helper'
+require 'support/helpers/person_search_by_last_middle_first_name_query_builder_part_two_helper'
+require 'support/helpers/person_search_by_last_middle_first_name_query_builder_part_three_helper'
 require 'support/helpers/person_search_by_date_of_birth_query_builder_helper'
 require 'support/helpers/person_search_by_approximate_age_query_builder_helper'
-require 'support/helpers/person_search_gender_query_builder_helper'
+require 'support/helpers/person_search_by_sex_at_birth_query_builder_helper'
 
 class PersonSearchResultBuilder
   include QueryBuilderHelper
@@ -20,11 +23,14 @@ class PersonSearchResultBuilder
   include PersonSearchByNameQueryBuilderHelper
   include PersonSearchByLastNameQueryBuilderHelper
   include PersonSearchByLastNameSuffixQueryBuilderHelper
-  include PersonSearchByNameQueryBuilderPartOneHelper
-  include PersonSearchByNameQueryBuilderPartTwoHelper
+  include PersonSearchByLastFirstNameQueryBuilderPartOneHelper
+  include PersonSearchByLastFirstNameQueryBuilderPartTwoHelper
+  include PersonSearchByLastMiddleFirstNameQueryBuilderPartOneHelper
+  include PersonSearchByLastMiddleFirstNameQueryBuilderPartTwoHelper
+  include PersonSearchByLastMiddleFirstNameQueryBuilderPartThreeHelper
   include PersonSearchByDateOfBirthQueryBuilderHelper
   include PersonSearchByApproximateAgeQueryBuilderHelper
-  include PersonSearchGenderQueryBuilderHelper
+  include PersonSearchBySexAtBirthQueryBuilderHelper
 
   attr_reader :search_result
 
@@ -40,6 +46,7 @@ class PersonSearchResultBuilder
         legacy_source_table: '',
         first_name: '',
         gender: '',
+        case_status: '',
         akas: [],
         last_name: '',
         middle_name: '',
@@ -54,6 +61,8 @@ class PersonSearchResultBuilder
         }],
         addresses: [],
         csec: [],
+        sp_county: '',
+        sp_phone: '',
         date_of_birth: '',
         legacy_descriptor: {},
         sensitivity_indicator: ''

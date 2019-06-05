@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module PersonSearchByDateOfBirthQueryBuilderHelper
-  def date_of_birth_query
+module PersonSearchBySexAtBirthQueryBuilderHelper
+  def gender_query
     query = {
       "bool": {
         "must": [
           {
             "query_string": {
-              "default_field": 'date_of_birth_as_text',
-              "query": '05051989',
-              "boost": '14'
+              "default_field": 'gender',
+              "query": 'male',
+              "boost": '1'
             }
           }
         ]

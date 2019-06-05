@@ -23,6 +23,24 @@ module QueryBuilderHelper
     { field: field, query: query, name: name, min_s_m: min_s_m }.delete_if { |_k, v| v.blank? }
   end
 
+  def last_name_params(name)
+    generate_match_params('last_name', last_name, name, nil)
+  end
+
+  def middle_name_params(name)
+    generate_match_params('middle_name', middle_name, name, nil)
+  end
+
+  def first_name_params(name)
+    generate_match_params('first_name', first_name, name, nil)
+  end
+
+  def match_last_name(name)
+    last_name_params = last_name_params(name)
+    param_list = [last_name_params]
+    match_query_list(param_list)
+  end
+
   def generate_query_params(params)
     {
       query: params[:query], value: params[:value], operator: params[:operator],
@@ -68,21 +86,27 @@ module QueryBuilderHelper
     { multi_match: multi_match_params }
   end
 
-  def filter_query(queries: nil, not_queries: nil, weight: nil, bool_query: nil)
-    return if queries.blank?
-    b = not_queries.nil? ? { must: queries } : { must: queries, must_not: not_queries }
-    f = bool_query ? { bool: b } : queries
+  def filter_query(queries: nil, weight: nil, bool_query: nil, min_s_m: nil)
+    must_queries = queries[:must_queries]
+    not_queries = queries[:not_queries]
+    should_queries = queries[:should_queries]
+    return if must_queries.blank? && not_queries.blank? && should_queries.blank?
+    b = { must: must_queries, must_not: not_queries, should: should_queries,
+          minimum_should_match: min_s_m }.delete_if { |_k, v| v.blank? }
+    f = bool_query ? { bool: b } : must_queries
     { filter: f, weight: weight }.delete_if { |_k, v| v.blank? }
   end
 
   def function_score_queries(param_list)
-    queries = []
+    query_list = []
     param_list.each do |hash|
-      params = { queries: hash[:q], not_queries: hash[:not_q],
-                 weight: hash[:w], bool_query: hash[:bq] }.delete_if { |_k, v| v.blank? }
+      queries = { must_queries: hash[:q], not_queries: hash[:not_q],
+                  should_queries: hash[:should_q] }
+      params = { queries: queries, weight: hash[:w], bool_query: hash[:bq],
+                 min_s_m: hash[:min_s_m] }.delete_if { |_k, v| v.blank? }
       fq = filter_query(params)
-      queries.push(fq)
+      query_list.push(fq)
     end
-    queries.flatten.compact
+    query_list.flatten.compact
   end
 end

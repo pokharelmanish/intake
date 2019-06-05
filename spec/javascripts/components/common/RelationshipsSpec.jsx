@@ -1,4 +1,3 @@
-import AttachLink from 'common/relationship/AttachLink'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {EmptyRelationships, Relationships} from 'common/Relationships'
@@ -310,32 +309,17 @@ describe('Relationships for Snapshot', () => {
       people,
       participants,
       pendingPeople,
-    }).find(AttachLink)
-    expect(component.length).toBe(4)
-    expect(component.at(0).prop('relationship')).toEqual({
-      name: 'Jane Johnson',
-      type: 'mother',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '1'},
     })
-    expect(component.at(1).prop('relationship')).toEqual({
-      name: 'Jim Johnson',
-      type: 'father',
-      person_card_exists: false,
-      legacy_descriptor: {legacy_id: '2'},
-    })
-    expect(component.at(2).prop('relationship')).toEqual({
-      name: 'Nate Starbringer',
-      type: 'son',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '4'},
-    })
-    expect(component.at(3).prop('relationship')).toEqual({
-      name: 'Sally Jones',
-      type: 'daughter',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '3'},
-    })
+    const relationships = component.find('li.person-relationship')
+    expect(relationships.length).toBe(4)
+    expect(relationships.at(0).find('.relationship-type').text()).toEqual('mother')
+    expect(relationships.at(0).find('.relationship-name').text()).toEqual('Jane Johnson')
+    expect(relationships.at(1).find('.relationship-type').text()).toEqual('father')
+    expect(relationships.at(1).find('.relationship-name').text()).toEqual('Jim Johnson')
+    expect(relationships.at(2).find('.relationship-type').text()).toEqual('son')
+    expect(relationships.at(2).find('.relationship-name').text()).toEqual('Nate Starbringer')
+    expect(relationships.at(3).find('.relationship-type').text()).toEqual('daughter')
+    expect(relationships.at(3).find('.relationship-name').text()).toEqual('Sally Jones')
   })
 
   it('renders relationships with sealed information flag when isSealed is true', () => {
@@ -359,19 +343,7 @@ describe('Relationships for Snapshot', () => {
       people,
       participants,
       pendingPeople,
-    })
-    expect(
-      component
-        .find(AttachLink)
-        .at(0)
-        .prop('relationship')
-    ).toEqual({
-      name: 'Jane Johnson',
-      type: 'mother',
-      person_card_exists: true,
-      isSealed: true,
-      legacy_descriptor: {legacy_id: '1'},
-    })
+    }).find('.information-flag')
     expect(component.at(0).html()).toContain(
       '<span class="information-flag search-result">Sealed</span>'
     )
@@ -399,19 +371,9 @@ describe('Relationships for Snapshot', () => {
       participants,
       pendingPeople,
     })
-
-    expect(
-      component
-        .find(AttachLink)
-        .at(0)
-        .prop('relationship')
-    ).toEqual({
-      name: 'Jane Johnson',
-      type: 'mother',
-      person_card_exists: true,
-      isSealed: false,
-      legacy_descriptor: {legacy_id: '1'},
-    })
+    const relationships = component.find('li.person-relationship')
+    expect(relationships.at(0).find('.relationship-type').text()).toEqual('mother')
+    expect(relationships.at(0).find('.relationship-name').text()).toEqual('Jane Johnson')
     expect(component.at(0).html()).not.toContain(
       '<span class="information-flag search-result">Sealed</span>'
     )
@@ -439,19 +401,9 @@ describe('Relationships for Snapshot', () => {
       participants,
       pendingPeople,
     })
-
-    expect(
-      component
-        .find(AttachLink)
-        .at(0)
-        .prop('relationship')
-    ).toEqual({
-      name: 'Jane Johnson',
-      type: 'mother',
-      person_card_exists: true,
-      isSensitive: true,
-      legacy_descriptor: {legacy_id: '1'},
-    })
+    const relationships = component.find('li.person-relationship')
+    expect(relationships.at(0).find('.relationship-type').text()).toEqual('mother')
+    expect(relationships.at(0).find('.relationship-name').text()).toEqual('Jane Johnson')
     expect(component.at(0).html()).toContain(
       '<span class="information-flag search-result">Sensitive</span>'
     )
@@ -479,232 +431,12 @@ describe('Relationships for Snapshot', () => {
       participants,
       pendingPeople,
     })
-
-    expect(
-      component
-        .find(AttachLink)
-        .at(0)
-        .prop('relationship')
-    ).toEqual({
-      name: 'Jane Johnson',
-      type: 'mother',
-      person_card_exists: true,
-      isSensitive: false,
-      legacy_descriptor: {legacy_id: '1'},
-    })
+    const relationships = component.find('li.person-relationship')
+    expect(relationships.at(0).find('.relationship-type').text()).toEqual('mother')
+    expect(relationships.at(0).find('.relationship-name').text()).toEqual('Jane Johnson')
     expect(component.at(0).html()).not.toContain(
       '<span class="information-flag search-result">Sealed</span>'
     )
-  })
-
-  it('renders Age & Age_Units for each person', () => {
-    const participants = []
-    const pendingPeople = []
-    const people = [
-      {
-        name: 'Sally Jones',
-        relationships: [
-          {
-            name: 'Jane Johnson',
-            type: 'mother',
-            age: '(30 yrs)',
-            person_card_exists: true,
-            legacy_descriptor: {legacy_id: '1'},
-          },
-        ],
-      },
-      {
-        name: 'Nate Starbringer',
-        relationships: [
-          {
-            name: 'Jim Johnson',
-            type: 'father',
-            age: '(30 yrs)',
-            person_card_exists: false,
-            legacy_descriptor: {legacy_id: '2'},
-          },
-        ],
-      },
-      {
-        name: 'Jim Johnson',
-        relationships: [
-          {
-            name: 'Nate Starbringer',
-            type: 'son',
-            age: '(20 yrs)',
-            person_card_exists: true,
-            legacy_descriptor: {legacy_id: '4'},
-          },
-          {
-            name: 'Sally Jones',
-            type: 'daughter',
-            age: '(10 yrs)',
-            person_card_exists: true,
-            legacy_descriptor: {legacy_id: '3'},
-          },
-        ],
-      },
-    ]
-    const component = renderRelationships({
-      people,
-      participants,
-      pendingPeople,
-    }).find(AttachLink)
-
-    expect(component.length).toBe(4)
-    expect(component.at(0).prop('relationship')).toEqual({
-      name: 'Jane Johnson',
-      type: 'mother',
-      age: '(30 yrs)',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '1'},
-    })
-    expect(component.at(1).prop('relationship')).toEqual({
-      name: 'Jim Johnson',
-      type: 'father',
-      age: '(30 yrs)',
-      person_card_exists: false,
-      legacy_descriptor: {legacy_id: '2'},
-    })
-    expect(component.at(2).prop('relationship')).toEqual({
-      name: 'Nate Starbringer',
-      type: 'son',
-      age: '(20 yrs)',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '4'},
-    })
-    expect(component.at(3).prop('relationship')).toEqual({
-      name: 'Sally Jones',
-      type: 'daughter',
-      age: '(10 yrs)',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '3'},
-    })
-  })
-
-  it('hides Attach link for people in the pending list', () => {
-    const participants = []
-    const pendingPeople = ['1']
-    const people = [
-      {
-        name: 'Sally Jones',
-        relationships: [
-          {
-            name: 'Jane Johnson',
-            type: 'mother',
-            person_card_exists: true,
-            legacy_descriptor: {legacy_id: '1'},
-          },
-        ],
-      },
-      {
-        name: 'Nate Starbringer',
-        relationships: [
-          {
-            name: 'Jim Johnson',
-            type: 'father',
-            person_card_exists: true,
-            legacy_descriptor: {legacy_id: '2'},
-          },
-        ],
-      },
-    ]
-    const attachLinks = renderRelationships({
-      people,
-      participants,
-      pendingPeople,
-    }).find(AttachLink)
-
-    expect(attachLinks.length).toBe(2)
-    expect(attachLinks.at(0).prop('relationship')).toEqual({
-      name: 'Jane Johnson',
-      type: 'mother',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '1'},
-    })
-    expect(attachLinks.at(1).prop('relationship')).toEqual({
-      name: 'Jim Johnson',
-      type: 'father',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '2'},
-    })
-    expect(
-      attachLinks
-        .at(0)
-        .dive()
-        .find('a')
-        .exists()
-    ).toBe(false)
-    expect(
-      attachLinks
-        .at(1)
-        .dive()
-        .find('a')
-        .exists()
-    ).toBe(true)
-  })
-
-  it('hides Attach link for people in the participants list', () => {
-    const participants = ['2']
-    const pendingPeople = []
-    const people = [
-      {
-        name: 'Sally Jones',
-        relationships: [
-          {
-            name: 'Jane Johnson',
-            type: 'mother',
-            person_card_exists: true,
-            legacy_descriptor: {legacy_id: '1'},
-          },
-        ],
-      },
-      {
-        name: 'Nate Starbringer',
-        relationships: [
-          {
-            name: 'Jim Johnson',
-            type: 'father',
-            person_card_exists: true,
-            legacy_descriptor: {legacy_id: '2'},
-          },
-        ],
-      },
-    ]
-
-    const attachLinks = renderRelationships({
-      people,
-      participants,
-      pendingPeople,
-    }).find(AttachLink)
-
-    expect(attachLinks.length).toBe(2)
-    expect(attachLinks.at(0).prop('relationship')).toEqual({
-      name: 'Jane Johnson',
-      type: 'mother',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '1'},
-    })
-    expect(attachLinks.at(1).prop('relationship')).toEqual({
-      name: 'Jim Johnson',
-      type: 'father',
-      person_card_exists: true,
-      legacy_descriptor: {legacy_id: '2'},
-    })
-    expect(
-      attachLinks
-        .at(0)
-        .dive()
-        .find('a')
-        .exists()
-    ).toBe(true)
-    expect(
-      attachLinks
-        .at(1)
-        .dive()
-        .find('a')
-        .exists()
-    ).toBe(false)
   })
 })
 
