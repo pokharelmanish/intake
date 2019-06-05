@@ -41,56 +41,55 @@ describe('InputField', () => {
       expect(formField.props().label).toEqual('this is my label')
       expect(formField.props().errors).toEqual([])
       expect(formField.props().required).toEqual(false)
-      expect(formField.childAt(0).getElement().type).toEqual('input')
       expect(formField.props().disabled).toEqual(false)
     })
 
     it('renders the input placeholder', () => {
-      const inputElement = component.find('input')
+      const inputElement = component.find('Input')
       expect(inputElement.props().placeholder).toEqual('This is some placeholder text...')
     })
 
     it('renders the input value', () => {
-      const inputElement = component.find('input')
+      const inputElement = component.find('Input')
       expect(inputElement.props().value).toEqual('this is my field value')
     })
 
     it('renders the input type', () => {
-      const inputElement = component.find('input')
+      const inputElement = component.find('Input')
       const inputElementWithType = shallow(
         <InputField {...props} type='tel' onChange={onChange} onBlur={onBlur}/>, {disableLifecycleMethods: true}
-      ).find('input')
+      ).find('Input')
 
       expect(inputElement.props().type).toEqual('text')
       expect(inputElementWithType.props().type).toEqual('tel')
     })
 
     it('renders the input length', () => {
-      const inputElement = component.find('input')
+      const inputElement = component.find('Input')
       expect(inputElement.props().maxLength).toEqual('125')
     })
 
     it('calls onChange when a change event occurs on input field', () => {
-      const inputElement = component.find('input')
+      const inputElement = component.find('Input')
       inputElement.simulate('change', {target: {value: 'hola mundo'}})
       expect(onChange).toHaveBeenCalledWith({target: {value: 'hola mundo'}})
     })
 
     it('calls onKeyPress when Enter is pressed', () => {
-      const inputElement = component.find('input')
+      const inputElement = component.find('Input')
       inputElement.simulate('keypress', {charCode: 13})
       expect(onKeyPress).toHaveBeenCalled()
     })
 
     it('sanitizes the call to onChange when an allowCharacters pattern is given', () => {
       component.setProps({allowCharacters: /[a-zA-Z\s-]/})
-      const inputElement = component.find('input')
+      const inputElement = component.find('Input')
       inputElement.simulate('change', {target: {value: 'hola mu-ndo239847%^#@$?'}})
       expect(onChange).toHaveBeenCalledWith({target: {value: 'hola mu-ndo'}})
     })
 
     it('calls onBlur when a blur event occurs on input field', () => {
-      const inputElement = component.find('input')
+      const inputElement = component.find('Input')
       inputElement.simulate('blur')
       expect(onBlur).toHaveBeenCalled()
     })
@@ -104,7 +103,7 @@ describe('InputField', () => {
     it('renders an input field', () => {
       expect(component.find('label.required').exists()).toEqual(false)
       expect(component.find('FormField').props().required).toEqual(false)
-      expect(typeof component.find('input').prop('onKeyPress')).toEqual('function')
+      expect(typeof component.find('Input').prop('onKeyPress')).toEqual('function')
     })
   })
 
@@ -115,9 +114,9 @@ describe('InputField', () => {
 
     it('renders a required input field', () => {
       expect(component.find('FormField').props().required).toEqual(true)
-      expect(component.find('input').prop('required')).toEqual(true)
-      expect(component.find('input').prop('aria-required')).toEqual(true)
-      expect(typeof component.find('input').prop('onKeyPress')).toEqual('function')
+      expect(component.find('Input').prop('required')).toEqual(true)
+      expect(component.find('Input').prop('aria-required')).toEqual(true)
+      expect(typeof component.find('Input').prop('onKeyPress')).toEqual('function')
     })
   })
 
@@ -128,7 +127,7 @@ describe('InputField', () => {
 
     it('renders a disabled input field', () => {
       expect(component.find('FormField').props().disabled).toEqual(true)
-      expect(component.find('input').prop('disabled')).toEqual(true)
+      expect(component.find('Input').prop('disabled')).toEqual(true)
     })
   })
 })

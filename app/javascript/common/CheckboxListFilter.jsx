@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import {Input} from '@cwds/components'
 
 export default class CheckboxListFilter extends React.Component {
   constructor() {
@@ -31,7 +32,7 @@ export default class CheckboxListFilter extends React.Component {
           {
             Object.keys(collection).map((item) => (
               <li key={item}>
-                <input
+                <Input
                   id={`${name}-${item}`}
                   type='checkbox'
                   checked={(selected || []).includes(item)}

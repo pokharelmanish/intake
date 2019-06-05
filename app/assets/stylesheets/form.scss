@@ -6,12 +6,6 @@
 
 /////////////////////////////////////////
 
-input,
-textarea:required {
-  box-shadow: none;
-}
-
-input,
 textarea,
 select {
   -moz-appearance: none;
@@ -33,7 +27,6 @@ select {
   width: 100%;
 }
 
-input:focus,
 textarea:focus,
 select:focus {
   box-shadow: 0 0 3px $medium-blue, 0 0 7px $medium-blue;
@@ -78,92 +71,6 @@ legend {
   margin-bottom: 0;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
-  clip: rect(1px, 1px, 1px, 1px);
-  margin-left: -2rem;
-  position: absolute;
-}
-
-input[type='checkbox'] + label,
-input[type='radio'] + label {
-  cursor: pointer;
-  font-weight: $normal-weight;
-  margin-bottom: .5em;
-}
-
-input[type='checkbox'] + label::before,
-input[type='radio'] + label::before {
-  background: $white;
-  border-radius: .3rem;
-  box-shadow: 0 0 0 1px $light-grey;
-  content: '\a0';
-  display: inline-block;
-  height: 1.8rem;
-  line-height: 1.8rem;
-  margin-right: .6em;
-  text-indent: .15em;
-  vertical-align: middle\0;
-  width: 1.8rem;
-}
-
-input[type='radio'] + label::before {
-  border-radius: 100%;
-  box-shadow: 0 0 0 2px $white, 0 0 0 3px $light-grey;
-  height: 1.6rem;
-  line-height: 1.6rem;
-  width: 1.6rem;
-}
-
-input[type='checkbox']:checked + label::before,
-input[type='radio']:checked + label::before {
-  background-color: $medium-blue;
-  box-shadow: 0 0 0 1px $medium-blue;
-}
-
-input[type='radio']:checked + label::before {
-  box-shadow: 0 0 0 2px $white, 0 0 0 4px $medium-blue;
-}
-
-input[type='radio']:focus + label::before {
-  box-shadow: 0 0 0 2px $white, 0 0 0 4px $medium-blue, 0 0 3px 4px $medium-blue, 0 0 7px 4px $medium-blue;
-}
-
-input[type='checkbox']:checked + label::before {
-  background-image: asset-path('/assets/images/correct8.png');
-  background-image: asset-path('/assets/images/correct8.svg');
-  background-position: 50%;
-  background-repeat: no-repeat;
-}
-
-input[type='checkbox']:focus + label::before {
-  box-shadow: 0 0 0 1px $white, 0 0 0 3px $medium-blue;
-}
-
-input[type='checkbox']:disabled + label {
-  color: $light-grey;
-}
-
-input[type='checkbox']:disabled + label::before,
-input[type='radio']:disabled + label::before {
-  background: $light-grey;
-  box-shadow: 0 0 0 1px $light-grey;
-  cursor: not-allowed;
-}
-
-.input-error-message:first-of-type {
-  padding-left: 1.3em;
-  text-indent: -1.3em;
-}
-
-.input-error-message:not(:first-child) {
-  padding-left: 2.1rem;
-}
-
-.input-no-header {
-  padding-top: 36px;
-}
-
 .text-between-inputs {
   padding-top: 50px;
   text-align: center;
@@ -175,29 +82,6 @@ input[type='radio']:disabled + label::before {
 
 .align-communication-method {
   margin-top: -2px;
-}
-
-input.rw-input {
-  // the height is now relative to the root element, and not the parent element
-  height: 4.3rem;
-}
-
-// see https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder
-// for more info about the placeholder pseudo element
-
-// edge (it requries the -webkit-input- prefix)
-input.rw-input::-webkit-input-placeholder {
-  font-size: .8em;
-}
-
-// ie 11
-input.rw-input:-ms-input-placeholder {
-  font-size: .8em;
-}
-
-// chrome v57+ and firefox v51+
-input.rw-input::placeholder {
-  font-size: .8em;
 }
 
 .unstyled-list {
