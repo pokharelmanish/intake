@@ -26,7 +26,6 @@ import {cardName as incidentInformationCardName} from 'containers/screenings/Inc
 import {cardName as narrativeCardName} from 'containers/screenings/NarrativeFormContainer'
 import {cardName as decisionCardName} from 'containers/screenings/DecisionFormContainer'
 import {cardName as workerSafetyCardName} from 'containers/screenings/WorkerSafetyFormContainer'
-import {cardName as crossReportsCardName} from 'containers/screenings/CrossReportFormContainer'
 import {replace} from 'react-router-redux'
 
 export function* createScreeningBase(screening) {
@@ -43,10 +42,6 @@ export function* quietlySaveScreeningCard({payload: {card}}) {
   switch (card) {
     case allegationsCardName: {
       screening = yield select(getScreeningWithAllegationsEditsSelector)
-      break
-    }
-    case crossReportsCardName: {
-      screening = yield select(getScreeningWithCrossReportEditsSelector)
       break
     }
     case decisionCardName: {
