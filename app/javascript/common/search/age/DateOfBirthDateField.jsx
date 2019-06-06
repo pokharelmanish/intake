@@ -1,26 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import DateField from 'common/DateField'
+import {FormField, DatePicker} from '@cwds/components'
 
 class DateOfBirthDateField extends React.Component {
   render() {
-    const {value, onBlur, onChange, errors, onKeyUp, onKeyPress} = this.props
-    const handleBlur = () => onBlur('dateOfBirth')
-    const handleChange = value => onChange('dateOfBirth', value)
-
+    const {value, onBlur, onChange, errors} = this.props
     return (
-      <DateField
+      <FormField
         id="search-date-of-birth"
-        gridClassName="date-field"
+        name="dob"
         label="Date"
+        Component={DatePicker}
         value={value}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        hasTime={false}
-        errors={errors}
-        onKeyUp={onKeyUp}
-        onKeyPress={onKeyPress}
+        error={errors}
+        onChange={(event, newValue) => {
+          onChange('dateOfBirth', newValue)
+        }}
+        onBlur={() => onBlur('dateOfBirth')}
       />
+
     )
   }
 }

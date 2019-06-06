@@ -7,7 +7,7 @@ import {PersonSearchFieldsPropType, PersonSearchFieldsDefaultProps} from 'data/p
 
 class AgeSearchFields extends React.Component {
   renderDateOfBirth() {
-    const {onBlur, onChange, dobErrors, onKeyUp, onKeyPress, personSearchFields} = this.props
+    const {onBlur, onChange, dobErrors, personSearchFields} = this.props
     const shouldRender = personSearchFields.searchByAgeMethod === 'dob'
     const dateOfBirthSection = (
       <div className="col-md-9 date-of-birth-section">
@@ -15,8 +15,6 @@ class AgeSearchFields extends React.Component {
           errors={dobErrors}
           onBlur={onBlur}
           onChange={onChange}
-          onKeyPress={onKeyPress}
-          onKeyUp={onKeyUp}
           value={personSearchFields.dateOfBirth}
         />
       </div>
