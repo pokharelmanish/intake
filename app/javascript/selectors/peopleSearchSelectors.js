@@ -28,7 +28,7 @@ const selectPeopleSearch = state => {
   return state.get('peopleSearch')
 }
 export const selectSearchTermValue = state =>
-  selectPeopleSearch(state).get('searchTerm')
+  selectPeopleSearch(state).getIn(['searchFields', 'searchTerm'])
 export const selectResultsTotalValue = state =>
   selectPeopleSearch(state).get('total')
 export const selectLastResultsSortValue = state => {

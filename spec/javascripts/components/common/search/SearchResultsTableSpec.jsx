@@ -37,6 +37,7 @@ describe('SearchResultsTable', () => {
       'spCounty': 'pokhara',
       'spPhone': '111-111-1111',
       'isSealed': true,
+      'akaFullName': ' (AKA: Laure)',
       'legacyDescriptor': {
         'legacy_id': '6j6DKYI0Ki',
       },
@@ -149,7 +150,7 @@ describe('SearchResultsTable', () => {
       const header = component.find('div.rt-resizable-header-content')
       expect(header.at(0).text()).toEqual('')
       expect(header.at(1).text()).toEqual('Name')
-      expect(header.at(2).text()).toEqual('Date of Birth')
+      expect(header.at(2).find('span').at(0).text()).toEqual('Date of Birth ')
       expect(header.at(3).text()).toEqual('Sex at Birth')
       expect(header.at(4).text()).toEqual('Service Provider County')
       expect(header.at(5).text()).toEqual('Service Provider Phone')
@@ -167,6 +168,7 @@ describe('SearchResultsTable', () => {
       const cell = row.find('div.rt-td')
       expect(cell.at(0).text()).toEqual('1.')
       expect(cell.at(1).find('button').text()).toEqual('Sarah Timson')
+      expect(cell.at(1).find('span').at(0).text()).toEqual(' (AKA: Laure)')
       expect(cell.at(2).text()).toEqual('01/03/2005')
       expect(cell.at(3).text()).toEqual('Female')
       expect(cell.at(4).text()).toEqual('pokhara')
@@ -260,7 +262,7 @@ describe('SearchResultsTable', () => {
     it('render client with tooltip', () => {
       const row = component.find('div.rt-tr-group').at(0)
       const cell = row.find('div.rt-td')
-      expect(cell.find('span').html()).toContain('Sealed')
+      expect(cell.find('span').at(1).html()).toContain('Sealed')
       expect(cell.find('span i').exists()).toBe(true)
     })
   })
@@ -269,7 +271,7 @@ describe('SearchResultsTable', () => {
     it('render client with tooltip', () => {
       const row = component.find('div.rt-tr-group').at(1)
       const cell = row.find('div.rt-td')
-      expect(cell.find('span').html()).toContain('Sensitive')
+      expect(cell.find('span').at(1).html()).toContain('Sensitive')
       expect(cell.find('span i').exists()).toBe(true)
     })
   })

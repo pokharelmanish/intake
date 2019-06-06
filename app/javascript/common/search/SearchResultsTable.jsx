@@ -7,7 +7,9 @@ import {capitalizedStr} from 'utils/textFormatter'
 import ReactTooltip from 'react-tooltip'
 import {phoneNumberFormatter} from 'utils/phoneNumberFormatter'
 import AlertMessageResultsLimit from 'common/search/AlertMessageResultsLimit'
+import DateOfBirthTooltip from 'common/search/DateOfBirthTooltip'
 
+const commonStyle = {headerClassName: 'search-results-header'}
 class SearchResultsTable extends React.Component {
   constructor() {
     super()
@@ -39,34 +41,42 @@ class SearchResultsTable extends React.Component {
       Cell: (row) => {
         const person = row.original
         const id = person.legacyDescriptor && person.legacyDescriptor.legacy_id
+        const akaFullName = person.akaFullName
         return (
           <div>
             {<button className='person-search-detail-link' onClick={() => onAuthorize(id)}>{person.fullName}</button>}
-            {person.isSensitive && <span data-tip="Sensitive">&nbsp;<i className="fa fa-circle search-information-flag" aria-hidden="true"/></span>}
-            {person.isSealed && <span data-tip="Sealed">&nbsp;<i className="fa fa-circle search-information-flag" aria-hidden="true"/></span>}
-            <ReactTooltip className="custom-tool-tip" />
+            <span>{akaFullName}</span>
+            {person.isSensitive && <span data-tip="Sensitive" data-for="Sensitive">&nbsp;<i className="fa fa-circle search-information-flag" aria-hidden="true"/></span>}
+            <ReactTooltip id='Sensitive' className="custom-tool-tip" />
+            {person.isSealed && <span data-tip="Sealed" data-for="Sealed">&nbsp;<i className="fa fa-circle search-information-flag" aria-hidden="true"/></span>}
+            <ReactTooltip id='Sealed' className="custom-tool-tip" />
           </div>
         )
       },
+      ...commonStyle,
     },
     {
-      Header: 'Date of Birth',
+      Header: <DateOfBirthTooltip/>,
       accessor: 'dateOfBirth',
       Cell: (row) => dateFormatter(row.original.dateOfBirth),
+      ...commonStyle,
     },
     {
       Header: 'Sex at Birth',
       accessor: 'gender',
       Cell: (row) => capitalizedStr(row.original.gender),
+      ...commonStyle,
     },
     {
       Header: 'Service Provider County',
       accessor: 'spCounty',
+      ...commonStyle,
     },
     {
       Header: 'Service Provider Phone',
       accessor: 'spPhone',
       Cell: (row) => phoneNumberFormatter(row.original.spPhone),
+      ...commonStyle,
     },
     {
       id: 'address',
@@ -77,10 +87,12 @@ class SearchResultsTable extends React.Component {
           `${address.streetAddress}, ${address.city}, ${address.state} ${address.zip}` :
           ''
       },
+      ...commonStyle,
     },
     {
       Header: 'Case Status',
       accessor: 'caseStatus',
+      ...commonStyle,
     },
   ]
 

@@ -712,7 +712,7 @@ describe('peopleSearchSelectors', () => {
   describe('selectAkaFullName', () => {
     it('return akaFullName and name_type when searchTerm match the akas', () => {
       const peopleSearch = {
-        searchTerm: 'James Doolittle',
+        searchFields: {searchTerm: 'James Doolittle'},
       }
       const akas = [
         {
