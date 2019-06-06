@@ -100,16 +100,8 @@ describe('intake config', () => {
   })
 
   describe('.isSearchByAddressOn', () => {
-    it('returns based on hotline flag when path includes screenings', () => {
-      window.org = Object.freeze({intake: {config: {active_features: ['address_search_hotline']}}})
-      expect(isSearchByAddressOn({pathname: '/screenings/123/edit'})).toEqual(true)
-
-      window.org = Object.freeze({intake: {config: {active_features: ['address_search_snapshot']}}})
-      expect(isSearchByAddressOn({pathname: '/screenings/123/edit'})).toEqual(false)
-    })
-
-    it('returns based on snapshot flag when path does not include screenings', () => {
-      window.org = Object.freeze({intake: {config: {active_features: ['address_search_hotline']}}})
+    it('returns based on snapshot flag', () => {
+      window.org = Object.freeze({intake: {config: {active_features: []}}})
       expect(isSearchByAddressOn({pathname: '/snapshot'})).toEqual(false)
 
       window.org = Object.freeze({intake: {config: {active_features: ['address_search_snapshot']}}})
