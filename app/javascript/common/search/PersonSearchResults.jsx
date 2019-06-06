@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CardView from 'views/CardView'
-import {SHOW_MODE} from 'actions/screeningPageActions'
+import {SHOW_MODE} from 'actions/snapshotActions'
 import SearchResultsTable from 'common/search/SearchResultsTable'
 
 const PersonSearchResults = (

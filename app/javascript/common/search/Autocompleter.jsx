@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React, {Component} from 'react'
 import Autocomplete from 'react-autocomplete'
 import SuggestionHeader from 'common/SuggestionHeader'
-import CreateUnknownPerson from 'screenings/CreateUnknownPerson'
 import ShowMoreResults from 'common/ShowMoreResults'
 import {logEvent} from 'utils/analytics'
 import moment from 'moment'
@@ -125,7 +124,7 @@ export default class Autocompleter extends Component {
     const canLoadMoreResults = results && total > results.length
     const buttonClassName = canLoadMoreResults && canCreateNewPerson ? ' col-md-6' : ''
     const className = itemClassName(isHighlighted) + buttonClassName
-    const button = item.showMoreResults ? <ShowMoreResults /> : <CreateUnknownPerson />
+    const button = <ShowMoreResults />
     return (<div id={id} key={key} className={className}>{button}</div>)
   }
 

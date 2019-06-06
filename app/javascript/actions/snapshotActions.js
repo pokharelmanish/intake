@@ -5,6 +5,8 @@ import {
   VIEW_SNAPSHOT_SEARCH,
 } from 'actions/actionTypes'
 
+export const SHOW_MODE = 'show'
+
 export function createSnapshot() {
   return {type: CREATE_SNAPSHOT}
 }
