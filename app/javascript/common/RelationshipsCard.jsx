@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import {SHOW_MODE} from 'actions/screeningPageActions'
+import {SHOW_MODE} from 'actions/snapshotActions'
 import {EmptyRelationships} from 'common/Relationships'
 import RelationshipsSnapshotContainer from 'containers/snapshot/RelationshipsContainer'
 import CardView from 'views/CardView'
 
-const RelationshipsCard = ({areRelationshipsEmpty, isScreening}) => (
+const RelationshipsCard = ({areRelationshipsEmpty}) => (
   <CardView
     id="relationships-card"
     title="Relationships"
@@ -22,7 +22,6 @@ const RelationshipsCard = ({areRelationshipsEmpty, isScreening}) => (
 
 RelationshipsCard.propTypes = {
   areRelationshipsEmpty: PropTypes.bool,
-  isScreening: PropTypes.bool,
 }
 
 export default RelationshipsCard
