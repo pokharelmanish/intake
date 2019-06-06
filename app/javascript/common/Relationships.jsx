@@ -7,7 +7,6 @@ export const Relationships = ({
   errors,
   isInvalidForm,
   isSaving,
-  isScreening,
   onClick,
   onChange,
   onEdit,
@@ -16,11 +15,9 @@ export const Relationships = ({
   pendingPeople = [],
   people,
   relationshipsButtonStatus,
-  screeningId,
 }) => (
   <div className="card-body no-pad-top">
-    {!isScreening &&
-      people.map((person, index) => (
+    {people.map((person, index) => (
         <div className="row" key={index}>
           <div className="col-md-8 gap-top">
             <span className="person">{person.name}</span>
@@ -77,7 +74,6 @@ Relationships.propTypes = {
   }),
   isInvalidForm: PropTypes.bool,
   isSaving: PropTypes.bool,
-  isScreening: PropTypes.bool,
   onChange: PropTypes.func,
   onClick: PropTypes.func,
   onEdit: PropTypes.func,
@@ -100,7 +96,6 @@ Relationships.propTypes = {
   relationshipsButtonStatus: PropTypes.shape({
     createRelationshipsButtonStatus: PropTypes.bool,
   }),
-  screeningId: PropTypes.string,
 }
 
 export const EmptyRelationships = () => (
