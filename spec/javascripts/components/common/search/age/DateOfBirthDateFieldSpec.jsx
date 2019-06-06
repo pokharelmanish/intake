@@ -24,20 +24,17 @@ const render = (
 
 describe('DateOfBirthDateField', () => {
   describe('layout', () => {
-    it('renders a DateField', () => {
+    it('renders a FormField as DateField as its component', () => {
       const component = render({value: '2019-03-01'})
-      const dateField = component.find('DateField')
+      const dateField = component.find('FormField')
       expect(dateField.exists()).toEqual(true)
       expect(dateField.props().id).toEqual('search-date-of-birth')
-      expect(dateField.props().gridClassName).toEqual('date-field')
+      expect(dateField.props().name).toEqual('dob')
       expect(dateField.props().label).toEqual('Date')
       expect(dateField.props().value).toEqual('2019-03-01')
       expect(typeof dateField.props().onBlur).toEqual('function')
       expect(typeof dateField.props().onChange).toEqual('function')
-      expect(dateField.props().hasTime).toEqual(false)
-      expect(dateField.props().errors).toEqual([])
-      expect(typeof dateField.props().onKeyPress).toEqual('function')
-      expect(typeof dateField.props().onKeyUp).toEqual('function')
+      expect(dateField.props().error).toEqual([])
     })
 
     describe('errors', () => {
@@ -46,20 +43,20 @@ describe('DateOfBirthDateField', () => {
           'Please enter date as today or earlier.',
         ]
         const component = render({errors: dobErrors})
-        const dateField = component.find('DateField[label="Date"]')
-        expect(dateField.props().errors).toEqual(dobErrors)
+        const dateField = component.find('FormField[label="Date"]')
+        expect(dateField.props().error).toEqual(dobErrors)
       })
 
       it('does not display error messages if dobErrors are not present', () => {
         const component = render({})
-        const dateField = component.find('DateField[label="Date"]')
-        expect(dateField.props().errors).toEqual([])
+        const dateField = component.find('FormField[label="Date"]')
+        expect(dateField.props().error).toEqual([])
       })
 
       it('does not display error messages if dobErrors is undefined', () => {
         const component = render({errors: undefined})
-        const dateField = component.find('DateField[label="Date"]')
-        expect(dateField.props().errors).toEqual([])
+        const dateField = component.find('FormField[label="Date"]')
+        expect(dateField.props().error).toEqual([])
       })
     })
 
@@ -67,7 +64,7 @@ describe('DateOfBirthDateField', () => {
       it('calls onBlur to set date of birth error check to true', () => {
         const onBlur = jasmine.createSpy('onBlur')
         const component = render({onBlur})
-        const dateField = component.find('DateField[label="Date"]')
+        const dateField = component.find('FormField[label="Date"]')
         dateField.props().onBlur()
         expect(onBlur).toHaveBeenCalledWith('dateOfBirth')
       })
@@ -77,9 +74,9 @@ describe('DateOfBirthDateField', () => {
       it('calls onChange to set the date of birth value', () => {
         const onChange = jasmine.createSpy('onChange')
         const component = render({onChange})
-        const dateField = component.find('DateField[label="Date"]')
-        dateField.props().onChange('12/12/2000')
-        expect(onChange).toHaveBeenCalledWith('dateOfBirth', '12/12/2000')
+        const dateField = component.find('FormField[label="Date"]')
+        dateField.props().onChange()
+        expect(onChange).toHaveBeenCalled()
       })
     })
   })

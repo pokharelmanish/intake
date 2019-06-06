@@ -23,7 +23,6 @@ const render = (
     onBlur = () => {},
     onChange = () => {},
     onKeyPress = () => {},
-    onKeyUp = () => {},
     personSearchFields = defaultPersonSearchFields,
   } = {}
 ) =>
@@ -33,7 +32,6 @@ const render = (
       onBlur={onBlur}
       onChange={onChange}
       onKeyPress={onKeyPress}
-      onKeyUp={onKeyUp}
       personSearchFields={personSearchFields}
     />
   )
@@ -74,8 +72,6 @@ describe('AgeSearchFields', () => {
         expect(props.errors).toEqual([])
         expect(typeof props.onBlur).toEqual('function')
         expect(typeof props.onChange).toEqual('function')
-        expect(typeof props.onKeyPress).toEqual('function')
-        expect(typeof props.onKeyUp).toEqual('function')
         expect(props.value).toEqual('2019-03-01')
       })
     })
